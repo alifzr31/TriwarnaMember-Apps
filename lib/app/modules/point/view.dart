@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:icons_plus/icons_plus.dart';
 import 'package:member_apps/app/component/point_text..dart';
+import 'package:member_apps/app/component/transparent_appbar.dart';
 import 'package:member_apps/app/component/white_text.dart';
 import 'package:member_apps/app/core/value.dart';
 
@@ -11,16 +12,10 @@ class PointPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Colors.transparent,
-        elevation: 0,
-        leading: IconButton(
-          onPressed: () {
-            Get.back();
-          },
-          icon: const Icon(Icons.arrow_back_ios_new, color: baseColor),
-        ),
-        actions: [
+      appBar: TransparentAppbar(
+        title: 'POINT',
+        preferredSize: Size.fromHeight(kToolbarHeight),
+        action: [
           Center(
             child: TextButton(
               onPressed: () {
@@ -120,7 +115,9 @@ class HeaderPoint extends StatelessWidget {
         PointText(text: '527', size: 34),
         const Divider(),
         ElevatedButton(
-          onPressed: () {},
+          onPressed: () {
+            Get.toNamed('/tarikpoint');
+          },
           style: ElevatedButton.styleFrom(
             backgroundColor: baseColor,
             shape: const StadiumBorder(),

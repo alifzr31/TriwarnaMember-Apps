@@ -4,8 +4,8 @@ import 'package:image_picker/image_picker.dart';
 import 'package:member_apps/app/component/base_button.dart';
 import 'package:member_apps/app/component/base_dropdown.dart';
 import 'package:member_apps/app/component/base_text_input.dart';
+import 'package:member_apps/app/component/transparent_appbar.dart';
 import 'package:member_apps/app/component/white_text.dart';
-import 'package:member_apps/app/core/value.dart';
 
 class ProfilePage extends StatelessWidget {
   const ProfilePage({super.key});
@@ -13,20 +13,9 @@ class ProfilePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Colors.transparent,
-        elevation: 0,
-        title: const Text(
-          'PROFILE',
-          style: TextStyle(color: baseColor),
-        ),
-        centerTitle: true,
-        leading: IconButton(
-          onPressed: () {
-            Get.back();
-          },
-          icon: const Icon(Icons.arrow_back_ios_new, color: baseColor),
-        ),
+      appBar: TransparentAppbar(
+        title: 'PROFILE',
+        preferredSize: Size.fromHeight(kToolbarHeight),
       ),
       body: SingleChildScrollView(
         child: Padding(

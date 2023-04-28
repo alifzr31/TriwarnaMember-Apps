@@ -2,6 +2,7 @@ import 'package:get/get.dart';
 import 'package:member_apps/app/modules/dashboard/view.dart';
 import 'package:member_apps/app/modules/login/view.dart';
 import 'package:member_apps/app/modules/onboard/view.dart';
+import 'package:member_apps/app/modules/point/tarik_point/view.dart';
 import 'package:member_apps/app/modules/point/view.dart';
 import 'package:member_apps/app/modules/profile/view.dart';
 import 'package:member_apps/app/modules/register/view.dart';
@@ -44,6 +45,11 @@ abstract class AppPages {
       name: Routes.profile,
       page: () => const ProfilePage(),
       transition: Transition.fadeIn,
+    ),
+    GetPage(
+      name: Routes.tarikpoint,
+      page: () => const TarikPointPage(),
+      transition: Transition.size,
     ),
   ];
 }

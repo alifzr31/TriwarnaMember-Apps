@@ -181,6 +181,7 @@ class CarouselField extends StatelessWidget {
       ),
       child: InkWell(
         onTap: () {},
+        splashColor: Colors.black.withOpacity(0.5),
         child: Container(
           decoration: const BoxDecoration(
             image: DecorationImage(
