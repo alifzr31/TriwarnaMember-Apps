@@ -13,7 +13,7 @@ class PointPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: TransparentAppbar(
-        title: 'POINT',
+        title: '',
         preferredSize: Size.fromHeight(kToolbarHeight),
         action: [
           Center(
@@ -86,7 +86,7 @@ class PointPage extends StatelessWidget {
           ),
         ],
       ),
-      body: SafeArea(
+      body: SingleChildScrollView(
         child: Padding(
           padding: const EdgeInsets.all(10),
           child: Center(

@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:icons_plus/icons_plus.dart';
 import 'package:member_apps/app/component/white_text.dart';
-import 'package:member_apps/app/component/yellow_button.dart';
 import 'package:member_apps/app/core/value.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -141,31 +140,35 @@ class BodyAccount extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        ListTile(
-          leading: Image.asset('assets/images/point_icon_small.png'),
-          title: const Text('Point'),
-          trailing: const Icon(Icons.keyboard_arrow_right),
-          onTap: () {
-            Get.toNamed('/point');
-          },
+    return Expanded(
+      child: SingleChildScrollView(
+        child: Column(
+          children: [
+            ListTile(
+              leading: Image.asset('assets/images/point_icon_small.png'),
+              title: const Text('Point'),
+              trailing: const Icon(Icons.keyboard_arrow_right),
+              onTap: () {
+                Get.toNamed('/point');
+              },
+            ),
+            ListTile(
+              leading: const Icon(
+                Bootstrap.door_open_fill,
+                color: Colors.black,
+              ),
+              title: const Text('Log Out'),
+              trailing: const Icon(Icons.keyboard_arrow_right),
+              onTap: () async {
+                SharedPreferences prefs = await SharedPreferences.getInstance();
+                prefs.clear();
+        
+                Get.offAllNamed('/onboard');
+              },
+            ),
+          ],
         ),
-        ListTile(
-          leading: const Icon(
-            Bootstrap.door_open_fill,
-            color: Colors.black,
-          ),
-          title: const Text('Log Out'),
-          trailing: const Icon(Icons.keyboard_arrow_right),
-          onTap: () async {
-            SharedPreferences prefs = await SharedPreferences.getInstance();
-            prefs.clear();
-
-            Get.offAllNamed('/onboard');
-          },
-        ),
-      ],
+      ),
     );
   }
 }

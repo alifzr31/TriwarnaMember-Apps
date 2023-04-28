@@ -9,12 +9,14 @@ class LotteryPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Column(
-        children: [
-          HeaderLottery(),
-          const Divider(),
-          BodyLottery(),
-        ],
+      body: SingleChildScrollView(
+        child: Column(
+          children: [
+            HeaderLottery(),
+            const Divider(),
+            BodyLottery(),
+          ],
+        ),
       ),
     );
   }
