@@ -176,22 +176,48 @@ class CarouselField extends StatelessWidget {
   List<Widget> cards = [
     Card(
       elevation: 8,
+      color: Colors.white.withOpacity(0.5),
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(20.0),
       ),
       child: InkWell(
         onTap: () {},
-        splashColor: Colors.black.withOpacity(0.5),
-        child: Container(
-          decoration: const BoxDecoration(
-            image: DecorationImage(
-              image: AssetImage('assets/images/back-splash.png'),
-              fit: BoxFit.fill,
+        splashColor: Colors.black.withOpacity(0.3),
+        child: Padding(
+          padding: const EdgeInsets.all(15),
+          child: Container(
+            decoration: const BoxDecoration(
+              image: DecorationImage(
+                image: AssetImage('assets/images/carousel.png'),
+                fit: BoxFit.fill,
+              ),
             ),
           ),
         ),
       ),
-    )
+    ),
+    Card(
+      elevation: 8,
+      color: Colors.white.withOpacity(0.5),
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(20.0),
+      ),
+      child: InkWell(
+        onTap: () {},
+        splashColor: Colors.black.withOpacity(0.3),
+        child: Padding(
+          padding: const EdgeInsets.all(15),
+          child: Container(
+            decoration: const BoxDecoration(
+              image: DecorationImage(
+                image: AssetImage('assets/images/event.png'),
+                fit: BoxFit.fill,
+              ),
+            ),
+          ),
+        ),
+      ),
+    ),
   ];
 
   @override
@@ -199,6 +225,9 @@ class CarouselField extends StatelessWidget {
     return Swiper(
       itemCount: cards.length,
       pagination: const SwiperPagination(),
+      control: const SwiperControl(
+        padding: EdgeInsets.symmetric(horizontal: 8),
+      ),
       curve: Curves.bounceOut,
       itemBuilder: (context, index) {
         return cards[index];

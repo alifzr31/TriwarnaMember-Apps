@@ -162,8 +162,9 @@ class BodyAccount extends StatelessWidget {
               onTap: () async {
                 SharedPreferences prefs = await SharedPreferences.getInstance();
                 prefs.clear();
+                prefs.setBool('opened', true);
         
-                Get.offAllNamed('/onboard');
+                Get.offAllNamed('/login');
               },
             ),
           ],
