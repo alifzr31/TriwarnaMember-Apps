@@ -86,17 +86,15 @@ class PointPage extends StatelessWidget {
           ),
         ],
       ),
-      body: SingleChildScrollView(
-        child: Padding(
-          padding: const EdgeInsets.all(10),
-          child: Center(
-            child: Column(
-              children: [
-                HeaderPoint(),
-                const Divider(),
-                HistorySaldo(),
-              ],
-            ),
+      body: Padding(
+        padding: const EdgeInsets.all(10),
+        child: Center(
+          child: Column(
+            children: [
+              HeaderPoint(),
+              const SizedBox(height: 10),
+              HistorySaldo(),
+            ],
           ),
         ),
       ),
@@ -113,7 +111,6 @@ class HeaderPoint extends StatelessWidget {
       children: [
         Image.asset('assets/images/point_icon_large.png'),
         PointText(text: '527', size: 34),
-        const Divider(),
         ElevatedButton(
           onPressed: () {
             Get.toNamed('/tarikpoint');
@@ -176,90 +173,90 @@ class HistorySaldo extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        Row(
-          children: const [
-            Icon(Iconsax.chart_1),
-            SizedBox(width: 5),
-            Text(
-              'Riwayat Saldo',
-              style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
-            )
-          ],
-        ),
-        const Divider(),
-        SizedBox(
-          height: Get.height / 2.41,
-          width: Get.width,
-          child: ListView(
-            children: [
-              Card(
-                color: Colors.transparent,
-                margin: const EdgeInsets.only(bottom: 10),
-                elevation: 0,
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        const Text('Pull point has been successfully',
-                            style: TextStyle(fontWeight: FontWeight.bold)),
-                        Text('03/03/2023',
-                            style:
-                                const TextStyle(fontWeight: FontWeight.bold)),
-                      ],
-                    ),
-                    Text(
-                      '-200',
-                      style: const TextStyle(color: Colors.red),
-                    ),
-                    Row(
-                      children: [
-                        const Text('Remaining Points :',
-                            style: TextStyle(color: baseColor)),
-                        PointText(text: ' 527'),
-                      ],
-                    )
-                  ],
-                ),
-              ),
-              Card(
-                color: Colors.transparent,
-                margin: const EdgeInsets.only(bottom: 10),
-                elevation: 0,
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        const Text('Pull point has been successfully',
-                            style: TextStyle(fontWeight: FontWeight.bold)),
-                        Text('03/03/2023',
-                            style:
-                                const TextStyle(fontWeight: FontWeight.bold)),
-                      ],
-                    ),
-                    Text(
-                      '+200',
-                      style: const TextStyle(color: Colors.green),
-                    ),
-                    Row(
-                      children: [
-                        const Text('Remaining Points :',
-                            style: TextStyle(color: baseColor)),
-                        PointText(text: ' 527'),
-                      ],
-                    )
-                  ],
-                ),
-              ),
+    return Expanded(
+      child: Column(
+        children: [
+          Row(
+            children: const [
+              Icon(Iconsax.chart_1),
+              SizedBox(width: 5),
+              Text(
+                'Riwayat Saldo',
+                style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+              )
             ],
           ),
-        ),
-      ],
+          const SizedBox(height: 5),
+          Expanded(
+            child: ListView(
+              children: [
+                Card(
+                  color: Colors.transparent,
+                  margin: const EdgeInsets.only(bottom: 10),
+                  elevation: 0,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          const Text('Pull point has been successfully',
+                              style: TextStyle(fontWeight: FontWeight.bold)),
+                          Text('03/03/2023',
+                              style:
+                                  const TextStyle(fontWeight: FontWeight.bold)),
+                        ],
+                      ),
+                      Text(
+                        '-200',
+                        style: const TextStyle(color: Colors.red),
+                      ),
+                      Row(
+                        children: [
+                          const Text('Remaining Points :',
+                              style: TextStyle(color: baseColor)),
+                          PointText(text: ' 527'),
+                        ],
+                      )
+                    ],
+                  ),
+                ),
+                Card(
+                  color: Colors.transparent,
+                  margin: const EdgeInsets.only(bottom: 10),
+                  elevation: 0,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          const Text('Pull point has been successfully',
+                              style: TextStyle(fontWeight: FontWeight.bold)),
+                          Text('03/03/2023',
+                              style:
+                                  const TextStyle(fontWeight: FontWeight.bold)),
+                        ],
+                      ),
+                      Text(
+                        '+200',
+                        style: const TextStyle(color: Colors.green),
+                      ),
+                      Row(
+                        children: [
+                          const Text('Remaining Points :',
+                              style: TextStyle(color: baseColor)),
+                          PointText(text: ' 527'),
+                        ],
+                      )
+                    ],
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ],
+      ),
     );
   }
 }
