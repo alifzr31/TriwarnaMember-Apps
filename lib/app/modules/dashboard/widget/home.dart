@@ -101,7 +101,7 @@ class Header extends StatelessWidget {
             ),
           ),
           Container(
-            height: 25,
+            height: 20,
             width: Get.width,
             decoration: BoxDecoration(
               color: yellow,
