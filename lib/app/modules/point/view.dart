@@ -21,7 +21,7 @@ class PointPage extends StatelessWidget {
               onPressed: () {
                 Get.bottomSheet(
                   SizedBox(
-                    height: 350,
+                    height: 300,
                     child: Padding(
                       padding: const EdgeInsets.symmetric(
                           horizontal: 10, vertical: 20),
