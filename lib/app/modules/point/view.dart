@@ -188,9 +188,11 @@ class HistorySaldo extends StatelessWidget {
           ),
           const SizedBox(height: 5),
           Expanded(
-            child: ListView(
-              children: [
-                Card(
+            child: ListView.builder(
+              physics: const ClampingScrollPhysics(),
+              itemCount: 6,
+              itemBuilder: (context, index) {
+                return Card(
                   color: Colors.transparent,
                   margin: const EdgeInsets.only(bottom: 10),
                   elevation: 0,
@@ -217,42 +219,16 @@ class HistorySaldo extends StatelessWidget {
                               style: TextStyle(color: baseColor)),
                           PointText(text: ' 527'),
                         ],
+                      ),
+                      const SizedBox(height: 8),
+                      const Divider(
+                        height: 1,
+                        color: Colors.grey,
                       )
                     ],
                   ),
-                ),
-                Card(
-                  color: Colors.transparent,
-                  margin: const EdgeInsets.only(bottom: 10),
-                  elevation: 0,
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          const Text('Pull point has been successfully',
-                              style: TextStyle(fontWeight: FontWeight.bold)),
-                          Text('03/03/2023',
-                              style:
-                                  const TextStyle(fontWeight: FontWeight.bold)),
-                        ],
-                      ),
-                      Text(
-                        '+200',
-                        style: const TextStyle(color: Colors.green),
-                      ),
-                      Row(
-                        children: [
-                          const Text('Remaining Points :',
-                              style: TextStyle(color: baseColor)),
-                          PointText(text: ' 527'),
-                        ],
-                      )
-                    ],
-                  ),
-                ),
-              ],
+                );
+              },
             ),
           ),
         ],

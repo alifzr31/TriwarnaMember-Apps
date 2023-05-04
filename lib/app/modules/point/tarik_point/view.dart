@@ -24,6 +24,7 @@ class TarikPointPage extends StatelessWidget {
               '*The number of Coins cannot be less than 50',
               style: TextStyle(color: Colors.red),
             ),
+            const SizedBox(height: 10),
             FormTarik(),
           ],
         ),
