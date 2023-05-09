@@ -34,6 +34,7 @@ class BaseTextInput extends StatelessWidget {
         labelStyle: const TextStyle(color: Colors.black),
         suffixIcon: icon,
         suffixIconColor: Colors.black,
+        contentPadding: const EdgeInsets.all(0),
         border: const UnderlineInputBorder(
           borderSide: BorderSide(
             width: 2,

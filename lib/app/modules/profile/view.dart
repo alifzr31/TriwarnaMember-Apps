@@ -17,16 +17,14 @@ class ProfilePage extends StatelessWidget {
         title: 'PROFILE',
         preferredSize: Size.fromHeight(kToolbarHeight),
       ),
-      body: SingleChildScrollView(
-        child: Padding(
-          padding: const EdgeInsets.all(10),
-          child: Column(
-            children: [
-              HeaderProfile(),
-              const Divider(),
-              FormProfile(),
-            ],
-          ),
+      body: Padding(
+        padding: const EdgeInsets.all(10),
+        child: Column(
+          children: [
+            HeaderProfile(),
+            const Divider(),
+            FormProfile(),
+          ],
         ),
       ),
     );
@@ -81,31 +79,33 @@ class HeaderProfile extends StatelessWidget {
               ),
             ),
             SizedBox(width: Get.width * 0.08),
-            Image.asset('assets/images/platinum.png', height: 50),
-            SizedBox(width: Get.width * 0.1),
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                const Text(
-                  'Alif Zakya Rafiq',
-                  style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
-                ),
-                const SizedBox(height: 5),
-                Container(
-                  width: 70,
-                  height: 25,
-                  decoration: BoxDecoration(
-                    color: Colors.grey.shade300,
-                    borderRadius: BorderRadius.circular(20),
+            Image.asset('assets/images/platinum.png', height: 60),
+            const SizedBox(width: 25),
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  const Text(
+                    'Alif Zakya Rafiq',
+                    style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
                   ),
-                  child: const Center(
-                    child: Text(
-                      'Platinum',
-                      style: TextStyle(fontSize: 12),
+                  const SizedBox(height: 5),
+                  Container(
+                    width: 70,
+                    height: 25,
+                    decoration: BoxDecoration(
+                      color: Colors.grey.shade300,
+                      borderRadius: BorderRadius.circular(20),
                     ),
-                  ),
-                )
-              ],
+                    child: const Center(
+                      child: Text(
+                        'Platinum',
+                        style: TextStyle(fontSize: 12),
+                      ),
+                    ),
+                  )
+                ],
+              ),
             ),
           ],
         ),
@@ -124,96 +124,97 @@ class FormProfile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        SizedBox(
-          height: Get.height / 1.63,
-          child: SingleChildScrollView(
-            child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 5),
-              child: Form(
-                key: formKey,
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    const Text(
-                      'Full Name',
-                      style: TextStyle(fontSize: 16),
-                    ),
-                    BaseTextInput(
-                      hint: 'Full Name',
-                    ),
-                    const Divider(),
-                    const Text(
-                      'Email',
-                      style: TextStyle(fontSize: 16),
-                    ),
-                    BaseTextInput(
-                      hint: 'Email',
-                    ),
-                    const Divider(),
-                    const Text(
-                      'Contact',
-                      style: TextStyle(fontSize: 16),
-                    ),
-                    BaseTextInput(
-                      hint: 'Contact',
-                    ),
-                    const Divider(),
-                    const Text(
-                      'Gender',
-                      style: TextStyle(fontSize: 16),
-                    ),
-                    BaseDropdown(
-                      hint: 'Gender',
-                      items: _items.map((e) {
-                        return DropdownMenuItem(
-                          value: e,
-                          child: Text(e),
-                        );
-                      }).toList(),
-                      onChanged: (val) {},
-                    ),
-                    const Divider(),
-                    const Text(
-                      'Birth Date',
-                      style: TextStyle(fontSize: 16),
-                    ),
-                    BaseTextInput(
-                      hint: 'Birth Date',
-                    ),
-                    const Divider(),
-                    const Text(
-                      'Province',
-                      style: TextStyle(fontSize: 16),
-                    ),
-                    BaseTextInput(
-                      hint: 'Province',
-                    ),
-                    const Divider(),
-                    const Text(
-                      'City',
-                      style: TextStyle(fontSize: 16),
-                    ),
-                    BaseTextInput(
-                      hint: 'City',
-                    ),
-                  ],
+    return Expanded(
+      child: Column(
+        children: [
+          Expanded(
+            child: SingleChildScrollView(
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 5),
+                child: Form(
+                  key: formKey,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      const Text(
+                        'Full Name',
+                        style: TextStyle(fontSize: 16),
+                      ),
+                      BaseTextInput(
+                        hint: 'Full Name',
+                      ),
+                      const Divider(),
+                      const Text(
+                        'Email',
+                        style: TextStyle(fontSize: 16),
+                      ),
+                      BaseTextInput(
+                        hint: 'Email',
+                      ),
+                      const Divider(),
+                      const Text(
+                        'Contact',
+                        style: TextStyle(fontSize: 16),
+                      ),
+                      BaseTextInput(
+                        hint: 'Contact',
+                      ),
+                      const Divider(),
+                      const Text(
+                        'Gender',
+                        style: TextStyle(fontSize: 16),
+                      ),
+                      BaseDropdown(
+                        hint: 'Gender',
+                        items: _items.map((e) {
+                          return DropdownMenuItem(
+                            value: e,
+                            child: Text(e),
+                          );
+                        }).toList(),
+                        onChanged: (val) {},
+                      ),
+                      const Divider(),
+                      const Text(
+                        'Birth Date',
+                        style: TextStyle(fontSize: 16),
+                      ),
+                      BaseTextInput(
+                        hint: 'Birth Date',
+                      ),
+                      const Divider(),
+                      const Text(
+                        'Province',
+                        style: TextStyle(fontSize: 16),
+                      ),
+                      BaseTextInput(
+                        hint: 'Province',
+                      ),
+                      const Divider(),
+                      const Text(
+                        'City',
+                        style: TextStyle(fontSize: 16),
+                      ),
+                      BaseTextInput(
+                        hint: 'City',
+                      ),
+                    ],
+                  ),
                 ),
               ),
             ),
           ),
-        ),
-        const Divider(),
-        SizedBox(
-          height: 40,
-          width: Get.width,
-          child: BaseButton(
-            text: 'Update Profile',
-            onPressed: () {},
+          const Divider(),
+          SizedBox(
+            height: 40,
+            width: Get.width,
+            child: BaseButton(
+              text: 'Update Profile',
+              onPressed: () {},
+            ),
           ),
-        ),
-      ],
+        ],
+      ),
     );
   }
 }

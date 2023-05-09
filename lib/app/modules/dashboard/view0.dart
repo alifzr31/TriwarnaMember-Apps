@@ -7,14 +7,14 @@ import 'package:member_apps/app/modules/dashboard/widget/lottery.dart';
 import 'package:member_apps/app/modules/dashboard/widget/home.dart';
 import 'package:member_apps/app/modules/dashboard/widget/store.dart';
 
-class DashboardPage extends StatefulWidget {
-  const DashboardPage({super.key});
+class DashboardPage0 extends StatefulWidget {
+  const DashboardPage0({super.key});
 
   @override
-  State<DashboardPage> createState() => _DashboardPageState();
+  State<DashboardPage0> createState() => _DashboardPage0State();
 }
 
-class _DashboardPageState extends State<DashboardPage> {
+class _DashboardPage0State extends State<DashboardPage0> {
   int _page = 0;
 
   @override
@@ -24,9 +24,7 @@ class _DashboardPageState extends State<DashboardPage> {
         index: _page,
         children: [
           HomePage(),
-          LotteryPage(),
           StorePage(),
-          AccountPage(),
         ],
       ),
       bottomNavigationBar: Padding(
@@ -51,16 +49,8 @@ class _DashboardPageState extends State<DashboardPage> {
               title: const Text('Home'),
             ),
             CustomNavigationBarItem(
-              icon: const Icon(HeroIcons.gift),
-              title: const Text('Lottery'),
-            ),
-            CustomNavigationBarItem(
               icon: const Icon(HeroIcons.map_pin),
               title: const Text('Store'),
-            ),
-            CustomNavigationBarItem(
-              icon: const Icon(HeroIcons.user),
-              title: const Text('Account'),
             ),
           ],
           bubbleCurve: Curves.bounceInOut,

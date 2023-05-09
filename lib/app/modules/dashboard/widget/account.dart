@@ -3,7 +3,9 @@ import 'package:flutter_custom_clippers/flutter_custom_clippers.dart';
 import 'package:get/get.dart';
 import 'package:icons_plus/icons_plus.dart';
 import 'package:member_apps/app/component/white_text.dart';
+import 'package:member_apps/app/core/utils/api_url.dart';
 import 'package:member_apps/app/core/value.dart';
+import 'package:member_apps/app/modules/dashboard/controller.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class AccountPage extends StatelessWidget {
@@ -12,18 +14,21 @@ class AccountPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Column(
-        children: const [
-          HeaderAccount(),
-          BodyAccount(),
-        ],
+      body: SingleChildScrollView(
+        child: Column(
+          children: [
+            HeaderAccount(),
+            const BodyAccount(),
+          ],
+        ),
       ),
     );
   }
 }
 
 class HeaderAccount extends StatelessWidget {
-  const HeaderAccount({super.key});
+  HeaderAccount({super.key});
+  final controller = Get.find<DashboardController>();
 
   @override
   Widget build(BuildContext context) {
@@ -32,7 +37,7 @@ class HeaderAccount extends StatelessWidget {
         ClipPath(
           clipper: WaveClipperOne(flip: true),
           child: Container(
-            height: 380,
+            height: 420,
             color: yellow,
           ),
         ),
@@ -47,91 +52,160 @@ class HeaderAccount extends StatelessWidget {
               padding: const EdgeInsets.all(10),
               color: baseColor,
               child: SafeArea(
-                child: Column(
-                  children: [
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceAround,
-                      children: [
-                        const CircleAvatar(
-                          radius: 50,
-                          backgroundColor: Colors.transparent,
-                          backgroundImage: NetworkImage(
-                              'https://thumbs.dreamstime.com/b/male-avatar-icon-flat-style-male-user-icon-cartoon-man-avatar-hipster-vector-stock-91462914.jpg'),
-                        ),
-                        Image.asset('assets/images/platinum.png', height: 50),
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            const Text(
-                              "Alif Zakya Rafiq",
-                              style:
-                                  TextStyle(fontSize: 22, color: Colors.white),
-                            ),
-                            const SizedBox(height: 5),
-                            Container(
-                              height: 23,
-                              width: 80,
-                              decoration: BoxDecoration(
-                                color: Colors.grey.shade300,
-                                borderRadius: BorderRadius.circular(30),
+                child: Obx(
+                  () {
+                    return controller.user.value == null
+                        ? const Center(
+                            child: CircularProgressIndicator(color: yellow))
+                        : Column(
+                            children: [
+                              Row(
+                                children: [
+                                  CircleAvatar(
+                                    radius: 50,
+                                    backgroundColor: Colors.transparent,
+                                    backgroundImage: NetworkImage(
+                                        ApiUrl.profileStorage +
+                                            '/${controller.user.value!.image}'),
+                                  ),
+                                  SizedBox(width: Get.width * 0.07),
+                                  controller.user.value!.loyalty == 'Silver'
+                                      ? Image.asset('assets/images/silver.png',
+                                          height: 50)
+                                      : controller.user.value!.loyalty ==
+                                              'Platinum'
+                                          ? Image.asset(
+                                              'assets/images/platinum.png',
+                                              height: 50)
+                                          : Image.asset(
+                                              'assets/images/gold.png',
+                                              height: 50),
+                                  const SizedBox(width: 15),
+                                  Expanded(
+                                    child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        Text(
+                                          controller
+                                              .user.value!.name!.capitalize!,
+                                          style: TextStyle(
+                                              fontSize: 22,
+                                              color: Colors.white),
+                                        ),
+                                        const SizedBox(height: 5),
+                                        controller.user.value!.loyalty ==
+                                                'Silver'
+                                            ? Container(
+                                                height: 23,
+                                                width: 80,
+                                                decoration: BoxDecoration(
+                                                  color: Colors.grey.shade100,
+                                                  borderRadius:
+                                                      BorderRadius.circular(30),
+                                                ),
+                                                child: const Center(
+                                                    child: Text('Silver')),
+                                              )
+                                            : controller.user.value!.loyalty ==
+                                                    'Platinum'
+                                                ? Container(
+                                                    height: 23,
+                                                    width: 80,
+                                                    decoration: BoxDecoration(
+                                                      color:
+                                                          Colors.grey.shade300,
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              30),
+                                                    ),
+                                                    child: const Center(
+                                                        child:
+                                                            Text('Platinum')),
+                                                  )
+                                                : Container(
+                                                    height: 23,
+                                                    width: 80,
+                                                    decoration: BoxDecoration(
+                                                      color: Colors.amber.shade300,
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              30),
+                                                    ),
+                                                    child: const Center(
+                                                        child: Text('Gold')),
+                                                  ),
+                                      ],
+                                    ),
+                                  ),
+                                ],
                               ),
-                              child: const Center(child: Text('Platinum')),
-                            ),
-                          ],
-                        ),
-                      ],
-                    ),
-                    const SizedBox(height: 30),
-                    Column(
-                      children: [
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceAround,
-                          children: [
-                            Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: const [
-                                WhiteText(text: 'No Member'),
-                                WhiteText(text: '123456789'),
-                                Divider(),
-                                WhiteText(text: 'Address'),
-                                WhiteText(text: 'Blok Citopeng No. 327'),
-                              ],
-                            ),
-                            const SizedBox(width: 30),
-                            Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: const [
-                                WhiteText(text: 'Username'),
-                                WhiteText(text: 'alifzr31'),
-                                Divider(),
-                                WhiteText(text: 'Contact'),
-                                WhiteText(text: '081221112586'),
-                              ],
-                            ),
-                          ],
-                        ),
-                        const SizedBox(height: 45),
-                        Align(
-                          alignment: Alignment.centerLeft,
-                          child: Container(
-                            height: 25,
-                            margin: const EdgeInsets.only(left: 15),
-                            child: ElevatedButton(
-                              onPressed: () {
-                                Get.toNamed('/profile');
-                              },
-                              style: ElevatedButton.styleFrom(
-                                shape: const StadiumBorder(),
-                                backgroundColor: yellow,
-                                foregroundColor: baseColor,
+                              const SizedBox(height: 30),
+                              SizedBox(
+                                height: 145,
+                                width: Get.width,
+                                child: Row(
+                                  children: [
+                                    Flexible(
+                                      child: Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          const WhiteText(text: 'No Member'),
+                                          WhiteText(
+                                              text: controller
+                                                  .user.value!.noMember!),
+                                          const SizedBox(height: 10),
+                                          const WhiteText(text: 'Address'),
+                                          WhiteText(
+                                              text: controller.user.value!.address!),
+                                        ],
+                                      ),
+                                    ),
+                                    const SizedBox(width: 10),
+                                    Flexible(
+                                      child: Align(
+                                        alignment: Alignment.centerRight,
+                                        child: Column(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          children: [
+                                            const WhiteText(text: 'Username'),
+                                            WhiteText(
+                                                text: controller
+                                                    .user.value!.username!),
+                                            const SizedBox(height: 10),
+                                            const WhiteText(text: 'Contact'),
+                                            WhiteText(
+                                                text: controller
+                                                    .user.value!.contact!),
+                                          ],
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
                               ),
-                              child: const Text('Edit Profile'),
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ],
+                              Align(
+                                alignment: Alignment.centerLeft,
+                                child: SizedBox(
+                                  height: 25,
+                                  child: ElevatedButton(
+                                    onPressed: () {
+                                      Get.toNamed('/profile');
+                                    },
+                                    style: ElevatedButton.styleFrom(
+                                      shape: const StadiumBorder(),
+                                      backgroundColor: yellow,
+                                      foregroundColor: baseColor,
+                                    ),
+                                    child: const Text('Edit Profile'),
+                                  ),
+                                ),
+                              ),
+                            ],
+                          );
+                  },
                 ),
               ),
             ),
@@ -147,36 +221,32 @@ class BodyAccount extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Expanded(
-      child: SingleChildScrollView(
-        child: Column(
-          children: [
-            ListTile(
-              leading: Image.asset('assets/images/point_icon_small.png'),
-              title: const Text('Point'),
-              trailing: const Icon(Icons.keyboard_arrow_right),
-              onTap: () {
-                Get.toNamed('/point');
-              },
-            ),
-            ListTile(
-              leading: const Icon(
-                Bootstrap.door_open_fill,
-                color: Colors.black,
-              ),
-              title: const Text('Log Out'),
-              trailing: const Icon(Icons.keyboard_arrow_right),
-              onTap: () async {
-                SharedPreferences prefs = await SharedPreferences.getInstance();
-                prefs.clear();
-                prefs.setBool('opened', true);
-
-                Get.offAllNamed('/login');
-              },
-            ),
-          ],
+    return Column(
+      children: [
+        ListTile(
+          leading: Image.asset('assets/images/point_icon_small.png'),
+          title: const Text('Point'),
+          trailing: const Icon(Icons.keyboard_arrow_right),
+          onTap: () {
+            Get.toNamed('/point');
+          },
         ),
-      ),
+        ListTile(
+          leading: const Icon(
+            Bootstrap.door_open_fill,
+            color: Colors.black,
+          ),
+          title: const Text('Log Out'),
+          trailing: const Icon(Icons.keyboard_arrow_right),
+          onTap: () async {
+            SharedPreferences prefs = await SharedPreferences.getInstance();
+            await prefs.clear();
+            await prefs.setBool('opened', true);
+
+            Get.offAllNamed('/dashboard0');
+          },
+        ),
+      ],
     );
   }
 }

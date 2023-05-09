@@ -44,6 +44,7 @@ class PointPage extends StatelessWidget {
                           const SizedBox(height: 30),
                           Expanded(
                             child: ListView(
+                              physics: const ClampingScrollPhysics(),
                               children: const [
                                 WhiteText(
                                     text:

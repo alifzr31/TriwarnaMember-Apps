@@ -17,7 +17,7 @@ import 'package:slide_to_act/slide_to_act.dart';
 //             description:
 //                 'Enjoy the best of the world in the palm of your hands.',
 //             imageUrl: 'https://i.ibb.co/cJqsPSB/scooter.png',
-//             bgColor: Colors.indigo,
+//             bgColor: Colors.white,
 //           ),
 //           OnboardingPageModel(
 //             title: 'Connect with your friends.',
@@ -244,124 +244,161 @@ class _OnBoardPageState extends State<OnBoardPage> {
   final PageController _pageController = PageController(initialPage: 0);
 
   List Images = [
-    'astro1.png',
-    'astro2.png',
-    'astro3.png',
+    'onboard1.png',
+    'onboard2.png',
+    'onboard3.png',
+  ];
+
+  List title = ['One Stop', '', ''];
+
+  List subtitle = ['Painting & Decorating Solution', '', ''];
+
+  List desc = [
+    'We provide all the points to enhance your walls',
+    'Paint your walls with the best quality paint',
+    'We provide the best quality for your paint needs.',
   ];
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: baseColor,
       body: PageView.builder(
         controller: _pageController,
         scrollDirection: Axis.vertical,
         itemCount: Images.length,
         itemBuilder: (context, index) {
-          return Container(
-            height: Get.height,
-            width: Get.width,
-            decoration: BoxDecoration(
-              image: DecorationImage(
-                  image: AssetImage('assets/images/' + Images[index]),
-                  fit: BoxFit.cover),
-            ),
-            child: Container(
-              margin: const EdgeInsets.only(top: 50, left: 20, right: 20),
-              padding: const EdgeInsets.all(10),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          return Stack(
+            children: [
+              Column(
                 children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: const [
-                          Text(
-                            'Welcome',
-                            style: TextStyle(
-                              color: Colors.indigo,
-                              fontWeight: FontWeight.bold,
-                              fontSize: 30,
-                            ),
-                          ),
-                          Text(
-                            'Member Apps',
-                            style: TextStyle(
-                              color: Colors.indigo,
-                              fontSize: 28,
-                            ),
-                          ),
-                          Divider(height: 10),
-                          SizedBox(
-                            width: 200,
-                            child: Text(
-                              'Lorem Ipsum is simply dummy text for of the printing and typesetting industry it is just dummy data. Lorem Ipsum has been the industry, when an unknown printer took a galley of type and scrambled it to make a type specimen book.',
-                              textAlign: TextAlign.justify,
-                              style: TextStyle(color: Colors.indigo),
-                            ),
-                          ),
-                        ],
-                      ),
-                      Column(
-                        children: List.generate(
-                          3,
-                          (indexDots) {
-                            return Container(
-                              margin: const EdgeInsets.only(bottom: 8),
-                              width: 5,
-                              height: index == indexDots ? 18 : 6,
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(10),
-                                color: index == indexDots
-                                    ? Colors.indigo
-                                    : Colors.grey,
+                  if (index == 1) SizedBox(height: 180),
+                  Container(
+                    margin: const EdgeInsets.only(top: 50),
+                    padding: const EdgeInsets.symmetric(
+                        vertical: 10, horizontal: 20),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Expanded(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                title[index],
+                                style: const TextStyle(
+                                  color: Colors.white,
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 28,
+                                ),
                               ),
-                            );
-                          },
-                        ),
-                      ),
-                    ],
-                  ),
-                  if (index == 2)
-                    Builder(
-                      builder: (context) {
-                        final GlobalKey<SlideActionState> key = GlobalKey();
-
-                        return Padding(
-                          padding: const EdgeInsets.symmetric(vertical: 10),
-                          child: SlideAction(
-                            key: key,
-                            sliderRotate: false,
-                            text: 'Get Started',
-                            textStyle: const TextStyle(
-                              color: baseColor,
-                              fontSize: 16,
-                              fontWeight: FontWeight.bold,
-                            ),
-                            onSubmit: () async {
-                              await Future.delayed(
-                                const Duration(seconds: 1),
-                                () async {
-                                  await key.currentState!.reset();
-                                  Get.offAllNamed('/dashboard');
-                                },
-                              );
-                              SharedPreferences prefs =
-                                  await SharedPreferences.getInstance();
-                              prefs.setBool('opened', true);
-                            },
-                            innerColor: baseColor,
-                            outerColor: Colors.white,
-                            sliderButtonIconSize: 20,
-                            height: 60,
+                              Text(
+                                subtitle[index],
+                                style: const TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 26,
+                                ),
+                              ),
+                            ],
                           ),
-                        );
-                      },
+                        ),
+                        Column(
+                          children: List.generate(
+                            3,
+                            (indexDots) {
+                              return Container(
+                                margin: const EdgeInsets.only(bottom: 8),
+                                width: 5,
+                                height: index == indexDots ? 18 : 6,
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(10),
+                                  color: index == indexDots
+                                      ? Colors.white
+                                      : Colors.grey,
+                                ),
+                              );
+                            },
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  SizedBox(height: Get.height / 100 * 7),
+                  index == 2
+                      ? SizedBox(height: Get.height * 0.54)
+                      : index == 0
+                          ? Column(
+                            children: [
+                              const SizedBox(height: 60),
+                              Image.asset('assets/images/' + Images[index]),
+                            ],
+                          )
+                          : Image.asset('assets/images/' + Images[index]),
+                  const SizedBox(height: 40),
+                  Text(
+                    desc[index],
+                    textAlign: TextAlign.center,
+                    style: const TextStyle(color: Colors.white, fontSize: 16),
+                  ),
+                  SizedBox(height: Get.height / 100 * 4),
+                  if (index == 2)
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 20),
+                      child: Builder(
+                        builder: (context) {
+                          final GlobalKey<SlideActionState> key = GlobalKey();
+
+                          return Padding(
+                            padding: const EdgeInsets.symmetric(vertical: 10),
+                            child: SlideAction(
+                              key: key,
+                              sliderRotate: false,
+                              text: 'Get Started',
+                              textStyle: const TextStyle(
+                                color: baseColor,
+                                fontSize: 16,
+                                fontWeight: FontWeight.bold,
+                              ),
+                              onSubmit: () async {
+                                await Future.delayed(
+                                  const Duration(seconds: 1),
+                                  () async {
+                                    await key.currentState!.reset();
+                                    Get.offAllNamed('/dashboard0');
+                                  },
+                                );
+                                SharedPreferences prefs =
+                                    await SharedPreferences.getInstance();
+                                prefs.setBool('opened', true);
+                              },
+                              innerColor: baseColor,
+                              outerColor: Colors.white,
+                              sliderButtonIconSize: 20,
+                              height: 60,
+                            ),
+                          );
+                        },
+                      ),
                     ),
                 ],
               ),
-            ),
+              if (index == 1)
+                Positioned(
+                  top: 0,
+                  left: 0,
+                  right: 0,
+                  child: Image.asset(
+                    'assets/images/headonboard2.png',
+                    fit: BoxFit.cover,
+                  ),
+                ),
+              if (index == 2)
+                Positioned(
+                  top: 130,
+                  right: -30,
+                  child: Image.asset('assets/images/onboard3.png'),
+                ),
+            ],
           );
         },
       ),

@@ -60,7 +60,6 @@ class _SplasScreenState extends State<SplasScreen> {
                             );
                           },
                         ),
-                        // const Divider(),
                         // const Text(
                         //   'Powered By',
                         //   style: TextStyle(fontSize: 16, color: yellow),
@@ -71,6 +70,23 @@ class _SplasScreenState extends State<SplasScreen> {
                         // ),
                       ],
                     ),
+                  ),
+                ),
+                Positioned(
+                  bottom: 35,
+                  left: 30,
+                  right: 30,
+                  child: Column(
+                    children: [
+                      const Text(
+                        'Powered By',
+                        style: TextStyle(fontSize: 16, color: yellow),
+                      ),
+                      const Text(
+                        'DEV-IT AnyarGroup | 2023',
+                        style: TextStyle(fontSize: 16, color: yellow),
+                      ),
+                    ],
                   ),
                 ),
               ],
@@ -85,9 +101,15 @@ class _SplasScreenState extends State<SplasScreen> {
 void navigate() async {
   SharedPreferences prefs = await SharedPreferences.getInstance();
   final opened = prefs.getBool('opened');
+  final token = prefs.getString('token');
+  print(opened);
 
-  if (opened != null) {
-    Get.offAndToNamed('/dashboard');
+  if (opened == true || opened != null) {
+    if (token == null) {
+      Get.offAndToNamed('/dashboard0');
+    } else {
+      Get.offAndToNamed('/dashboard');
+    }
   } else {
     Get.offAndToNamed('/onboard');
   }

@@ -4,6 +4,7 @@ import 'package:icons_plus/icons_plus.dart';
 import 'package:member_apps/app/component/yellow_button.dart';
 import 'package:member_apps/app/component/base_text_input.dart';
 import 'package:member_apps/app/core/value.dart';
+import 'package:member_apps/app/modules/auth/controller.dart';
 
 class LoginPage extends StatelessWidget {
   const LoginPage({super.key});
@@ -44,10 +45,12 @@ class LoginForm extends StatefulWidget {
 
 class _LoginFormState extends State<LoginForm> {
   bool showPass = true;
+  final controller = Get.find<AuthController>();
 
   @override
   Widget build(BuildContext context) {
     return Form(
+      key: controller.formKey,
       child: Column(
         children: [
           Padding(
@@ -57,12 +60,14 @@ class _LoginFormState extends State<LoginForm> {
               height: 80,
             ),
           ),
-          const BaseTextInput(
+          BaseTextInput(
+            controller: controller.emailController,
             label: 'Email',
             icon: Icon(HeroIcons.user),
           ),
-          const Divider(),
+          const SizedBox(height: 20),
           BaseTextInput(
+            controller: controller.passwordController,
             label: 'Password',
             obscureText: showPass,
             icon: IconButton(
@@ -76,7 +81,7 @@ class _LoginFormState extends State<LoginForm> {
                   : const Icon(HeroIcons.eye_slash),
             ),
           ),
-          const Divider(),
+          const SizedBox(height: 20),
           const Align(
             alignment: Alignment.centerRight,
             child: Text('Forgot Password?'),
@@ -87,7 +92,13 @@ class _LoginFormState extends State<LoginForm> {
             height: 40,
             child: YellowButton(
               text: 'Log In',
-              onPressed: () {},
+              onPressed: () async {
+                if (controller.formKey.currentState!.validate()) {
+                  controller.login();
+                  print(controller.emailController.text);
+                  print(controller.passwordController.text);
+                }
+              },
             ),
           ),
           Row(
@@ -99,7 +110,7 @@ class _LoginFormState extends State<LoginForm> {
               ),
               TextButton(
                 onPressed: () {
-                  Get.offAndToNamed('/register');
+                  Get.toNamed('/register');
                 },
                 child: const Text(
                   'Register here',
