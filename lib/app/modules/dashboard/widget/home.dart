@@ -1,7 +1,9 @@
 import 'package:card_swiper/card_swiper.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
+import 'package:member_apps/app/component/base_refresh.dart';
 import 'package:member_apps/app/component/card_menu.dart';
 import 'package:member_apps/app/component/white_text.dart';
 import 'package:member_apps/app/core/utils/api_url.dart';
@@ -9,26 +11,56 @@ import 'package:member_apps/app/core/value.dart';
 import 'package:member_apps/app/modules/dashboard/controller.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
-class HomePage extends StatelessWidget {
+class HomePage extends StatefulWidget {
   const HomePage({super.key});
+
+  @override
+  State<HomePage> createState() => _HomePageState();
+}
+
+class _HomePageState extends State<HomePage> {
+  final controller = Get.find<DashboardController>();
+
+  Future<void> refreshHome() async {
+    await Future.delayed(
+      const Duration(milliseconds: 2500),
+      () async {
+        controller.fetchProfile();
+        controller.user.refresh();
+
+        await Fluttertoast.showToast(
+          msg: 'Data Refreshed',
+          toastLength: Toast.LENGTH_SHORT,
+          gravity: ToastGravity.BOTTOM,
+          timeInSecForIosWeb: 1,
+          backgroundColor: Colors.black.withOpacity(0.8),
+          textColor: Colors.white,
+          fontSize: 12.0,
+        );
+      },
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
     return SafeArea(
-      child: SingleChildScrollView(
-        child: Padding(
-          padding: const EdgeInsets.all(15),
-          child: Column(
-            children: [
-              Header(),
-              const SizedBox(height: 10),
-              const MenuButton(),
-              SizedBox(
-                height: 200,
-                width: Get.width,
-                child: CarouselField(),
-              ),
-            ],
+      child: BaseRefresh(
+        onRefresh: refreshHome,
+        child: SingleChildScrollView(
+          child: Padding(
+            padding: const EdgeInsets.all(15),
+            child: Column(
+              children: [
+                Header(),
+                const SizedBox(height: 10),
+                const MenuButton(),
+                SizedBox(
+                  height: 200,
+                  width: Get.width,
+                  child: CarouselField(),
+                ),
+              ],
+            ),
           ),
         ),
       ),
@@ -167,8 +199,7 @@ class Header extends StatelessWidget {
                     height: 25,
                   ),
                   controller.user.value == null
-                      ? const Center(
-                          child: CupertinoActivityIndicator())
+                      ? const Center(child: CupertinoActivityIndicator())
                       : WhiteText(
                           text: controller.user.value!.loyaltyPoint!,
                           size: 16,
