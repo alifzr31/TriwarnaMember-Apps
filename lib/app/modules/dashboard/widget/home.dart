@@ -1,4 +1,5 @@
 import 'package:card_swiper/card_swiper.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:member_apps/app/component/card_menu.dart';
@@ -42,22 +43,23 @@ class Header extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Obx(
-      () => controller.user.value == null
-          ? const Center(child: CircularProgressIndicator(color: yellow))
-          : Column(
-              children: [
-                SizedBox(
-                  height: 100,
-                  width: Get.width,
-                  child: Material(
-                    color: baseColor,
-                    borderRadius: BorderRadius.only(
-                      topLeft: Radius.circular(20),
-                      topRight: Radius.circular(20),
-                    ),
-                    child: Padding(
-                      padding: const EdgeInsets.all(10),
-                      child: Row(
+      () => Column(
+        children: [
+          SizedBox(
+            height: 100,
+            width: Get.width,
+            child: Material(
+              color: baseColor,
+              borderRadius: BorderRadius.only(
+                topLeft: Radius.circular(20),
+                topRight: Radius.circular(20),
+              ),
+              child: Padding(
+                padding: const EdgeInsets.all(10),
+                child: controller.user.value == null
+                    ? const Center(
+                        child: CircularProgressIndicator(color: yellow))
+                    : Row(
                         children: [
                           CircleAvatar(
                             radius: 35,
@@ -135,47 +137,48 @@ class Header extends StatelessWidget {
                           ),
                         ],
                       ),
-                    ),
-                  ),
-                ),
-                Container(
-                  width: Get.width,
-                  decoration: BoxDecoration(
-                    color: yellow,
-                    borderRadius: const BorderRadius.only(
-                      bottomLeft: Radius.circular(20),
-                      bottomRight: Radius.circular(20),
-                    ),
-                    boxShadow: [
-                      BoxShadow(
-                        color: Colors.grey.withOpacity(0.5),
-                        spreadRadius: 4,
-                        blurRadius: 6,
-                        offset:
-                            const Offset(0, 3), // changes position of shadow
-                      ),
-                    ],
-                  ),
-                  child: Padding(
-                    padding:
-                        const EdgeInsets.symmetric(vertical: 1, horizontal: 10),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.end,
-                      children: [
-                        Image.asset(
-                          'assets/images/point_icon_large.png',
-                          height: 25,
-                        ),
-                        WhiteText(
-                          text: controller.user.value!.loyaltyPoint!,
-                          size: 16,
-                        )
-                      ],
-                    ),
-                  ),
+              ),
+            ),
+          ),
+          Container(
+            width: Get.width,
+            decoration: BoxDecoration(
+              color: yellow,
+              borderRadius: const BorderRadius.only(
+                bottomLeft: Radius.circular(20),
+                bottomRight: Radius.circular(20),
+              ),
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.grey.withOpacity(0.5),
+                  spreadRadius: 4,
+                  blurRadius: 6,
+                  offset: const Offset(0, 3), // changes position of shadow
                 ),
               ],
             ),
+            child: Padding(
+              padding: const EdgeInsets.symmetric(vertical: 1, horizontal: 10),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                  Image.asset(
+                    'assets/images/point_icon_large.png',
+                    height: 25,
+                  ),
+                  controller.user.value == null
+                      ? const Center(
+                          child: CupertinoActivityIndicator())
+                      : WhiteText(
+                          text: controller.user.value!.loyaltyPoint!,
+                          size: 16,
+                        )
+                ],
+              ),
+            ),
+          ),
+        ],
+      ),
     );
   }
 }
