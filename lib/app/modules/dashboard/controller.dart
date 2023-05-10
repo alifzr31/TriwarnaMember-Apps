@@ -32,8 +32,8 @@ class DashboardController extends GetxController {
 
   @override
   void onClose() {
-    user.close();
     store.clear();
+    // user.close();
     // store.close();
     super.onClose();
   }

@@ -1,16 +1,23 @@
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:icons_plus/icons_plus.dart';
+import 'package:member_apps/app/component/base_refresh.dart';
 import 'package:member_apps/app/component/point_text..dart';
 import 'package:member_apps/app/component/transparent_appbar.dart';
 import 'package:member_apps/app/component/white_text.dart';
 import 'package:member_apps/app/core/value.dart';
+import 'package:member_apps/app/modules/point/controller.dart';
+import 'package:intl/intl.dart';
 
 class PointPage extends StatelessWidget {
   const PointPage({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final loyalty = Get.arguments[0];
+    final spendTotal = Get.arguments[1];
+
     return Scaffold(
       appBar: TransparentAppbar(
         title: '',
@@ -92,7 +99,7 @@ class PointPage extends StatelessWidget {
         child: Center(
           child: Column(
             children: [
-              HeaderPoint(),
+              HeaderPoint(loyalty: loyalty, spendTotal: spendTotal),
               const SizedBox(height: 10),
               HistorySaldo(),
             ],
@@ -104,73 +111,115 @@ class PointPage extends StatelessWidget {
 }
 
 class HeaderPoint extends StatelessWidget {
-  const HeaderPoint({super.key});
+  HeaderPoint({
+    Key? key,
+    required this.loyalty,
+    required this.spendTotal,
+  }) : super(key: key);
+
+  final controller = Get.find<PointController>();
+  final String loyalty;
+  final String spendTotal;
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        Image.asset('assets/images/point_icon_large.png'),
-        PointText(text: '527', size: 34),
-        ElevatedButton(
-          onPressed: () {
-            Get.toNamed('/tarikpoint');
-          },
-          style: ElevatedButton.styleFrom(
-            backgroundColor: baseColor,
-            shape: const StadiumBorder(),
+    final spend = int.parse(spendTotal);
+    final total_spending = NumberFormat.currency(
+      locale: 'id_ID',
+      symbol: 'Rp ',
+    ).format(spend);
+
+    return Obx(
+      () => Column(
+        children: [
+          Image.asset('assets/images/point_icon_large.png'),
+          PointText(text: controller.jumlah.value, size: 34),
+          ElevatedButton(
+            onPressed: () {
+              Get.toNamed('/tarikpoint');
+            },
+            style: ElevatedButton.styleFrom(
+              backgroundColor: baseColor,
+              shape: const StadiumBorder(),
+            ),
+            child: const Text('Redeem Point'),
           ),
-          child: const Text('Tarik Point'),
-        ),
-        Container(
-          width: Get.width,
-          padding: const EdgeInsets.all(10),
-          decoration: const BoxDecoration(
-            color: baseColor,
-            borderRadius: BorderRadius.all(Radius.circular(10)),
-          ),
-          child: Column(
-            children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  WhiteText(text: 'Platinum', bold: FontWeight.bold, size: 16),
-                  WhiteText(
-                      text: '100.000.000/100.000.000',
+          Container(
+            width: Get.width,
+            padding: const EdgeInsets.all(10),
+            decoration: const BoxDecoration(
+              color: baseColor,
+              borderRadius: BorderRadius.all(Radius.circular(10)),
+            ),
+            child: Column(
+              children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    WhiteText(
+                      text: loyalty,
+                      size: 16,
                       bold: FontWeight.bold,
-                      size: 16),
-                ],
-              ),
-              const Divider(),
-              Container(
-                height: 8,
-                width: Get.width,
-                decoration: BoxDecoration(
+                    ),
+                    WhiteText(
+                      text: total_spending + "/Rp 100.000.000,00",
+                      bold: FontWeight.bold,
+                    ),
+                  ],
+                ),
+                const SizedBox(height: 5),
+                Container(
+                  height: 8,
+                  width: Get.width,
+                  decoration: BoxDecoration(
                     color: Colors.grey.shade300,
-                    borderRadius: BorderRadius.all(Radius.circular(20))),
-              ),
-              const Divider(),
-              Row(
-                children: [
-                  WhiteText(
-                      text: 'Transaksi Terakhir ',
-                      size: 12,
-                      bold: FontWeight.bold),
-                  WhiteText(
-                      text: ': Tarik point telah berhasil 03/03/2023',
-                      size: 12),
-                ],
-              )
-            ],
+                    borderRadius: BorderRadius.all(
+                      Radius.circular(20),
+                    ),
+                  ),
+                ),
+                const Divider(),
+                Row(
+                  children: [
+                    WhiteText(
+                        text: 'Last Transaction : ', bold: FontWeight.bold),
+                    WhiteText(
+                      text: controller.last_transaction.value,
+                    ),
+                  ],
+                )
+              ],
+            ),
           ),
-        ),
-      ],
+        ],
+      ),
     );
   }
 }
 
 class HistorySaldo extends StatelessWidget {
-  const HistorySaldo({super.key});
+  HistorySaldo({super.key});
+  final controller = Get.find<PointController>();
+
+  Future<void> refreshListPoint() async {
+    await Future.delayed(
+      const Duration(milliseconds: 2500),
+      () async {
+        controller.fetchPoint();
+        controller.point.refresh();
+
+        await Fluttertoast.showToast(
+          msg: 'Point Data Refreshed',
+          toastLength: Toast.LENGTH_SHORT,
+          gravity: ToastGravity.BOTTOM,
+          timeInSecForIosWeb: 1,
+          backgroundColor: Colors.black.withOpacity(0.8),
+          textColor: Colors.white,
+          fontSize: 12.0,
+        );
+      },
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -187,49 +236,109 @@ class HistorySaldo extends StatelessWidget {
               )
             ],
           ),
-          const SizedBox(height: 5),
+          const SizedBox(height: 10),
           Expanded(
-            child: ListView.builder(
-              physics: const ClampingScrollPhysics(),
-              itemCount: 6,
-              itemBuilder: (context, index) {
-                return Card(
-                  color: Colors.transparent,
-                  margin: const EdgeInsets.only(bottom: 10),
-                  elevation: 0,
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          const Text('Pull point has been successfully',
-                              style: TextStyle(fontWeight: FontWeight.bold)),
-                          Text('03/03/2023',
-                              style:
-                                  const TextStyle(fontWeight: FontWeight.bold)),
-                        ],
+            child: Obx(
+              () => controller.isLoading.value
+                  ? const Center(child: CircularProgressIndicator())
+                  : BaseRefresh(
+                      onRefresh: refreshListPoint,
+                      child: ListView.builder(
+                        itemCount: controller.point.length,
+                        itemBuilder: (context, index) {
+                          final formatter = DateFormat('dd/MM/yyyy');
+                          final tanggal = formatter
+                              .format(controller.point[index].transactionDate);
+
+                          return Card(
+                            color: Colors.transparent,
+                            margin: const EdgeInsets.only(bottom: 10),
+                            elevation: 0,
+                            child: controller.point[index].info == '0'
+                                ? Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceBetween,
+                                        children: [
+                                          const Text('Point added',
+                                              style: TextStyle(
+                                                  fontWeight: FontWeight.bold)),
+                                          Text(tanggal,
+                                              style: const TextStyle(
+                                                  fontWeight: FontWeight.bold)),
+                                        ],
+                                      ),
+                                      Text(
+                                        '+' +
+                                            controller
+                                                .point[index].addSubAmount!,
+                                        style: const TextStyle(
+                                            color: Colors.green),
+                                      ),
+                                      Row(
+                                        children: [
+                                          const Text('Remaining Points : ',
+                                              style:
+                                                  TextStyle(color: baseColor)),
+                                          PointText(
+                                              text: controller.point[index]
+                                                  .remainingPoint!),
+                                        ],
+                                      ),
+                                      const SizedBox(height: 8),
+                                      const Divider(
+                                        height: 1,
+                                        color: Colors.grey,
+                                      )
+                                    ],
+                                  )
+                                : Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceBetween,
+                                        children: [
+                                          const Text('Point redeemed',
+                                              style: TextStyle(
+                                                  fontWeight: FontWeight.bold)),
+                                          Text(tanggal,
+                                              style: const TextStyle(
+                                                  fontWeight: FontWeight.bold)),
+                                        ],
+                                      ),
+                                      Text(
+                                        '-' +
+                                            controller
+                                                .point[index].addSubAmount!,
+                                        style:
+                                            const TextStyle(color: Colors.red),
+                                      ),
+                                      Row(
+                                        children: [
+                                          const Text('Remaining Points : ',
+                                              style:
+                                                  TextStyle(color: baseColor)),
+                                          PointText(
+                                              text: controller.point[index]
+                                                  .remainingPoint!),
+                                        ],
+                                      ),
+                                      const SizedBox(height: 8),
+                                      const Divider(
+                                        height: 1,
+                                        color: Colors.grey,
+                                      )
+                                    ],
+                                  ),
+                          );
+                        },
                       ),
-                      Text(
-                        '-200',
-                        style: const TextStyle(color: Colors.red),
-                      ),
-                      Row(
-                        children: [
-                          const Text('Remaining Points :',
-                              style: TextStyle(color: baseColor)),
-                          PointText(text: ' 527'),
-                        ],
-                      ),
-                      const SizedBox(height: 8),
-                      const Divider(
-                        height: 1,
-                        color: Colors.grey,
-                      )
-                    ],
-                  ),
-                );
-              },
+                    ),
             ),
           ),
         ],

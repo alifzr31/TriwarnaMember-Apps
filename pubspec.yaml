@@ -56,6 +56,8 @@ dependencies:
   custom_refresh_indicator: ^2.0.1
   fluttertoast: ^8.2.1
   responsive_sizer: ^3.1.1
+  font_awesome_flutter: 
+  intl: ^0.17.0
 
 dev_dependencies:
   flutter_test:

@@ -18,7 +18,7 @@ class AuthController extends GetxController {
 
   void login() async {
     final formData = _dio.FormData.fromMap({
-      'email_user': emailController.text,
+      'username': emailController.text,
       'password': passwordController.text,
     });
 

@@ -5,8 +5,10 @@ import 'package:member_apps/app/modules/dashboard/view.dart';
 import 'package:member_apps/app/modules/auth/login/view.dart';
 import 'package:member_apps/app/modules/dashboard/view0.dart';
 import 'package:member_apps/app/modules/onboard/view.dart';
+import 'package:member_apps/app/modules/point/binding.dart';
 import 'package:member_apps/app/modules/point/tarik_point/view.dart';
 import 'package:member_apps/app/modules/point/view.dart';
+import 'package:member_apps/app/modules/profile/binding.dart';
 import 'package:member_apps/app/modules/profile/view.dart';
 import 'package:member_apps/app/modules/auth/register/view.dart';
 import 'package:member_apps/app/modules/splash/view.dart';
@@ -51,11 +53,13 @@ abstract class AppPages {
     GetPage(
       name: Routes.point,
       page: () => const PointPage(),
+      binding: PointBinding(),
       transition: Transition.fadeIn,
     ),
     GetPage(
       name: Routes.profile,
       page: () => const ProfilePage(),
+      binding: ProfileBinding(),
       transition: Transition.fadeIn,
     ),
     GetPage(

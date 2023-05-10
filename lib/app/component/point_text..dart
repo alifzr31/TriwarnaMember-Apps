@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:member_apps/app/core/value.dart';
 
 class PointText extends StatelessWidget {
   const PointText({
@@ -16,7 +17,7 @@ class PointText extends StatelessWidget {
   Widget build(BuildContext context) {
     return Text(
       text,
-      style: TextStyle(color: Color.fromARGB(255, 255, 189, 0), fontSize: size, fontWeight: bold),
+      style: TextStyle(color: yellow, fontSize: size, fontWeight: bold),
     );
   }
 }

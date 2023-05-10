@@ -3,6 +3,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:maps_launcher/maps_launcher.dart';
+import 'package:member_apps/app/component/base_refresh.dart';
 import 'package:member_apps/app/core/value.dart';
 import 'package:member_apps/app/modules/dashboard/controller.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -69,9 +70,7 @@ class ListStore extends StatelessWidget {
       () => controller.isLoading.value
           ? const Center(child: CircularProgressIndicator())
           : Expanded(
-              child: RefreshIndicator(
-                backgroundColor: baseColor,
-                color: yellow,
+              child: BaseRefresh(
                 onRefresh: refreshListStore,
                 child: ListView.builder(
                   itemCount: controller.store.length,

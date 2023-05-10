@@ -18,7 +18,7 @@ class AccountPage extends StatelessWidget {
         child: Column(
           children: [
             HeaderAccount(),
-            const BodyAccount(),
+            BodyAccount(),
           ],
         ),
       ),
@@ -89,7 +89,7 @@ class HeaderAccount extends StatelessWidget {
                                         Text(
                                           controller
                                               .user.value!.name!.capitalize!,
-                                          style: TextStyle(
+                                          style: const TextStyle(
                                               fontSize: 22,
                                               color: Colors.white),
                                         ),
@@ -127,7 +127,8 @@ class HeaderAccount extends StatelessWidget {
                                                     height: 23,
                                                     width: 80,
                                                     decoration: BoxDecoration(
-                                                      color: Colors.amber.shade300,
+                                                      color:
+                                                          Colors.amber.shade400,
                                                       borderRadius:
                                                           BorderRadius.circular(
                                                               30),
@@ -158,7 +159,8 @@ class HeaderAccount extends StatelessWidget {
                                           const SizedBox(height: 10),
                                           const WhiteText(text: 'Address'),
                                           WhiteText(
-                                              text: controller.user.value!.address!),
+                                              text: controller.user.value!
+                                                  .fullAddress!.capitalize!),
                                         ],
                                       ),
                                     ),
@@ -217,36 +219,48 @@ class HeaderAccount extends StatelessWidget {
 }
 
 class BodyAccount extends StatelessWidget {
-  const BodyAccount({super.key});
+  BodyAccount({super.key});
+  final controller = Get.find<DashboardController>();
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        ListTile(
-          leading: Image.asset('assets/images/point_icon_small.png'),
-          title: const Text('Point'),
-          trailing: const Icon(Icons.keyboard_arrow_right),
-          onTap: () {
-            Get.toNamed('/point');
-          },
-        ),
-        ListTile(
-          leading: const Icon(
-            Bootstrap.door_open_fill,
-            color: Colors.black,
-          ),
-          title: const Text('Log Out'),
-          trailing: const Icon(Icons.keyboard_arrow_right),
-          onTap: () async {
-            SharedPreferences prefs = await SharedPreferences.getInstance();
-            await prefs.clear();
-            await prefs.setBool('opened', true);
+    return Obx(
+      () => controller.user.value == null
+          ? Container()
+          : Column(
+              children: [
+                ListTile(
+                  leading: Image.asset('assets/images/point_icon_small.png'),
+                  title: const Text('Point'),
+                  trailing: const Icon(Icons.keyboard_arrow_right),
+                  onTap: () {
+                    Get.toNamed(
+                      '/point',
+                      arguments: [
+                        controller.user.value!.loyalty!.capitalize!,
+                        controller.user.value!.spendingTotal!,
+                      ],
+                    );
+                  },
+                ),
+                ListTile(
+                  leading: const Icon(
+                    Bootstrap.door_open_fill,
+                    color: Colors.black,
+                  ),
+                  title: const Text('Log Out'),
+                  trailing: const Icon(Icons.keyboard_arrow_right),
+                  onTap: () async {
+                    SharedPreferences prefs =
+                        await SharedPreferences.getInstance();
+                    await prefs.clear();
+                    await prefs.setBool('opened', true);
 
-            Get.offAllNamed('/dashboard0');
-          },
-        ),
-      ],
+                    Get.offAllNamed('/dashboard0');
+                  },
+                ),
+              ],
+            ),
     );
   }
 }

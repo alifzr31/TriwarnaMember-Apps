@@ -2,7 +2,11 @@ import 'package:card_swiper/card_swiper.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:member_apps/app/component/card_menu.dart';
+import 'package:member_apps/app/component/white_text.dart';
+import 'package:member_apps/app/core/utils/api_url.dart';
 import 'package:member_apps/app/core/value.dart';
+import 'package:member_apps/app/modules/dashboard/controller.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
@@ -15,8 +19,8 @@ class HomePage extends StatelessWidget {
           padding: const EdgeInsets.all(15),
           child: Column(
             children: [
-              const Header(),
-              const Divider(),
+              Header(),
+              const SizedBox(height: 10),
               const MenuButton(),
               SizedBox(
                 height: 200,
@@ -32,95 +36,146 @@ class HomePage extends StatelessWidget {
 }
 
 class Header extends StatelessWidget {
-  const Header({super.key});
+  Header({super.key});
+  final controller = Get.find<DashboardController>();
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      width: Get.width,
-      child: Column(
-        children: [
-          Container(
-            height: 100,
-            width: Get.width,
-            decoration: const BoxDecoration(
-              color: baseColor,
-              borderRadius: BorderRadius.only(
-                topLeft: Radius.circular(20),
-                topRight: Radius.circular(20),
-              ),
-            ),
-            child: Padding(
-              padding: const EdgeInsets.all(10),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    children: [
-                      SizedBox(
-                        height: 30,
-                        width: 80,
-                        child: ElevatedButton(
-                          onPressed: () {
-                            Get.toNamed('/login');
-                          },
-                          style: ElevatedButton.styleFrom(
-                            backgroundColor: yellow,
-                            foregroundColor: baseColor,
-                            shape: const StadiumBorder(),
+    return Obx(
+      () => controller.user.value == null
+          ? const Center(child: CircularProgressIndicator(color: yellow))
+          : Column(
+              children: [
+                SizedBox(
+                  height: 100,
+                  width: Get.width,
+                  child: Material(
+                    color: baseColor,
+                    borderRadius: BorderRadius.only(
+                      topLeft: Radius.circular(20),
+                      topRight: Radius.circular(20),
+                    ),
+                    child: Padding(
+                      padding: const EdgeInsets.all(10),
+                      child: Row(
+                        children: [
+                          CircleAvatar(
+                            radius: 35,
+                            backgroundColor: Colors.transparent,
+                            backgroundImage: NetworkImage(
+                                ApiUrl.profileStorage +
+                                    '/${controller.user.value!.image}'),
                           ),
-                          child: const Text('Login'),
-                        ),
+                          const SizedBox(width: 15),
+                          Expanded(
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                WhiteText(
+                                  text:
+                                      controller.user.value!.name!.capitalize!,
+                                  size: 18,
+                                ),
+                                const SizedBox(height: 5),
+                                controller.user.value!.loyalty == 'Silver'
+                                    ? Container(
+                                        height: 23,
+                                        width: 80,
+                                        decoration: BoxDecoration(
+                                          color: Colors.grey.shade100,
+                                          borderRadius:
+                                              BorderRadius.circular(30),
+                                        ),
+                                        child:
+                                            const Center(child: Text('Silver')),
+                                      )
+                                    : controller.user.value!.loyalty ==
+                                            'Platinum'
+                                        ? Container(
+                                            height: 23,
+                                            width: 80,
+                                            decoration: BoxDecoration(
+                                              color: Colors.grey.shade300,
+                                              borderRadius:
+                                                  BorderRadius.circular(30),
+                                            ),
+                                            child: const Center(
+                                                child: Text('Platinum')),
+                                          )
+                                        : Container(
+                                            height: 23,
+                                            width: 80,
+                                            decoration: BoxDecoration(
+                                              color: Colors.amber.shade400,
+                                              borderRadius:
+                                                  BorderRadius.circular(30),
+                                            ),
+                                            child: const Center(
+                                                child: Text('Gold')),
+                                          ),
+                              ],
+                            ),
+                          ),
+                          Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              IconButton(
+                                onPressed: () {
+                                  print('My QR Code');
+                                },
+                                icon: Icon(
+                                  FontAwesomeIcons.qrcode,
+                                  color: Colors.white,
+                                  size: 30,
+                                ),
+                              ),
+                              const WhiteText(text: 'QR Code')
+                            ],
+                          ),
+                        ],
                       ),
-                      const SizedBox(width: 10),
-                      SizedBox(
-                        height: 30,
-                        width: 85,
-                        child: ElevatedButton(
-                          onPressed: () {
-                            Get.toNamed('/register');
-                          },
-                          style: ElevatedButton.styleFrom(
-                            backgroundColor: yellow,
-                            foregroundColor: baseColor,
-                            shape: const StadiumBorder(),
-                          ),
-                          child: const Text('Register'),
-                        ),
+                    ),
+                  ),
+                ),
+                Container(
+                  width: Get.width,
+                  decoration: BoxDecoration(
+                    color: yellow,
+                    borderRadius: const BorderRadius.only(
+                      bottomLeft: Radius.circular(20),
+                      bottomRight: Radius.circular(20),
+                    ),
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.grey.withOpacity(0.5),
+                        spreadRadius: 4,
+                        blurRadius: 6,
+                        offset:
+                            const Offset(0, 3), // changes position of shadow
                       ),
                     ],
                   ),
-                  const Text(
-                    'Please login first for detail information',
-                    style: TextStyle(color: Colors.white),
+                  child: Padding(
+                    padding:
+                        const EdgeInsets.symmetric(vertical: 1, horizontal: 10),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      children: [
+                        Image.asset(
+                          'assets/images/point_icon_large.png',
+                          height: 25,
+                        ),
+                        WhiteText(
+                          text: controller.user.value!.loyaltyPoint!,
+                          size: 16,
+                        )
+                      ],
+                    ),
                   ),
-                ],
-              ),
-            ),
-          ),
-          Container(
-            height: 20,
-            width: Get.width,
-            decoration: BoxDecoration(
-              color: yellow,
-              borderRadius: const BorderRadius.only(
-                bottomLeft: Radius.circular(20),
-                bottomRight: Radius.circular(20),
-              ),
-              boxShadow: [
-                BoxShadow(
-                  color: Colors.grey.withOpacity(0.5),
-                  spreadRadius: 4,
-                  blurRadius: 6,
-                  offset: const Offset(0, 3), // changes position of shadow
                 ),
               ],
             ),
-          ),
-        ],
-      ),
     );
   }
 }

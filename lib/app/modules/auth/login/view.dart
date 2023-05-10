@@ -62,7 +62,7 @@ class _LoginFormState extends State<LoginForm> {
           ),
           BaseTextInput(
             controller: controller.emailController,
-            label: 'Email',
+            label: 'Username or Email Address',
             icon: Icon(HeroIcons.user),
           ),
           const SizedBox(height: 20),
