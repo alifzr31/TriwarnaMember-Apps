@@ -16,7 +16,7 @@ class HomePage0 extends StatelessWidget {
           child: Column(
             children: [
               const Header(),
-              const Divider(),
+              const SizedBox(height: 10),
               const MenuButton(),
               SizedBox(
                 height: 200,
