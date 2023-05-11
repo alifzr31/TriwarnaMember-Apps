@@ -218,7 +218,7 @@ class BodyLottery extends StatelessWidget {
           Image.asset('assets/images/nodata.png'),
           const SizedBox(height: 10),
           const Text(
-            'No Lottery Numbers',
+            'Lottery Number Not Found',
             style: TextStyle(fontSize: 20),
           ),
         ],
