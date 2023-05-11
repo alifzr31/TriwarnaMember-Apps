@@ -108,7 +108,8 @@ class HeaderLottery extends StatelessWidget {
                               Row(
                                 children: [
                                   const SizedBox(width: 25),
-                                  GreyText(text: controller.user.value!.address!),
+                                  GreyText(
+                                      text: controller.user.value!.address!),
                                 ],
                               ),
                               const Divider(),
@@ -126,7 +127,8 @@ class HeaderLottery extends StatelessWidget {
                               Row(
                                 children: [
                                   const SizedBox(width: 25),
-                                  GreyText(text: controller.user.value!.loyalty!),
+                                  GreyText(
+                                      text: controller.user.value!.loyalty!),
                                 ],
                               ),
                             ],
@@ -166,7 +168,8 @@ class HeaderLottery extends StatelessWidget {
                               Row(
                                 children: [
                                   const SizedBox(width: 25),
-                                  GreyText(text: controller.user.value!.idNumber!),
+                                  GreyText(
+                                      text: controller.user.value!.idNumber!),
                                 ],
                               ),
                               const Divider(),
@@ -184,7 +187,8 @@ class HeaderLottery extends StatelessWidget {
                               Row(
                                 children: [
                                   const SizedBox(width: 25),
-                                  GreyText(text: controller.user.value!.contact!),
+                                  GreyText(
+                                      text: controller.user.value!.contact!),
                                 ],
                               ),
                               const SizedBox(height: 50)
@@ -208,15 +212,16 @@ class BodyLottery extends StatelessWidget {
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.all(10),
-      child: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Image.asset('assets/images/nodata.png', width: 200),
-            const Divider(),
-            const Text('TIDAK ADA UNDIAN'),
-          ],
-        ),
+      child: Column(
+        children: [
+          SizedBox(height: Get.height * 0.1),
+          Image.asset('assets/images/nodata.png'),
+          const SizedBox(height: 10),
+          const Text(
+            'No Lottery Numbers',
+            style: TextStyle(fontSize: 20),
+          ),
+        ],
       ),
     );
   }

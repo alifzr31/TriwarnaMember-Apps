@@ -46,7 +46,7 @@ class Point {
   Map<String, dynamic> toJson() => {
         "code": code,
         "name": name,
-        "transaction_date": transactionDate?.toIso8601String(),
+        "transaction_date": transactionDate.toIso8601String(),
         "point_before": pointBefore,
         "add/sub_amount": addSubAmount,
         "remaining_point": remainingPoint,
