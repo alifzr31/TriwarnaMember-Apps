@@ -8,4 +8,7 @@ class Routes {
   static const point = '/point';
   static const profile = '/profile';
   static const tarikpoint = '/tarikpoint';
+  static const event = '/event';
+  static const promo = '/promo';
+  static const changepin = '/changepin';
 }

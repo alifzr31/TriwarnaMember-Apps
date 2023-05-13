@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:member_apps/app/animation/fadeanimation.dart';
 import 'package:member_apps/app/component/grey_text.dart';
 import 'package:member_apps/app/component/white_text.dart';
 import 'package:member_apps/app/core/value.dart';
@@ -71,8 +72,11 @@ class HeaderLottery extends StatelessWidget {
                               Row(
                                 children: [
                                   const SizedBox(width: 25),
-                                  GreyText(
-                                      text: controller.user.value!.noMember!),
+                                  FadeAnimation(
+                                    delay: 1,
+                                    child: GreyText(
+                                        text: controller.user.value!.noMember!),
+                                  ),
                                 ],
                               ),
                               const Divider(),
@@ -90,7 +94,11 @@ class HeaderLottery extends StatelessWidget {
                               Row(
                                 children: [
                                   const SizedBox(width: 25),
-                                  GreyText(text: 'Swasta'),
+                                  FadeAnimation(
+                                    delay: 1,
+                                    child: GreyText(
+                                        text: controller.user.value!.job!),
+                                  ),
                                 ],
                               ),
                               const Divider(),
@@ -108,8 +116,11 @@ class HeaderLottery extends StatelessWidget {
                               Row(
                                 children: [
                                   const SizedBox(width: 25),
-                                  GreyText(
-                                      text: controller.user.value!.address!),
+                                  FadeAnimation(
+                                    delay: 1,
+                                    child: GreyText(
+                                        text: controller.user.value!.address!),
+                                  ),
                                 ],
                               ),
                               const Divider(),
@@ -127,8 +138,11 @@ class HeaderLottery extends StatelessWidget {
                               Row(
                                 children: [
                                   const SizedBox(width: 25),
-                                  GreyText(
-                                      text: controller.user.value!.loyalty!),
+                                  FadeAnimation(
+                                    delay: 1,
+                                    child: GreyText(
+                                        text: controller.user.value!.loyalty!),
+                                  ),
                                 ],
                               ),
                             ],
@@ -150,7 +164,11 @@ class HeaderLottery extends StatelessWidget {
                               Row(
                                 children: [
                                   const SizedBox(width: 25),
-                                  GreyText(text: controller.user.value!.name!),
+                                  FadeAnimation(
+                                    delay: 1,
+                                    child: GreyText(
+                                        text: controller.user.value!.name!),
+                                  ),
                                 ],
                               ),
                               const Divider(),
@@ -168,8 +186,11 @@ class HeaderLottery extends StatelessWidget {
                               Row(
                                 children: [
                                   const SizedBox(width: 25),
-                                  GreyText(
-                                      text: controller.user.value!.idNumber!),
+                                  FadeAnimation(
+                                    delay: 1,
+                                    child: GreyText(
+                                        text: controller.user.value!.idNumber!),
+                                  ),
                                 ],
                               ),
                               const Divider(),
@@ -187,8 +208,11 @@ class HeaderLottery extends StatelessWidget {
                               Row(
                                 children: [
                                   const SizedBox(width: 25),
-                                  GreyText(
-                                      text: controller.user.value!.contact!),
+                                  FadeAnimation(
+                                    delay: 1,
+                                    child: GreyText(
+                                        text: controller.user.value!.contact!),
+                                  ),
                                 ],
                               ),
                               const SizedBox(height: 50)

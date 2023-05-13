@@ -15,4 +15,7 @@ class EndPoint {
 
   // POINT
   static final String point = '/point';
+
+  // ACCOUNT
+  static final String changePin = '/profile/pin/update';
 }

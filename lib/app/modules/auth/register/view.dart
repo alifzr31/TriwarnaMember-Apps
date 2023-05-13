@@ -88,7 +88,7 @@ class _RegisterFormState extends State<RegisterForm> {
           Expanded(
             child: SingleChildScrollView(
               child: Form(
-                key: controller.formKey,
+                key: controller.formKeyRegister,
                 child: Column(
                   children: [
                     BaseTextInput(
@@ -162,7 +162,7 @@ class _RegisterFormState extends State<RegisterForm> {
             width: Get.width,
             child: BaseButton(
               onPressed: () async {
-                if (controller.formKey.currentState!.validate()) {
+                if (controller.formKeyRegister.currentState!.validate()) {
                   print('Submitted');
                   controller.register(imagePicked!);
                 } else {

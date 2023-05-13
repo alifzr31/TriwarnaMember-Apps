@@ -1,9 +1,13 @@
 import 'package:get/get.dart';
 import 'package:member_apps/app/modules/auth/binding.dart';
+import 'package:member_apps/app/modules/change_pin/binding.dart';
+import 'package:member_apps/app/modules/change_pin/view.dart';
 import 'package:member_apps/app/modules/dashboard/binding.dart';
 import 'package:member_apps/app/modules/dashboard/view.dart';
 import 'package:member_apps/app/modules/auth/login/view.dart';
 import 'package:member_apps/app/modules/dashboard/view0.dart';
+import 'package:member_apps/app/modules/event/binding.dart';
+import 'package:member_apps/app/modules/event/view.dart';
 import 'package:member_apps/app/modules/onboard/view.dart';
 import 'package:member_apps/app/modules/point/binding.dart';
 import 'package:member_apps/app/modules/point/tarik_point/view.dart';
@@ -11,6 +15,8 @@ import 'package:member_apps/app/modules/point/view.dart';
 import 'package:member_apps/app/modules/profile/binding.dart';
 import 'package:member_apps/app/modules/profile/view.dart';
 import 'package:member_apps/app/modules/auth/register/view.dart';
+import 'package:member_apps/app/modules/promo/binding.dart';
+import 'package:member_apps/app/modules/promo/view.dart';
 import 'package:member_apps/app/modules/splash/view.dart';
 import 'package:member_apps/app/routes/routes.dart';
 
@@ -54,7 +60,7 @@ abstract class AppPages {
       name: Routes.point,
       page: () => const PointPage(),
       binding: PointBinding(),
-      transition: Transition.fadeIn,
+      transition: Transition.rightToLeft,
     ),
     GetPage(
       name: Routes.profile,
@@ -66,6 +72,24 @@ abstract class AppPages {
       name: Routes.tarikpoint,
       page: () => const TarikPointPage(),
       transition: Transition.size,
+    ),
+    GetPage(
+      name: Routes.event,
+      page: () => const EventPage(),
+      binding: EventBinding(),
+      transition: Transition.rightToLeftWithFade,
+    ),
+    GetPage(
+      name: Routes.promo,
+      page: () => const PromoPage(),
+      binding: PromoBinding(),
+      transition: Transition.rightToLeftWithFade,
+    ),
+    GetPage(
+      name: Routes.changepin,
+      page: () => const ChangePinPage(),
+      binding: ChangePinBinding(),
+      transition: Transition.rightToLeft,
     ),
   ];
 }

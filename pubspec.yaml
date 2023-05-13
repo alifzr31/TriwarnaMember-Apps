@@ -58,6 +58,10 @@ dependencies:
   responsive_sizer: ^3.1.1
   font_awesome_flutter: 
   intl: ^0.17.0
+  smart_alert_dialog: ^4.0.4
+  simple_animations: ^4.0.1
+  supercharged: ^2.1.1
+  pinput: ^2.2.31
 
 dev_dependencies:
   flutter_test:

@@ -50,7 +50,7 @@ class _LoginFormState extends State<LoginForm> {
   @override
   Widget build(BuildContext context) {
     return Form(
-      key: controller.formKey,
+      key: controller.formKeyLogin,
       child: Column(
         children: [
           Padding(
@@ -93,7 +93,7 @@ class _LoginFormState extends State<LoginForm> {
             child: YellowButton(
               text: 'Log In',
               onPressed: () async {
-                if (controller.formKey.currentState!.validate()) {
+                if (controller.formKeyLogin.currentState!.validate()) {
                   controller.login();
                   print(controller.emailController.text);
                   print(controller.passwordController.text);

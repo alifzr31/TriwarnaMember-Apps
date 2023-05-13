@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:member_apps/app/animation/fadeanimation.dart';
 import 'package:member_apps/app/core/value.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:slide_to_act/slide_to_act.dart';
@@ -284,19 +285,25 @@ class _OnBoardPageState extends State<OnBoardPage> {
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Text(
-                                title[index],
-                                style: const TextStyle(
-                                  color: Colors.white,
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 28,
+                              FadeAnimation(
+                                delay: 1,
+                                child: Text(
+                                  title[index],
+                                  style: const TextStyle(
+                                    color: Colors.white,
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 28,
+                                  ),
                                 ),
                               ),
-                              Text(
-                                subtitle[index],
-                                style: const TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 26,
+                              FadeAnimation(
+                                delay: 1,
+                                child: Text(
+                                  subtitle[index],
+                                  style: const TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 26,
+                                  ),
                                 ),
                               ),
                             ],
@@ -327,18 +334,28 @@ class _OnBoardPageState extends State<OnBoardPage> {
                   index == 2
                       ? SizedBox(height: Get.height * 0.54)
                       : index == 0
-                          ? Column(
-                            children: [
-                              const SizedBox(height: 60),
-                              Image.asset('assets/images/' + Images[index]),
-                            ],
-                          )
-                          : Image.asset('assets/images/' + Images[index]),
+                          ? FadeAnimation(
+                              delay: 1,
+                              child: Column(
+                                children: [
+                                  const SizedBox(height: 60),
+                                  Image.asset('assets/images/' + Images[index]),
+                                ],
+                              ),
+                            )
+                          : FadeAnimation(
+                              delay: 1,
+                              child:
+                                  Image.asset('assets/images/' + Images[index]),
+                            ),
                   const SizedBox(height: 40),
-                  Text(
-                    desc[index],
-                    textAlign: TextAlign.center,
-                    style: const TextStyle(color: Colors.white, fontSize: 16),
+                  FadeAnimation(
+                    delay: 1,
+                    child: Text(
+                      desc[index],
+                      textAlign: TextAlign.center,
+                      style: const TextStyle(color: Colors.white, fontSize: 16),
+                    ),
                   ),
                   SizedBox(height: Get.height / 100 * 4),
                   if (index == 2)
@@ -348,33 +365,36 @@ class _OnBoardPageState extends State<OnBoardPage> {
                         builder: (context) {
                           final GlobalKey<SlideActionState> key = GlobalKey();
 
-                          return Padding(
-                            padding: const EdgeInsets.symmetric(vertical: 10),
-                            child: SlideAction(
-                              key: key,
-                              sliderRotate: false,
-                              text: 'Get Started',
-                              textStyle: const TextStyle(
-                                color: baseColor,
-                                fontSize: 16,
-                                fontWeight: FontWeight.bold,
+                          return FadeAnimation(
+                            delay: 1,
+                            child: Padding(
+                              padding: const EdgeInsets.symmetric(vertical: 10),
+                              child: SlideAction(
+                                key: key,
+                                sliderRotate: false,
+                                text: 'Get Started',
+                                textStyle: const TextStyle(
+                                  color: baseColor,
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                                onSubmit: () async {
+                                  await Future.delayed(
+                                    const Duration(seconds: 1),
+                                    () async {
+                                      await key.currentState!.reset();
+                                      Get.offAllNamed('/dashboard0');
+                                    },
+                                  );
+                                  SharedPreferences prefs =
+                                      await SharedPreferences.getInstance();
+                                  prefs.setBool('opened', true);
+                                },
+                                innerColor: baseColor,
+                                outerColor: Colors.white,
+                                sliderButtonIconSize: 20,
+                                height: 60,
                               ),
-                              onSubmit: () async {
-                                await Future.delayed(
-                                  const Duration(seconds: 1),
-                                  () async {
-                                    await key.currentState!.reset();
-                                    Get.offAllNamed('/dashboard0');
-                                  },
-                                );
-                                SharedPreferences prefs =
-                                    await SharedPreferences.getInstance();
-                                prefs.setBool('opened', true);
-                              },
-                              innerColor: baseColor,
-                              outerColor: Colors.white,
-                              sliderButtonIconSize: 20,
-                              height: 60,
                             ),
                           );
                         },
@@ -387,16 +407,22 @@ class _OnBoardPageState extends State<OnBoardPage> {
                   top: 0,
                   left: 0,
                   right: 0,
-                  child: Image.asset(
-                    'assets/images/headonboard2.png',
-                    fit: BoxFit.cover,
+                  child: FadeAnimation(
+                    delay: 1,
+                    child: Image.asset(
+                      'assets/images/headonboard2.png',
+                      fit: BoxFit.cover,
+                    ),
                   ),
                 ),
               if (index == 2)
                 Positioned(
                   top: 130,
                   right: -30,
-                  child: Image.asset('assets/images/onboard3.png'),
+                  child: FadeAnimation(
+                    delay: 1,
+                    child: Image.asset('assets/images/onboard3.png'),
+                  ),
                 ),
             ],
           );

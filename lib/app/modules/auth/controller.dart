@@ -11,9 +11,10 @@ class AuthController extends GetxController {
 
   AuthController({required this.authProvider});
 
-  final formKey = GlobalKey<FormState>();
-  final nameController = TextEditingController();
+  final formKeyLogin = GlobalKey<FormState>();
+  final formKeyRegister = GlobalKey<FormState>();
 
+  final nameController = TextEditingController();
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
 

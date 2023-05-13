@@ -1,8 +1,12 @@
 import 'package:card_swiper/card_swiper.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_custom_clippers/flutter_custom_clippers.dart';
 import 'package:get/get.dart';
 import 'package:member_apps/app/component/card_menu.dart';
 import 'package:member_apps/app/core/value.dart';
+import 'package:member_apps/app/modules/dashboard/component/carousel.dart';
+import 'package:smart_alert_dialog/models/alert_dialog_text.dart';
+import 'package:smart_alert_dialog/smart_alert_dialog.dart';
 
 class HomePage0 extends StatelessWidget {
   const HomePage0({super.key});
@@ -139,11 +143,25 @@ class MenuButton extends StatelessWidget {
               children: [
                 CardMenu(
                   pathImage: 'assets/images/event.png',
-                  onTap: () {},
+                  onTap: () {
+                    Get.toNamed('/event');
+                  },
                 ),
                 CardMenu(
                   pathImage: 'assets/images/konsul.png',
-                  onTap: () {},
+                  onTap: () {
+                    showDialog(
+                      context: context,
+                      builder: (_) => SmartAlertDialog(
+                        title: "You are not logged in",
+                        message: "Please login first to enjoy this feature.",
+                        text: AlertDialogText(),
+                        onConfirmPressed: () {
+                          Get.toNamed('/login');
+                        },
+                      ),
+                    );
+                  },
                 ),
               ],
             ),
@@ -151,11 +169,25 @@ class MenuButton extends StatelessWidget {
               children: [
                 CardMenu(
                   pathImage: 'assets/images/promo.png',
-                  onTap: () {},
+                  onTap: () {
+                    Get.toNamed('/promo');
+                  },
                 ),
                 CardMenu(
                   pathImage: 'assets/images/ongkir.png',
-                  onTap: () {},
+                  onTap: () {
+                    showDialog(
+                      context: context,
+                      builder: (_) => SmartAlertDialog(
+                        title: "You are not logged in",
+                        message: "Please login first to enjoy this feature.",
+                        text: AlertDialogText(),
+                        onConfirmPressed: () {
+                          Get.toNamed('/login');
+                        },
+                      ),
+                    );
+                  },
                 ),
               ],
             ),
@@ -163,75 +195,21 @@ class MenuButton extends StatelessWidget {
         ),
         CardMenu(
           pathImage: 'assets/images/member.png',
-          onTap: () {},
+          onTap: () {
+            showDialog(
+              context: context,
+              builder: (_) => SmartAlertDialog(
+                title: "You are not logged in",
+                message: "Please login first to enjoy this feature.",
+                text: AlertDialogText(),
+                onConfirmPressed: () {
+                  Get.toNamed('/login');
+                },
+              ),
+            );
+          },
         ),
       ],
-    );
-  }
-}
-
-class CarouselField extends StatelessWidget {
-  CarouselField({super.key});
-
-  List<Widget> cards = [
-    Card(
-      elevation: 8,
-      color: Colors.white.withOpacity(0.5),
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(20.0),
-      ),
-      child: InkWell(
-        onTap: () {},
-        splashColor: Colors.black.withOpacity(0.3),
-        child: Padding(
-          padding: const EdgeInsets.all(15),
-          child: Container(
-            decoration: const BoxDecoration(
-              image: DecorationImage(
-                image: AssetImage('assets/images/carousel.png'),
-                fit: BoxFit.fill,
-              ),
-            ),
-          ),
-        ),
-      ),
-    ),
-    Card(
-      elevation: 8,
-      color: Colors.white.withOpacity(0.5),
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(20.0),
-      ),
-      child: InkWell(
-        onTap: () {},
-        splashColor: Colors.black.withOpacity(0.3),
-        child: Padding(
-          padding: const EdgeInsets.all(15),
-          child: Container(
-            decoration: const BoxDecoration(
-              image: DecorationImage(
-                image: AssetImage('assets/images/event.png'),
-                fit: BoxFit.fill,
-              ),
-            ),
-          ),
-        ),
-      ),
-    ),
-  ];
-
-  @override
-  Widget build(BuildContext context) {
-    return Swiper(
-      itemCount: cards.length,
-      pagination: const SwiperPagination(),
-      control: const SwiperControl(
-        padding: EdgeInsets.symmetric(horizontal: 8),
-      ),
-      curve: Curves.bounceOut,
-      itemBuilder: (context, index) {
-        return cards[index];
-      },
     );
   }
 }
