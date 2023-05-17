@@ -201,7 +201,7 @@ class HeaderAccount extends StatelessWidget {
                                               delay: 1.2,
                                               child: WhiteText(
                                                   text: controller
-                                                      .user.value!.username!),
+                                                      .user.value!.username!.toLowerCase()),
                                             ),
                                             const SizedBox(height: 10),
                                             const WhiteText(text: 'Contact'),
