@@ -53,6 +53,8 @@ class AuthController extends GetxController {
   }
 
   void register(XFile file) async {
+    final fl = await _dio.MultipartFile.fromFile(file.path);
+    
     final formData = _dio.FormData.fromMap({
       'nama': nameController.text,
       'file': await _dio.MultipartFile.fromFile(file.path),
@@ -63,7 +65,8 @@ class AuthController extends GetxController {
       print(response);
     } catch (e) {
       print(e);
-      print(formData.fields[0]);
+      print(formData.fields);
+      print(fl.contentType);
     }
   }
 }

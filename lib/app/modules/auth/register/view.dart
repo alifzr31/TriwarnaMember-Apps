@@ -108,16 +108,16 @@ class _RegisterFormState extends State<RegisterForm> {
                       label: 'Email',
                     ),
                     const SizedBox(height: 20),
-                    BaseDropdown(
-                      label: 'ID Type',
-                      items: _items.map((e) {
-                        return DropdownMenuItem(
-                          value: e,
-                          child: Text(e),
-                        );
-                      }).toList(),
-                      onChanged: (val) {},
-                    ),
+                    // BaseDropdown(
+                    //   label: 'ID Type',
+                    //   items: _items.map((e) {
+                    //     return DropdownMenuItem(
+                    //       value: e,
+                    //       child: Text(e),
+                    //     );
+                    //   }).toList(),
+                    //   onChanged: (val) {},
+                    // ),
                     const SizedBox(height: 20),
                     const BaseTextInput(
                       label: 'ID Number',

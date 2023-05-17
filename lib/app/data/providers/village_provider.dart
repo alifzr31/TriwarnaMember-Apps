@@ -2,7 +2,7 @@ import 'package:dio/dio.dart';
 import 'package:member_apps/app/core/utils/api_url.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-class ProfileProvider {
+class VillageProvider {
   final dio = Dio(BaseOptions(baseUrl: ApiUrl.baseUrl));
   var token;
 
@@ -15,28 +15,6 @@ class ProfileProvider {
         'accept': 'application/json',
         'Authorization': 'Bearer $token',
       };
-
-  Future<Response> updateProfile(FormData formData) async {
-    await _getToken();
-    return await dio.post(
-      EndPoint.updateProfile,
-      data: formData,
-      options: Options(
-        headers: _setHeaders(),
-      ),
-    );
-  }
-
-  Future<Response> changePin(FormData formData) async {
-    await _getToken();
-    return await dio.post(
-      EndPoint.changePin,
-      data: formData,
-      options: Options(
-        headers: _setHeaders(),
-      ),
-    );
-  }
 
   Future<Response> fetchVillage() async {
     await _getToken();

@@ -1,7 +1,10 @@
+import 'package:card_swiper/card_swiper.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:member_apps/app/animation/fadeanimation.dart';
-import 'package:member_apps/app/component/menu_box.dart';
+import 'package:member_apps/app/component/base_refresh.dart';
+import 'package:member_apps/app/component/swiper_box.dart';
 import 'package:member_apps/app/core/value.dart';
 
 class EventPage extends StatelessWidget {
@@ -24,35 +27,61 @@ class EventPage extends StatelessWidget {
         ),
         toolbarHeight: 45,
       ),
-      body: SafeArea(
-        child: Column(
-          children: [
-            Container(
-              height: 250,
-              width: Get.width,
-              decoration: BoxDecoration(
-                image: DecorationImage(
-                  image: AssetImage('assets/images/header-event.png'),
-                  fit: BoxFit.cover,
+      body: Column(
+        children: [
+          Container(
+            height: 200,
+            width: Get.width,
+            decoration: BoxDecoration(
+              image: DecorationImage(
+                image: AssetImage('assets/images/header-event.png'),
+                fit: BoxFit.cover,
+              ),
+            ),
+          ),
+          FadeAnimation(
+            delay: 1,
+            child: const Text(
+              'Get to know all event for you on Triwarna',
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                fontSize: 20,
+                color: baseColor,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+          ),
+          Expanded(
+            child: Padding(
+              padding: const EdgeInsets.all(10),
+              child: BaseRefresh(
+                onRefresh: () async {
+                  await Future.delayed(
+                    const Duration(milliseconds: 2500),
+                    () async {
+                      await Fluttertoast.showToast(
+                        msg: 'Event Data Refreshed',
+                        toastLength: Toast.LENGTH_SHORT,
+                        gravity: ToastGravity.BOTTOM,
+                        timeInSecForIosWeb: 1,
+                        backgroundColor: Colors.black.withOpacity(0.8),
+                        textColor: Colors.white,
+                        fontSize: 12.0,
+                      );
+                    },
+                  );
+                },
+                child: ListView(
+                  children: const [
+                    LotteryAnnouncement(),
+                    SizedBox(height: 10),
+                    TodayEvent(),
+                  ],
                 ),
               ),
             ),
-            FadeAnimation(
-              delay: 1,
-              child: const Text(
-                'Get to know all event for you on Triwarna',
-                textAlign: TextAlign.center,
-                style: TextStyle(
-                  fontSize: 20,
-                  color: baseColor,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-            ),
-            LotteryAnnouncement(),
-            TodayEvent(),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }
@@ -66,7 +95,7 @@ class LotteryAnnouncement extends StatefulWidget {
 }
 
 class _LotteryAnnouncementState extends State<LotteryAnnouncement> {
-  final ScrollController scrollController = ScrollController();
+  final SwiperController swiperController = SwiperController();
 
   List Images = [
     'announ1.png',
@@ -77,61 +106,59 @@ class _LotteryAnnouncementState extends State<LotteryAnnouncement> {
 
   @override
   Widget build(BuildContext context) {
-    return Expanded(
-      child: Padding(
-        padding: const EdgeInsets.all(10),
-        child: Column(
-          children: [
-            FadeAnimation(
-              delay: 1,
-              child: const Align(
-                alignment: Alignment.centerLeft,
-                child: Text(
-                  'Lottery Announcement',
-                  style: TextStyle(
-                    color: baseColor,
-                    fontSize: 16,
-                    fontWeight: FontWeight.bold,
-                  ),
+    return SizedBox(
+      width: Get.width,
+      height: 230,
+      child: Column(
+        children: [
+          FadeAnimation(
+            delay: 1,
+            child: const Align(
+              alignment: Alignment.centerLeft,
+              child: Text(
+                'Lottery Announcement',
+                style: TextStyle(
+                  color: baseColor,
+                  fontSize: 16,
+                  fontWeight: FontWeight.bold,
                 ),
               ),
             ),
-            const SizedBox(height: 5),
-            Expanded(
-              child: ListView.builder(
-                controller: scrollController,
-                scrollDirection: Axis.horizontal,
-                itemCount: Images.length,
-                itemBuilder: (context, index) {
-                  return MenuBox(
-                    onTap: () {},
-                    image: 'assets/images/' + Images[index],
-                  );
-                },
-              ),
+          ),
+          const SizedBox(height: 5),
+          Expanded(
+            child: SwiperBox(
+              controller: swiperController,
+              itemCount: Images.length,
+              itemBuilder: (context, index) {
+                return BoxContent(image: 'assets/images/' + Images[index]);
+              },
+              onIndexChanged: (value) {
+                setState(() {
+                  _currentPage = value;
+                });
+              },
             ),
-            // SizedBox(
-            //   height: 20,
-            //   child: Row(
-            //     mainAxisAlignment: MainAxisAlignment.center,
-            //     children: List.generate(
-            //       today.length,
-            //       (indexDots) {
-            //         return Container(
-            //           margin: const EdgeInsets.only(right: 8),
-            //           height: 8,
-            //           width: _currentPage == indexDots ? 18 : 8,
-            //           decoration: BoxDecoration(
-            //             borderRadius: BorderRadius.circular(10),
-            //             color: _currentPage == indexDots ? baseColor : yellow,
-            //           ),
-            //         );
-            //       },
-            //     ),
-            //   ),
-            // )
-          ],
-        ),
+          ),
+          const SizedBox(height: 5),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: List.generate(
+              Images.length,
+              (indexDots) {
+                return Container(
+                  margin: const EdgeInsets.only(right: 5),
+                  height: 7,
+                  width: _currentPage == indexDots ? 16 : 7,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(10),
+                    color: _currentPage == indexDots ? baseColor : yellow,
+                  ),
+                );
+              },
+            ),
+          )
+        ],
       ),
     );
   }
@@ -145,8 +172,7 @@ class TodayEvent extends StatefulWidget {
 }
 
 class _TodayEventState extends State<TodayEvent> {
-  final ScrollController scrollController = ScrollController();
-
+  final SwiperController swiperController = SwiperController();
   List today = [
     'today1.png',
     'today2.png',
@@ -166,112 +192,64 @@ class _TodayEventState extends State<TodayEvent> {
 
   @override
   Widget build(BuildContext context) {
-    return Expanded(
-      child: Padding(
-        padding: const EdgeInsets.all(10),
-        child: Column(
-          children: [
-            FadeAnimation(
-              delay: 1,
-              child: const Align(
-                alignment: Alignment.centerLeft,
-                child: Text(
-                  'Today Event',
-                  style: TextStyle(
-                    color: baseColor,
-                    fontSize: 16,
-                    fontWeight: FontWeight.bold,
-                  ),
+    return SizedBox(
+      width: Get.width,
+      height: 230,
+      child: Column(
+        children: [
+          FadeAnimation(
+            delay: 1,
+            child: const Align(
+              alignment: Alignment.centerLeft,
+              child: Text(
+                'Today Event',
+                style: TextStyle(
+                  color: baseColor,
+                  fontSize: 16,
+                  fontWeight: FontWeight.bold,
                 ),
               ),
             ),
-            const SizedBox(height: 5),
-            Expanded(
-              child: ListView.builder(
-                controller: scrollController,
-                scrollDirection: Axis.horizontal,
-                itemCount: today.length,
-                itemBuilder: (context, index) {
-                  return FadeAnimation(
-                    delay: 1,
-                    child: Column(
-                      children: [
-                        Flexible(
-                          child: Container(
-                            margin: const EdgeInsets.only(right: 10),
-                            width: 250,
-                            decoration: BoxDecoration(
-                              image: DecorationImage(
-                                  image: AssetImage(
-                                      'assets/images/' + today[index]),
-                                  fit: BoxFit.fill),
-                              borderRadius: BorderRadius.only(
-                                topLeft: Radius.circular(20),
-                                topRight: Radius.circular(20),
-                              ),
-                            ),
-                          ),
-                        ),
-                        Container(
-                          margin: const EdgeInsets.only(right: 10),
-                          width: 250,
-                          decoration: BoxDecoration(
-                            color: yellow,
-                            borderRadius: const BorderRadius.only(
-                              bottomLeft: Radius.circular(20),
-                              bottomRight: Radius.circular(20),
-                            ),
-                          ),
-                          child: Container(
-                            margin: const EdgeInsets.only(bottom: 5),
-                            padding: const EdgeInsets.all(10),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(
-                                  title[index],
-                                  style: const TextStyle(
-                                    fontSize: 16,
-                                    fontWeight: FontWeight.bold,
-                                  ),
-                                ),
-                                const SizedBox(height: 5),
-                                Text(
-                                  desc[index],
-                                  textAlign: TextAlign.justify,
-                                ),
-                              ],
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                  );
-                },
-              ),
+          ),
+          const SizedBox(height: 5),
+          Expanded(
+            child: SwiperBox(
+              onTap: (index) {},
+              controller: swiperController,
+              itemCount: today.length,
+              itemBuilder: (context, index) {
+                return BoxColumnContent(
+                  image: 'assets/images/' + today[index],
+                  title: title[index],
+                  desc: desc[index],
+                );
+              },
+              onIndexChanged: (value) {
+                setState(() {
+                  _currentPage = value;
+                });
+              },
             ),
-            // SizedBox(
-            //   height: 20,
-            //   child: Row(
-            //     mainAxisAlignment: MainAxisAlignment.center,
-            //     children: List.generate(
-            //       today.length,
-            //       (indexDots) {
-            //         return Container(
-            //           margin: const EdgeInsets.only(right: 8),
-            //           height: 8,
-            //           width: _currentPage == indexDots ? 18 : 8,
-            //           decoration: BoxDecoration(
-            //             borderRadius: BorderRadius.circular(10),
-            //             color: _currentPage == indexDots ? baseColor : yellow,
-            //           ),
-            //         );
-            //       },
-            //     ),
-            //   ),
-            // )
-          ],
-        ),
+          ),
+          const SizedBox(height: 5),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: List.generate(
+              today.length,
+              (indexDots) {
+                return Container(
+                  margin: const EdgeInsets.only(right: 5),
+                  height: 7,
+                  width: _currentPage == indexDots ? 16 : 7,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(10),
+                    color: _currentPage == indexDots ? baseColor : yellow,
+                  ),
+                );
+              },
+            ),
+          ),
+        ],
       ),
     );
   }

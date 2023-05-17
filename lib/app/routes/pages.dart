@@ -10,6 +10,7 @@ import 'package:member_apps/app/modules/event/binding.dart';
 import 'package:member_apps/app/modules/event/view.dart';
 import 'package:member_apps/app/modules/onboard/view.dart';
 import 'package:member_apps/app/modules/point/binding.dart';
+import 'package:member_apps/app/modules/point/tarik_point/binding.dart';
 import 'package:member_apps/app/modules/point/tarik_point/view.dart';
 import 'package:member_apps/app/modules/point/view.dart';
 import 'package:member_apps/app/modules/profile/binding.dart';
@@ -71,6 +72,7 @@ abstract class AppPages {
     GetPage(
       name: Routes.tarikpoint,
       page: () => const TarikPointPage(),
+      binding: TarikPointBinding(),
       transition: Transition.size,
     ),
     GetPage(

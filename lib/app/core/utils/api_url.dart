@@ -1,6 +1,7 @@
 class ApiUrl {
   static final String baseUrl = 'http://10.1.1.152/triwarna/api';
   static final String profileStorage = 'http://10.1.1.152/triwarna/storage/profile';
+  static final String qrStorage = 'http://10.1.1.152/triwarna/storage/qr/members';
   static final EndPoint endPoint = EndPoint();
 }
 
@@ -17,5 +18,7 @@ class EndPoint {
   static final String point = '/point';
 
   // ACCOUNT
+  static final String updateProfile = '/profile/update';
   static final String changePin = '/profile/pin/update';
+  static final String village = '/desa';
 }

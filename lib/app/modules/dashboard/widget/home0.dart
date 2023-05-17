@@ -5,6 +5,7 @@ import 'package:get/get.dart';
 import 'package:member_apps/app/component/card_menu.dart';
 import 'package:member_apps/app/core/value.dart';
 import 'package:member_apps/app/modules/dashboard/component/carousel.dart';
+import 'package:member_apps/app/modules/webview/view.dart';
 import 'package:smart_alert_dialog/models/alert_dialog_text.dart';
 import 'package:smart_alert_dialog/smart_alert_dialog.dart';
 
@@ -83,8 +84,13 @@ class Header extends StatelessWidget {
                         height: 30,
                         width: 85,
                         child: ElevatedButton(
-                          onPressed: () {
-                            Get.toNamed('/register');
+                          onPressed: () async {
+                            Get.to(
+                              WebViewPage(
+                                url: 'http://10.1.1.152/triwarna/register',
+                                title: 'Register Member',
+                              ),
+                            );
                           },
                           style: ElevatedButton.styleFrom(
                             backgroundColor: yellow,

@@ -264,168 +264,358 @@ class _OnBoardPageState extends State<OnBoardPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: baseColor,
-      body: PageView.builder(
-        controller: _pageController,
-        scrollDirection: Axis.vertical,
-        itemCount: Images.length,
-        itemBuilder: (context, index) {
-          return Stack(
-            children: [
-              Column(
-                children: [
-                  if (index == 1) SizedBox(height: 180),
-                  Container(
-                    margin: const EdgeInsets.only(top: 50),
-                    padding: const EdgeInsets.symmetric(
-                        vertical: 10, horizontal: 20),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      body: LayoutBuilder(
+        builder: (context, constrain) {
+          print(constrain.maxWidth);
+          print(Get.width);
+
+          if (constrain.maxWidth <= 380) {
+            return PageView.builder(
+              controller: _pageController,
+              scrollDirection: Axis.vertical,
+              itemCount: Images.length,
+              itemBuilder: (context, index) {
+                return Stack(
+                  children: [
+                    Column(
                       children: [
-                        Expanded(
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
+                        if (index == 1) SizedBox(height: 150),
+                        Container(
+                          margin: const EdgeInsets.only(top: 50),
+                          padding: const EdgeInsets.symmetric(
+                              vertical: 10, horizontal: 20),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              FadeAnimation(
-                                delay: 1,
-                                child: Text(
-                                  title[index],
-                                  style: const TextStyle(
-                                    color: Colors.white,
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: 28,
-                                  ),
+                              Expanded(
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    FadeAnimation(
+                                      delay: 1,
+                                      child: Text(
+                                        title[index],
+                                        style: const TextStyle(
+                                          color: Colors.white,
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 26,
+                                        ),
+                                      ),
+                                    ),
+                                    FadeAnimation(
+                                      delay: 1,
+                                      child: Text(
+                                        subtitle[index],
+                                        style: const TextStyle(
+                                          color: Colors.white,
+                                          fontSize: 18,
+                                        ),
+                                      ),
+                                    ),
+                                  ],
                                 ),
                               ),
-                              FadeAnimation(
-                                delay: 1,
-                                child: Text(
-                                  subtitle[index],
-                                  style: const TextStyle(
-                                    color: Colors.white,
-                                    fontSize: 26,
-                                  ),
+                              Column(
+                                children: List.generate(
+                                  3,
+                                  (indexDots) {
+                                    return Container(
+                                      margin: const EdgeInsets.only(bottom: 8),
+                                      width: 5,
+                                      height: index == indexDots ? 18 : 6,
+                                      decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.circular(10),
+                                        color: index == indexDots
+                                            ? Colors.white
+                                            : Colors.grey,
+                                      ),
+                                    );
+                                  },
                                 ),
                               ),
                             ],
                           ),
                         ),
-                        Column(
-                          children: List.generate(
-                            3,
-                            (indexDots) {
-                              return Container(
-                                margin: const EdgeInsets.only(bottom: 8),
-                                width: 5,
-                                height: index == indexDots ? 18 : 6,
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(10),
-                                  color: index == indexDots
-                                      ? Colors.white
-                                      : Colors.grey,
-                                ),
-                              );
-                            },
+                        index == 2
+                            ? SizedBox(height: Get.height * 0.55)
+                            : index == 0
+                                ? FadeAnimation(
+                                    delay: 1,
+                                    child: Column(
+                                      children: [
+                                        const SizedBox(height: 20),
+                                        Image.asset(
+                                          'assets/images/' + Images[index],
+                                          width: 200,
+                                        ),
+                                      ],
+                                    ),
+                                  )
+                                : FadeAnimation(
+                                    delay: 1,
+                                    child: Image.asset(
+                                      'assets/images/' + Images[index],
+                                      width: 280,
+                                    ),
+                                  ),
+                        const SizedBox(height: 30),
+                        FadeAnimation(
+                          delay: 1,
+                          child: Text(
+                            desc[index],
+                            textAlign: TextAlign.center,
+                            style: const TextStyle(
+                                color: Colors.white, fontSize: 16),
                           ),
                         ),
+                        SizedBox(height: Get.height / 100 * 4),
+                        if (index == 2)
+                          Padding(
+                            padding: const EdgeInsets.symmetric(horizontal: 20),
+                            child: Builder(
+                              builder: (context) {
+                                final GlobalKey<SlideActionState> key =
+                                    GlobalKey();
+
+                                return FadeAnimation(
+                                  delay: 1,
+                                  child: Padding(
+                                    padding: const EdgeInsets.symmetric(
+                                        vertical: 10),
+                                    child: SlideAction(
+                                      key: key,
+                                      sliderRotate: false,
+                                      text: 'Get Started',
+                                      textStyle: const TextStyle(
+                                        color: baseColor,
+                                        fontSize: 16,
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                      onSubmit: () async {
+                                        await Future.delayed(
+                                          const Duration(seconds: 1),
+                                          () async {
+                                            await key.currentState!.reset();
+                                            Get.offAllNamed('/dashboard0');
+                                          },
+                                        );
+                                        SharedPreferences prefs =
+                                            await SharedPreferences
+                                                .getInstance();
+                                        prefs.setBool('opened', true);
+                                      },
+                                      innerColor: baseColor,
+                                      outerColor: Colors.white,
+                                      sliderButtonIconSize: 13,
+                                      height: 50,
+                                    ),
+                                  ),
+                                );
+                              },
+                            ),
+                          ),
                       ],
                     ),
-                  ),
-                  SizedBox(height: Get.height / 100 * 7),
-                  index == 2
-                      ? SizedBox(height: Get.height * 0.54)
-                      : index == 0
-                          ? FadeAnimation(
-                              delay: 1,
-                              child: Column(
-                                children: [
-                                  const SizedBox(height: 60),
-                                  Image.asset('assets/images/' + Images[index]),
-                                ],
-                              ),
-                            )
-                          : FadeAnimation(
-                              delay: 1,
-                              child:
-                                  Image.asset('assets/images/' + Images[index]),
-                            ),
-                  const SizedBox(height: 40),
-                  FadeAnimation(
-                    delay: 1,
-                    child: Text(
-                      desc[index],
-                      textAlign: TextAlign.center,
-                      style: const TextStyle(color: Colors.white, fontSize: 16),
-                    ),
-                  ),
-                  SizedBox(height: Get.height / 100 * 4),
-                  if (index == 2)
-                    Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 20),
-                      child: Builder(
-                        builder: (context) {
-                          final GlobalKey<SlideActionState> key = GlobalKey();
-
-                          return FadeAnimation(
-                            delay: 1,
-                            child: Padding(
-                              padding: const EdgeInsets.symmetric(vertical: 10),
-                              child: SlideAction(
-                                key: key,
-                                sliderRotate: false,
-                                text: 'Get Started',
-                                textStyle: const TextStyle(
-                                  color: baseColor,
-                                  fontSize: 16,
-                                  fontWeight: FontWeight.bold,
-                                ),
-                                onSubmit: () async {
-                                  await Future.delayed(
-                                    const Duration(seconds: 1),
-                                    () async {
-                                      await key.currentState!.reset();
-                                      Get.offAllNamed('/dashboard0');
-                                    },
-                                  );
-                                  SharedPreferences prefs =
-                                      await SharedPreferences.getInstance();
-                                  prefs.setBool('opened', true);
-                                },
-                                innerColor: baseColor,
-                                outerColor: Colors.white,
-                                sliderButtonIconSize: 20,
-                                height: 60,
-                              ),
-                            ),
-                          );
-                        },
+                    if (index == 1)
+                      Positioned(
+                        top: -10,
+                        left: 0,
+                        right: 0,
+                        child: FadeAnimation(
+                          delay: 1,
+                          child: Image.asset(
+                            'assets/images/headonboard2.png',
+                            fit: BoxFit.cover,
+                          ),
+                        ),
                       ),
+                    if (index == 2)
+                      Positioned(
+                        top: 130,
+                        right: -30,
+                        child: FadeAnimation(
+                          delay: 1,
+                          child: Image.asset(
+                            'assets/images/onboard3.png',
+                            width: 300,
+                          ),
+                        ),
+                      ),
+                  ],
+                );
+              },
+            );
+          } else {
+            return PageView.builder(
+              controller: _pageController,
+              scrollDirection: Axis.vertical,
+              itemCount: Images.length,
+              itemBuilder: (context, index) {
+                return Stack(
+                  children: [
+                    Column(
+                      children: [
+                        if (index == 1) SizedBox(height: 180),
+                        Container(
+                          margin: const EdgeInsets.only(top: 50),
+                          padding: const EdgeInsets.symmetric(
+                              vertical: 10, horizontal: 20),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Expanded(
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    FadeAnimation(
+                                      delay: 1,
+                                      child: Text(
+                                        title[index],
+                                        style: const TextStyle(
+                                          color: Colors.white,
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 28,
+                                        ),
+                                      ),
+                                    ),
+                                    FadeAnimation(
+                                      delay: 1,
+                                      child: Text(
+                                        subtitle[index],
+                                        style: const TextStyle(
+                                          color: Colors.white,
+                                          fontSize: 26,
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                              Column(
+                                children: List.generate(
+                                  3,
+                                  (indexDots) {
+                                    return Container(
+                                      margin: const EdgeInsets.only(bottom: 8),
+                                      width: 5,
+                                      height: index == indexDots ? 18 : 6,
+                                      decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.circular(10),
+                                        color: index == indexDots
+                                            ? Colors.white
+                                            : Colors.grey,
+                                      ),
+                                    );
+                                  },
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                        SizedBox(height: Get.height / 100 * 7),
+                        index == 2
+                            ? SizedBox(height: Get.height * 0.54)
+                            : index == 0
+                                ? FadeAnimation(
+                                    delay: 1,
+                                    child: Column(
+                                      children: [
+                                        const SizedBox(height: 60),
+                                        Image.asset(
+                                            'assets/images/' + Images[index]),
+                                      ],
+                                    ),
+                                  )
+                                : FadeAnimation(
+                                    delay: 1,
+                                    child: Image.asset(
+                                        'assets/images/' + Images[index]),
+                                  ),
+                        const SizedBox(height: 40),
+                        FadeAnimation(
+                          delay: 1,
+                          child: Text(
+                            desc[index],
+                            textAlign: TextAlign.center,
+                            style: const TextStyle(
+                                color: Colors.white, fontSize: 16),
+                          ),
+                        ),
+                        SizedBox(height: Get.height / 100 * 4),
+                        if (index == 2)
+                          Padding(
+                            padding: const EdgeInsets.symmetric(horizontal: 20),
+                            child: Builder(
+                              builder: (context) {
+                                final GlobalKey<SlideActionState> key =
+                                    GlobalKey();
+
+                                return FadeAnimation(
+                                  delay: 1,
+                                  child: Padding(
+                                    padding: const EdgeInsets.symmetric(
+                                        vertical: 10),
+                                    child: SlideAction(
+                                      key: key,
+                                      sliderRotate: false,
+                                      text: 'Get Started',
+                                      textStyle: const TextStyle(
+                                        color: baseColor,
+                                        fontSize: 16,
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                      onSubmit: () async {
+                                        await Future.delayed(
+                                          const Duration(seconds: 1),
+                                          () async {
+                                            await key.currentState!.reset();
+                                            Get.offAllNamed('/dashboard0');
+                                          },
+                                        );
+                                        SharedPreferences prefs =
+                                            await SharedPreferences
+                                                .getInstance();
+                                        prefs.setBool('opened', true);
+                                      },
+                                      innerColor: baseColor,
+                                      outerColor: Colors.white,
+                                      sliderButtonIconSize: 20,
+                                      height: 60,
+                                    ),
+                                  ),
+                                );
+                              },
+                            ),
+                          ),
+                      ],
                     ),
-                ],
-              ),
-              if (index == 1)
-                Positioned(
-                  top: 0,
-                  left: 0,
-                  right: 0,
-                  child: FadeAnimation(
-                    delay: 1,
-                    child: Image.asset(
-                      'assets/images/headonboard2.png',
-                      fit: BoxFit.cover,
-                    ),
-                  ),
-                ),
-              if (index == 2)
-                Positioned(
-                  top: 130,
-                  right: -30,
-                  child: FadeAnimation(
-                    delay: 1,
-                    child: Image.asset('assets/images/onboard3.png'),
-                  ),
-                ),
-            ],
-          );
+                    if (index == 1)
+                      Positioned(
+                        top: 0,
+                        left: 0,
+                        right: 0,
+                        child: FadeAnimation(
+                          delay: 1,
+                          child: Image.asset(
+                            'assets/images/headonboard2.png',
+                            fit: BoxFit.cover,
+                          ),
+                        ),
+                      ),
+                    if (index == 2)
+                      Positioned(
+                        top: 130,
+                        right: -30,
+                        child: FadeAnimation(
+                          delay: 1,
+                          child: Image.asset('assets/images/onboard3.png'),
+                        ),
+                      ),
+                  ],
+                );
+              },
+            );
+          }
         },
       ),
     );

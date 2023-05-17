@@ -1,18 +1,27 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:member_apps/app/animation/fadeanimation.dart';
 import 'package:member_apps/app/component/base_button.dart';
 import 'package:member_apps/app/component/base_dropdown.dart';
-import 'package:member_apps/app/component/base_text_input.dart';
 import 'package:member_apps/app/component/transparent_appbar.dart';
+import 'package:member_apps/app/core/value.dart';
+import 'package:member_apps/app/modules/dashboard/controller.dart';
 
-class TarikPointPage extends StatelessWidget {
+class TarikPointPage extends StatefulWidget {
   const TarikPointPage({super.key});
+
+  @override
+  State<TarikPointPage> createState() => _TarikPointPageState();
+}
+
+class _TarikPointPageState extends State<TarikPointPage> {
+  final controller = Get.find<DashboardController>();
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: TransparentAppbar(
-        title: 'PULL POINT',
+        title: 'REDEEM POINT',
         preferredSize: Size.fromHeight(kToolbarHeight),
       ),
       body: Padding(
@@ -20,9 +29,12 @@ class TarikPointPage extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const Text(
-              '*The number of Coins cannot be less than 50',
-              style: TextStyle(color: Colors.red),
+            FadeAnimation(
+              delay: 1,
+              child: const Text(
+                '*The number of Coins cannot be less than 50',
+                style: TextStyle(color: Colors.red),
+              ),
             ),
             const SizedBox(height: 10),
             FormTarik(),
@@ -45,26 +57,32 @@ class FormTarik extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Form(
-      key: formKey,
-      child: Column(
-        children: [
-          BaseDropdown(
-            label: 'Nominal Point',
-            items: _items.map((e) {
-              return DropdownMenuItem(value: e, child: Text(e));
-            }).toList(),
-            onChanged: (val) {},
-          ),
-          SizedBox(height: Get.height * 0.1),
-          SizedBox(
-            width: Get.width,
-            child: BaseButton(
-              text: 'Pull Point',
-              onPressed: () {},
+    return Expanded(
+      child: Form(
+        key: formKey,
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            FadeAnimation(
+              delay: 1.5,
+              child: BaseDropdown(
+                hint: 'Nominal Point',
+                items: _items.map((e) {
+                  return DropdownMenuItem(value: e, child: Text(e));
+                }).toList(),
+                onChanged: (val) {},
+              ),
             ),
-          ),
-        ],
+            SizedBox(
+              height: 40,
+              width: Get.width,
+              child: BaseButton(
+                text: 'Pull Point',
+                onPressed: () {},
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }

@@ -14,12 +14,14 @@ class User {
   String? codeName;
   String? loyalty;
   String? username;
+  String? email;
   String? idType;
   String? idNumber;
   String? name;
   String? group;
   String? pin;
   String? gender;
+  DateTime birthDate;
   String? image;
   String? contact;
   String? religion;
@@ -45,12 +47,14 @@ class User {
     this.codeName,
     this.loyalty,
     this.username,
+    this.email,
     this.idType,
     this.idNumber,
     this.name,
     this.group,
     this.pin,
     this.gender,
+    required this.birthDate,
     this.image,
     this.contact,
     this.religion,
@@ -77,12 +81,14 @@ class User {
         codeName: json["code_name"],
         loyalty: json["loyalty"],
         username: json["username"],
+        email: json["email"],
         idType: json["id_type"],
         idNumber: json["id_number"],
         name: json["name"],
         group: json["group"],
         pin: json["pin"],
         gender: json["gender"],
+        birthDate: DateTime.parse(json["birth_date"]),
         image: json["image"],
         contact: json["contact"],
         religion: json["religion"],
@@ -113,12 +119,14 @@ class User {
         "code_name": codeName,
         "loyalty": loyalty,
         "username": username,
+        "email": email,
         "id_type": idType,
         "id_number": idNumber,
         "name": name,
         "group": group,
         "pin": pin,
         "gender": gender,
+        "birth_date": birthDate.toIso8601String(),
         "image": image,
         "contact": contact,
         "religion": religion,

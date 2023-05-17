@@ -5,6 +5,7 @@ import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:member_apps/app/animation/fadeanimation.dart';
+import 'package:member_apps/app/component/base_alert.dart';
 import 'package:member_apps/app/component/base_refresh.dart';
 import 'package:member_apps/app/component/card_menu.dart';
 import 'package:member_apps/app/component/white_text.dart';
@@ -125,8 +126,8 @@ class Header extends StatelessWidget {
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
                                   WhiteText(
-                                    text:
-                                        controller.user.value!.name!.capitalize!,
+                                    text: controller
+                                        .user.value!.name!.capitalize!,
                                     size: 18,
                                   ),
                                   const SizedBox(height: 5),
@@ -139,8 +140,8 @@ class Header extends StatelessWidget {
                                             borderRadius:
                                                 BorderRadius.circular(30),
                                           ),
-                                          child:
-                                              const Center(child: Text('Silver')),
+                                          child: const Center(
+                                              child: Text('Silver')),
                                         )
                                       : controller.user.value!.loyalty ==
                                               'Platinum'
@@ -175,7 +176,30 @@ class Header extends StatelessWidget {
                             children: [
                               IconButton(
                                 onPressed: () {
-                                  print('My QR Code');
+                                  showDialog(
+                                    context: context,
+                                    builder: (context) {
+                                      return BaseAlert(
+                                        height: 230,
+                                        title: 'My QR Code',
+                                        content: Column(
+                                          children: [
+                                            Image.network(ApiUrl.qrStorage +
+                                                '/${controller.user.value!.noMember}.png'),
+                                            const SizedBox(height: 10),
+                                            Flexible(
+                                              child: Text(
+                                                controller.user.value!.noMember
+                                                    .toString(),
+                                                style: const TextStyle(
+                                                    fontSize: 16),
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                      );
+                                    },
+                                  );
                                 },
                                 icon: Icon(
                                   FontAwesomeIcons.qrcode,
@@ -220,12 +244,12 @@ class Header extends StatelessWidget {
                   controller.user.value == null
                       ? const Center(child: CupertinoActivityIndicator())
                       : FadeAnimation(
-                        delay: 1,
-                        child: WhiteText(
+                          delay: 1,
+                          child: WhiteText(
                             text: controller.user.value!.loyaltyPoint!,
                             size: 16,
                           ),
-                      )
+                        )
                 ],
               ),
             ),
