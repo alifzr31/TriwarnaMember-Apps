@@ -208,220 +208,189 @@ class _HeaderProfileState extends State<HeaderProfile> {
       selectedGender = 'Female';
     }
 
-    final List<String> _village = controller.village.map((element) {
-      return element.namaKelurahan.toString();
-    }).toList();
-
-    final List<String> _kdVillage = controller.village.map((element) {
-      return element.kdKelurahan.toString();
-    }).toList();
-
-    final List<String> _district = controller.village.map((element) {
-      return element.namaKecamatan.toString();
-    }).toList();
-
-    print(_village);
-
     final formatter = DateFormat('yyyy-MM-dd');
     final date = formatter.format(userController.user.value!.birthDate);
-    controller.birthController.text = date;
-
-    final searchController = TextEditingController();
+    var selectedDate = date;
+    // controller.birthController.text = date.toString();
 
     return Expanded(
       child: SingleChildScrollView(
-        child: Column(
-          children: [
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 5),
-              child: Form(
-                key: controller.formKey,
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    const Text(
-                      'Full Name',
-                      style: TextStyle(fontSize: 16),
-                    ),
-                    FadeAnimation(
-                      delay: 1,
-                      child: BaseTextInput(
-                        controller: controller.nameController,
-                        hint: 'Your Full Name',
-                        validator: (value) {
-                          if (value!.isEmpty || value == null) {
-                            return 'Please input your full name';
-                          }
-
-                          return null;
-                        },
-                      ),
-                    ),
-                    const SizedBox(height: 15),
-                    const Text(
-                      'Email',
-                      style: TextStyle(fontSize: 16),
-                    ),
-                    FadeAnimation(
-                      delay: 1,
-                      child: BaseTextInput(
-                        controller: controller.emailController,
-                        enabled: false,
-                        hint: 'Email Address',
-                      ),
-                    ),
-                    const SizedBox(height: 15),
-                    const Text(
-                      'Gender',
-                      style: TextStyle(fontSize: 16),
-                    ),
-                    FadeAnimation(
-                      delay: 1,
-                      child: BaseDropdown(
-                        hint: 'Your Gender',
-                        value: selectedGender,
-                        items: _items.map((e) {
-                          return DropdownMenuItem<String>(
-                            value: e,
-                            child: Text(e),
-                          );
-                        }).toList(),
-                        onChanged: (value) {
-                          setState(() {
-                            if (value == 'Male') {
-                              controller.genderController.text = 'Laki-Laki';
-                            } else {
-                              controller.genderController.text = 'Perempuan';
-                            }
-                          });
-
-                          print(userController.user.value!.province);
-                        },
-                      ),
-                    ),
-                    const SizedBox(height: 15),
-                    const Text(
-                      'Birth Date',
-                      style: TextStyle(fontSize: 16),
-                    ),
-                    FadeAnimation(
-                      delay: 1,
-                      child: BaseDatePicker(
-                        controller: controller.birthController,
-                        hint: 'Your Birth Date',
-                        validator: 'Choose Your Birth Date',
-                        onChanged: (val) {
-                          setState(() {
-                            controller.birthController.text = val;
-                          });
-                        },
-                        onSaved: (val) {
-                          setState(() {
-                            controller.birthController.text = val!;
-                          });
-                        },
-                      ),
-                    ),
-                    const SizedBox(height: 15),
-                    const Text(
-                      'Address',
-                      style: TextStyle(fontSize: 16),
-                    ),
-                    FadeAnimation(
-                      delay: 1,
-                      child: BaseTextArea(
-                        controller: controller.addressController,
-                        keyboardType: TextInputType.multiline,
-                        maxLines: null,
-                        hint: 'Your Address',
-                        validator: (value) {
-                          if (value!.isEmpty || value == null) {
-                            return 'Please input your address';
-                          }
-
-                          return null;
-                        },
-                      ),
-                    ),
-                    const SizedBox(height: 15),
-                    const Text(
-                      'Village',
-                      style: TextStyle(fontSize: 16),
-                    ),
-                    FadeAnimation(
-                      delay: 1,
-                      child: TypeAheadFormField(
-                        hideSuggestionsOnKeyboardHide: false,
-                        textFieldConfiguration: TextFieldConfiguration(
-                          controller: controller.villageController,
-                          decoration: const InputDecoration(
-                            hintText: 'Your Village',
-                          ),
-                        ),
-                        suggestionsCallback: (pattern) async {
-                          return controller.village
-                              .where((element) => element.namaKelurahan
-                                  .toString()
-                                  .toLowerCase()
-                                  .contains(pattern.toLowerCase()))
-                              .toList();
-                        },
-                        itemBuilder: (context, suggestion) {
-                          return ListTile(
-                            title: FadeAnimation(
-                              delay: 1,
-                              child: Text(suggestion.namaKelurahan.toString()),
-                            ),
-                            subtitle: FadeAnimation(
-                              delay: 1.5,
-                              child: Text(suggestion.namaKecamatan.toString()),
-                            ),
-                          );
-                        },
-                        onSuggestionSelected: (suggestion) {
-                          setState(() {
-                            controller.selectedVillage.value =
-                                suggestion.kdKelurahan.toString();
-                            controller.villageController.text =
-                                suggestion.namaKelurahan.toString();
-                          });
-
-                          print(controller.selectedVillage.value);
-                        },
-                        onSaved: (newValue) {
-                          print('Hasil print onsaved: ' + newValue.toString());
-                        },
-                        validator: (value) {
-                          if (value!.isEmpty ||
-                              value == null ||
-                              controller.selectedVillage.value.isEmpty ||
-                              controller.selectedVillage.value == null) {
-                            return 'Choose Your Village';
-                          }
-
-                          return null;
-                        },
-                      ),
-                    ),
-                  ],
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 5),
+          child: Form(
+            key: controller.formKey,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                const Text(
+                  'Full Name',
+                  style: TextStyle(fontSize: 16),
                 ),
-              ),
+                FadeAnimation(
+                  delay: 1,
+                  child: BaseTextInput(
+                    controller: controller.nameController,
+                    hint: 'Your Full Name',
+                    validator: (value) {
+                      if (value!.isEmpty || value == null) {
+                        return 'Please input your full name';
+                      }
+
+                      return null;
+                    },
+                  ),
+                ),
+                const SizedBox(height: 15),
+                const Text(
+                  'Email',
+                  style: TextStyle(fontSize: 16),
+                ),
+                FadeAnimation(
+                  delay: 1,
+                  child: BaseTextInput(
+                    controller: controller.emailController,
+                    enabled: false,
+                    hint: 'Email Address',
+                  ),
+                ),
+                const SizedBox(height: 15),
+                const Text(
+                  'Gender',
+                  style: TextStyle(fontSize: 16),
+                ),
+                FadeAnimation(
+                  delay: 1,
+                  child: BaseDropdown(
+                    hint: 'Your Gender',
+                    value: selectedGender,
+                    items: _items.map((e) {
+                      return DropdownMenuItem<String>(
+                        value: e,
+                        child: Text(e),
+                      );
+                    }).toList(),
+                    onChanged: (value) {
+                      setState(() {
+                        if (value == 'Male') {
+                          controller.genderController.text = 'Laki-Laki';
+                        } else {
+                          controller.genderController.text = 'Perempuan';
+                        }
+                      });
+
+                      print(userController.user.value!.province);
+                    },
+                  ),
+                ),
+                const SizedBox(height: 15),
+                const Text(
+                  'Birth Date',
+                  style: TextStyle(fontSize: 16),
+                ),
+                FadeAnimation(
+                  delay: 1,
+                  child: BaseDatePicker(
+                    initialValue: selectedDate,
+                    hint: 'Your Birth Date',
+                    validator: 'Choose Your Birth Date',
+                    onChanged: (val) {
+                      setState(() {
+                        selectedDate = val.toString();
+                        controller.birthController.text = selectedDate;
+                      });
+                      print(controller.birthController.text);
+                    },
+                    onSaved: (val) {
+                      setState(() {
+                        controller.birthController.text = val!;
+                      });
+                    },
+                  ),
+                ),
+                const SizedBox(height: 15),
+                const Text(
+                  'Address',
+                  style: TextStyle(fontSize: 16),
+                ),
+                FadeAnimation(
+                  delay: 1,
+                  child: BaseTextArea(
+                    controller: controller.addressController,
+                    keyboardType: TextInputType.multiline,
+                    maxLines: null,
+                    hint: 'Your Address',
+                    validator: (value) {
+                      if (value!.isEmpty || value == null) {
+                        return 'Please input your address';
+                      }
+
+                      return null;
+                    },
+                  ),
+                ),
+                const SizedBox(height: 15),
+                const Text(
+                  'Village',
+                  style: TextStyle(fontSize: 16),
+                ),
+                FadeAnimation(
+                  delay: 1,
+                  child: TypeAheadFormField(
+                    hideSuggestionsOnKeyboardHide: false,
+                    textFieldConfiguration: TextFieldConfiguration(
+                      controller: controller.villageController,
+                      decoration: const InputDecoration(
+                        hintText: 'Your Village',
+                      ),
+                    ),
+                    suggestionsCallback: (pattern) async {
+                      return controller.village
+                          .where((element) => element.namaKelurahan
+                              .toString()
+                              .toLowerCase()
+                              .contains(pattern.toLowerCase()))
+                          .toList();
+                    },
+                    itemBuilder: (context, suggestion) {
+                      return ListTile(
+                        title: FadeAnimation(
+                          delay: 1,
+                          child: Text(suggestion.namaKelurahan.toString()),
+                        ),
+                        subtitle: FadeAnimation(
+                          delay: 1.5,
+                          child: Text(suggestion.namaKecamatan.toString()),
+                        ),
+                      );
+                    },
+                    onSuggestionSelected: (suggestion) {
+                      setState(() {
+                        controller.selectedVillage.value =
+                            suggestion.kdKelurahan.toString();
+                        controller.villageController.text =
+                            suggestion.namaKelurahan.toString();
+                      });
+
+                      print(controller.selectedVillage.value);
+                    },
+                    onSaved: (newValue) {
+                      print('Hasil print onsaved: ' + newValue.toString());
+                    },
+                    validator: (value) {
+                      if (value!.isEmpty ||
+                          value == null ||
+                          controller.selectedVillage.value.isEmpty ||
+                          controller.selectedVillage.value == null) {
+                        return 'Choose Your Village';
+                      }
+
+                      return null;
+                    },
+                  ),
+                ),
+              ],
             ),
-            const SizedBox(height: 10),
-            // SizedBox(
-            //   height: 40,
-            //   width: Get.width,
-            //   child: BaseButton(
-            //     text: 'Update Profile',
-            //     onPressed: () async {
-            //       print(picked);
-            //       if (controller.formKey.currentState!.validate()) {
-            //         controller.updateProfile(picked);
-            //       }
-            //     },
-            //   ),
-            // ),
-          ],
+          ),
         ),
       ),
     );

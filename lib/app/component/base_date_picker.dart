@@ -9,17 +9,20 @@ class BaseDatePicker extends StatelessWidget {
     this.onChanged,
     this.onSaved,
     this.hint,
+    this.initialValue,
   }) : super(key: key);
 
   final TextEditingController? controller;
   final String? validator;
   final String? hint;
+  final String? initialValue;
   final void Function(String)? onChanged;
   final void Function(String?)? onSaved;
 
   @override
   Widget build(BuildContext context) {
     return DateTimePicker(
+      initialValue: initialValue,
       controller: controller,
       fieldHintText: hint,
       type: DateTimePickerType.date,
