@@ -38,6 +38,17 @@ class ProfileProvider {
     );
   }
 
+  Future<Response> changePass(FormData formData) async {
+    await _getToken();
+    return await dio.post(
+      EndPoint.changePass,
+      data: formData,
+      options: Options(
+        headers: _setHeaders(),
+      ),
+    );
+  }
+
   Future<Response> fetchVillage() async {
     await _getToken();
     return dio.get(

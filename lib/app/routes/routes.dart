@@ -11,4 +11,5 @@ class Routes {
   static const event = '/event';
   static const promo = '/promo';
   static const changepin = '/changepin';
+  static const changepass = '/changepass';
 }

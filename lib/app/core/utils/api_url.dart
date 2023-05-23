@@ -20,5 +20,6 @@ class EndPoint {
   // ACCOUNT
   static final String updateProfile = '/profile/update';
   static final String changePin = '/profile/pin/update';
+  static final String changePass = '/profile/password/update';
   static final String village = '/desa';
 }

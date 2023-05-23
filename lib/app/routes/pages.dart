@@ -1,5 +1,7 @@
 import 'package:get/get.dart';
 import 'package:member_apps/app/modules/auth/binding.dart';
+import 'package:member_apps/app/modules/change_pass/binding.dart';
+import 'package:member_apps/app/modules/change_pass/view.dart';
 import 'package:member_apps/app/modules/change_pin/binding.dart';
 import 'package:member_apps/app/modules/change_pin/view.dart';
 import 'package:member_apps/app/modules/dashboard/binding.dart';
@@ -91,6 +93,12 @@ abstract class AppPages {
       name: Routes.changepin,
       page: () => const ChangePinPage(),
       binding: ChangePinBinding(),
+      transition: Transition.rightToLeft,
+    ),
+    GetPage(
+      name: Routes.changepass,
+      page: () => const ChangePassPage(),
+      binding: ChangePassBinding(),
       transition: Transition.rightToLeft,
     ),
   ];

@@ -201,7 +201,8 @@ class HeaderAccount extends StatelessWidget {
                                               delay: 1.2,
                                               child: WhiteText(
                                                   text: controller
-                                                      .user.value!.username!.toLowerCase()),
+                                                      .user.value!.username!
+                                                      .toLowerCase()),
                                             ),
                                             const SizedBox(height: 10),
                                             const WhiteText(text: 'Contact'),
@@ -286,13 +287,21 @@ class BodyAccount extends StatelessWidget {
                     title: const Text('Change PIN'),
                     trailing: const Icon(Icons.keyboard_arrow_right),
                     onTap: () {
-                      Get.toNamed(
-                        '/changepin',
-                        arguments: [
-                          controller.user.value!.loyalty!.capitalize!,
-                          controller.user.value!.spendingTotal!,
-                        ],
-                      );
+                      Get.toNamed('/changepin');
+                    },
+                  ),
+                ),
+                FadeAnimation(
+                  delay: 1,
+                  child: ListTile(
+                    leading: const Icon(
+                      Iconsax.key,
+                      color: baseColor,
+                    ),
+                    title: const Text('Change Password'),
+                    trailing: const Icon(Icons.keyboard_arrow_right),
+                    onTap: () {
+                      Get.toNamed('/changepass');
                     },
                   ),
                 ),
