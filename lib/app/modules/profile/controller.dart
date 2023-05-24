@@ -80,6 +80,8 @@ class ProfileController extends GetxController {
       'address': addressController.text
     });
 
+    print(formData.fields[1]);
+
     try {
       final response = await profileProvider.updateProfile(formData);
 
