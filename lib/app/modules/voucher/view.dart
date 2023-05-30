@@ -1,14 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/framework.dart';
-import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
-import 'package:icons_plus/icons_plus.dart';
 import 'package:member_apps/app/animation/fadeanimation.dart';
 import 'package:member_apps/app/component/base_refresh.dart';
-import 'package:member_apps/app/component/point_text..dart';
 import 'package:member_apps/app/core/utils/api_url.dart';
 import 'package:member_apps/app/core/value.dart';
 import 'package:member_apps/app/modules/voucher/component/voucher_card.dart';
@@ -67,6 +63,7 @@ class VoucherPage extends StatelessWidget {
 
 class ListVoucher extends StatelessWidget {
   ListVoucher({super.key});
+
   final controller = Get.find<VoucherController>();
 
   Future<void> refreshVoucher() async {
@@ -90,8 +87,6 @@ class ListVoucher extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    print(controller.voucher);
-
     return Obx(
       () => controller.isLoading.value
           ? Expanded(
@@ -133,9 +128,7 @@ class ListVoucher extends StatelessWidget {
                           qrcode: '${ApiUrl.voucherStorage}/${voucher.qrcode}',
                           voucherName:
                               'VOUCHER MEMBERSHIP\n${voucher.prizeName} ${voucher.prizeDesc}',
-                          onTap: () {
-                            print(voucher.qrcode);
-                          },
+                          onTap: () {},
                         );
                       },
                     ),
