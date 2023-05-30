@@ -31,6 +31,16 @@ class BasePinInput extends StatelessWidget {
         length: 6,
         useNativeKeyboard: true,
         validator: validator,
+        obscureText: true,
+        obscuringWidget: Container(
+          height: 10,
+          width: 10,
+          decoration: const BoxDecoration(
+            color: baseColor,
+            shape: BoxShape.circle,
+          ),
+        ),
+        // Image.asset('assets/images/pepeng.png'),
         hapticFeedbackType: HapticFeedbackType.lightImpact,
         onCompleted: onCompleted,
         onChanged: onChanged,

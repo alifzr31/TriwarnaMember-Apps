@@ -9,6 +9,7 @@ import 'package:member_apps/app/component/point_text..dart';
 import 'package:member_apps/app/component/transparent_appbar.dart';
 import 'package:member_apps/app/component/white_text.dart';
 import 'package:member_apps/app/core/value.dart';
+import 'package:member_apps/app/modules/dashboard/controller.dart';
 import 'package:member_apps/app/modules/point/controller.dart';
 import 'package:intl/intl.dart';
 
@@ -17,8 +18,8 @@ class PointPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final loyalty = Get.arguments[0];
-    final spendTotal = Get.arguments[1];
+    // final loyalty = Get.arguments[0];
+    // final spendTotal = Get.arguments[1];
 
     return Scaffold(
       appBar: TransparentAppbar(
@@ -101,7 +102,8 @@ class PointPage extends StatelessWidget {
         child: Center(
           child: Column(
             children: [
-              HeaderPoint(loyalty: loyalty, spendTotal: spendTotal),
+              // HeaderPoint(loyalty: loyalty, spendTotal: spendTotal),
+              HeaderPoint(),
               const SizedBox(height: 10),
               HistorySaldo(),
             ],
@@ -113,19 +115,14 @@ class PointPage extends StatelessWidget {
 }
 
 class HeaderPoint extends StatelessWidget {
-  HeaderPoint({
-    Key? key,
-    required this.loyalty,
-    required this.spendTotal,
-  }) : super(key: key);
-
+  HeaderPoint({super.key});
   final controller = Get.find<PointController>();
-  final String loyalty;
-  final String spendTotal;
+  final userController = Get.find<DashboardController>();
 
   @override
   Widget build(BuildContext context) {
-    final spend = int.parse(spendTotal);
+    final spend =
+        int.parse(userController.user.value!.spendingTotal.toString());
     final total_spending = NumberFormat.currency(
       locale: 'id_ID',
       symbol: 'Rp ',
@@ -158,34 +155,37 @@ class HeaderPoint extends StatelessWidget {
             ),
             child: Column(
               children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    FadeAnimation(
-                      delay: 1,
-                      child: WhiteText(
-                        text: loyalty,
-                        size: 16,
-                        bold: FontWeight.bold,
-                      ),
-                    ),
-                    Row(
-                      children: [
-                        FadeAnimation(
-                          delay: 1,
-                          child: WhiteText(
-                            text: total_spending,
-                            bold: FontWeight.bold,
+                userController.user.value == null
+                    ? Container()
+                    : Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          FadeAnimation(
+                            delay: 1,
+                            child: WhiteText(
+                              text:
+                                  userController.user.value!.loyalty.toString().capitalize!,
+                              size: 16,
+                              bold: FontWeight.bold,
+                            ),
                           ),
-                        ),
-                        WhiteText(
-                          text: "/Rp 100.000.000,00",
-                          bold: FontWeight.bold,
-                        ),
-                      ],
-                    ),
-                  ],
-                ),
+                          Row(
+                            children: [
+                              FadeAnimation(
+                                delay: 1,
+                                child: WhiteText(
+                                  text: total_spending,
+                                  bold: FontWeight.bold,
+                                ),
+                              ),
+                              WhiteText(
+                                text: "/Rp 100.000.000,00",
+                                bold: FontWeight.bold,
+                              ),
+                            ],
+                          ),
+                        ],
+                      ),
                 const SizedBox(height: 5),
                 Container(
                   height: 8,
@@ -218,6 +218,113 @@ class HeaderPoint extends StatelessWidget {
     );
   }
 }
+
+// class HeaderPoint extends StatelessWidget {
+//   HeaderPoint({
+//     Key? key,
+//     required this.loyalty,
+//     required this.spendTotal,
+//   }) : super(key: key);
+
+//   final controller = Get.find<PointController>();
+//   final String loyalty;
+//   final String spendTotal;
+
+//   @override
+//   Widget build(BuildContext context) {
+//     final spend = int.parse(spendTotal);
+//     final total_spending = NumberFormat.currency(
+//       locale: 'id_ID',
+//       symbol: 'Rp ',
+//     ).format(spend);
+
+//     return Obx(
+//       () => Column(
+//         children: [
+//           Image.asset('assets/images/point_icon_large.png'),
+//           FadeAnimation(
+//             delay: 1,
+//             child: PointText(text: controller.jumlah.value, size: 34),
+//           ),
+//           ElevatedButton(
+//             onPressed: () {
+//               Get.toNamed('/tarikpoint');
+//             },
+//             style: ElevatedButton.styleFrom(
+//               backgroundColor: baseColor,
+//               shape: const StadiumBorder(),
+//             ),
+//             child: const Text('Redeem Point'),
+//           ),
+//           Container(
+//             width: Get.width,
+//             padding: const EdgeInsets.all(10),
+//             decoration: const BoxDecoration(
+//               color: baseColor,
+//               borderRadius: BorderRadius.all(Radius.circular(10)),
+//             ),
+//             child: Column(
+//               children: [
+//                 Row(
+//                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+//                   children: [
+//                     FadeAnimation(
+//                       delay: 1,
+//                       child: WhiteText(
+//                         text: loyalty,
+//                         size: 16,
+//                         bold: FontWeight.bold,
+//                       ),
+//                     ),
+//                     Row(
+//                       children: [
+//                         FadeAnimation(
+//                           delay: 1,
+//                           child: WhiteText(
+//                             text: total_spending,
+//                             bold: FontWeight.bold,
+//                           ),
+//                         ),
+//                         WhiteText(
+//                           text: "/Rp 100.000.000,00",
+//                           bold: FontWeight.bold,
+//                         ),
+//                       ],
+//                     ),
+//                   ],
+//                 ),
+//                 const SizedBox(height: 5),
+//                 Container(
+//                   height: 8,
+//                   width: Get.width,
+//                   decoration: BoxDecoration(
+//                     color: Colors.grey.shade300,
+//                     borderRadius: BorderRadius.all(
+//                       Radius.circular(20),
+//                     ),
+//                   ),
+//                 ),
+//                 const Divider(),
+//                 Row(
+//                   children: [
+//                     WhiteText(
+//                         text: 'Last Transaction : ', bold: FontWeight.bold),
+//                     FadeAnimation(
+//                       delay: 1,
+//                       child: WhiteText(
+//                         text: controller.last_transaction.value,
+//                       ),
+//                     ),
+//                   ],
+//                 )
+//               ],
+//             ),
+//           ),
+//         ],
+//       ),
+//     );
+//   }
+// }
 
 class HistorySaldo extends StatelessWidget {
   HistorySaldo({super.key});
@@ -253,7 +360,7 @@ class HistorySaldo extends StatelessWidget {
               Icon(Iconsax.chart_1),
               SizedBox(width: 5),
               Text(
-                'Riwayat Saldo',
+                'Point History',
                 style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
               )
             ],

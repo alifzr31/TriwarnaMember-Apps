@@ -4,6 +4,7 @@
 
 list(APPEND FLUTTER_PLUGIN_LIST
   maps_launcher
+  rive_common
   smart_auth
   url_launcher_windows
 )

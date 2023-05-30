@@ -378,7 +378,7 @@ class _HeaderProfileState extends State<HeaderProfile> {
                                     suggestion.namaKelurahan.toString();
                               });
 
-                              print(controller.selectedVillage.value);
+                              print(selectedVillage);
                             },
                             onSaved: (newValue) {
                               print('Hasil print onsaved: ' +

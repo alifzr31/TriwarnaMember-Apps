@@ -10,6 +10,8 @@ import 'package:member_apps/app/modules/auth/login/view.dart';
 import 'package:member_apps/app/modules/dashboard/view0.dart';
 import 'package:member_apps/app/modules/event/binding.dart';
 import 'package:member_apps/app/modules/event/view.dart';
+import 'package:member_apps/app/modules/input_pin/binding.dart';
+import 'package:member_apps/app/modules/input_pin/view.dart';
 import 'package:member_apps/app/modules/onboard/view.dart';
 import 'package:member_apps/app/modules/point/binding.dart';
 import 'package:member_apps/app/modules/point/tarik_point/binding.dart';
@@ -99,6 +101,12 @@ abstract class AppPages {
       name: Routes.changepass,
       page: () => const ChangePassPage(),
       binding: ChangePassBinding(),
+      transition: Transition.rightToLeft,
+    ),
+    GetPage(
+      name: Routes.inputpin,
+      page: () => const InputPinPage(),
+      binding: InputPinBinding(),
       transition: Transition.rightToLeft,
     ),
   ];

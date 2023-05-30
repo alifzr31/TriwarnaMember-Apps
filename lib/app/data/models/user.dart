@@ -28,6 +28,7 @@ class User {
   String? maritalStatus;
   String? job;
   String? address;
+  String? village;
   String? district;
   String? city;
   String? province;
@@ -61,6 +62,7 @@ class User {
     this.maritalStatus,
     this.job,
     this.address,
+    this.village,
     this.district,
     this.city,
     this.province,
@@ -95,6 +97,7 @@ class User {
         maritalStatus: json["marital_status"],
         job: json["job"],
         address: json["address"],
+        village: json["village"],
         district: json["district"],
         city: json["city"],
         province: json["province"],
@@ -133,6 +136,7 @@ class User {
         "marital_status": maritalStatus,
         "job": job,
         "address": address,
+        "village": village,
         "district": district,
         "city": city,
         "province": province,

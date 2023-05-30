@@ -65,6 +65,8 @@ dependencies:
   pinput: ^2.2.31
   webview_flutter: ^3.0.4
   flutter_typeahead: ^4.3.8
+  flutter_expanded_tile: ^0.3.7
+  awesome_dialog: ^3.1.0
 
 dev_dependencies:
   flutter_test:

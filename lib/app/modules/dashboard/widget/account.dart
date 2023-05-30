@@ -255,12 +255,12 @@ class BodyAccount extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Obx(
-      () => controller.user.value == null
-          ? Container()
-          : Column(
-              children: [
-                FadeAnimation(
+    return Column(
+      children: [
+        Obx(
+          () => controller.user.value == null
+              ? Container()
+              : FadeAnimation(
                   delay: 1,
                   child: ListTile(
                     leading: Image.asset('assets/images/point_icon_small.png'),
@@ -269,63 +269,62 @@ class BodyAccount extends StatelessWidget {
                     onTap: () {
                       Get.toNamed(
                         '/point',
-                        arguments: [
-                          controller.user.value!.loyalty!.capitalize!,
-                          controller.user.value!.spendingTotal!,
-                        ],
+                        // arguments: [
+                        //   controller.user.value!.loyalty!.capitalize!,
+                        //   controller.user.value!.spendingTotal!,
+                        // ],
                       );
                     },
                   ),
                 ),
-                FadeAnimation(
-                  delay: 1,
-                  child: ListTile(
-                    leading: const Icon(
-                      Iconsax.password_check,
-                      color: baseColor,
-                    ),
-                    title: const Text('Change PIN'),
-                    trailing: const Icon(Icons.keyboard_arrow_right),
-                    onTap: () {
-                      Get.toNamed('/changepin');
-                    },
-                  ),
-                ),
-                FadeAnimation(
-                  delay: 1,
-                  child: ListTile(
-                    leading: const Icon(
-                      Iconsax.key,
-                      color: baseColor,
-                    ),
-                    title: const Text('Change Password'),
-                    trailing: const Icon(Icons.keyboard_arrow_right),
-                    onTap: () {
-                      Get.toNamed('/changepass');
-                    },
-                  ),
-                ),
-                FadeAnimation(
-                  delay: 1,
-                  child: ListTile(
-                    leading: const Icon(
-                      Bootstrap.door_open_fill,
-                      color: baseColor,
-                    ),
-                    title: const Text('Log Out'),
-                    trailing: const Icon(Icons.keyboard_arrow_right),
-                    onTap: () async {
-                      SharedPreferences prefs =
-                          await SharedPreferences.getInstance();
-                      await prefs.clear();
-                      await prefs.setBool('opened', true);
-
-                      Get.offAllNamed('/dashboard0');
-                    },
-                  ),
-                ),
-              ],
+        ),
+        FadeAnimation(
+          delay: 1,
+          child: ListTile(
+            leading: const Icon(
+              Iconsax.password_check,
+              color: baseColor,
             ),
+            title: const Text('Change PIN'),
+            trailing: const Icon(Icons.keyboard_arrow_right),
+            onTap: () {
+              Get.toNamed('/changepin');
+            },
+          ),
+        ),
+        FadeAnimation(
+          delay: 1,
+          child: ListTile(
+            leading: const Icon(
+              Iconsax.key,
+              color: baseColor,
+            ),
+            title: const Text('Change Password'),
+            trailing: const Icon(Icons.keyboard_arrow_right),
+            onTap: () {
+              Get.toNamed('/changepass');
+            },
+          ),
+        ),
+        FadeAnimation(
+          delay: 1,
+          child: ListTile(
+            leading: const Icon(
+              Bootstrap.door_open_fill,
+              color: baseColor,
+            ),
+            title: const Text('Log Out'),
+            trailing: const Icon(Icons.keyboard_arrow_right),
+            onTap: () async {
+              SharedPreferences prefs = await SharedPreferences.getInstance();
+              await prefs.clear();
+              await prefs.setBool('opened', true);
+
+              Get.offAllNamed('/dashboard0');
+            },
+          ),
+        ),
+      ],
     );
   }
 }

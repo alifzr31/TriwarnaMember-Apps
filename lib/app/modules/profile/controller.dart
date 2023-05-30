@@ -43,6 +43,12 @@ class ProfileController extends GetxController {
   @override
   void onClose() {
     village.clear();
+    emailController.dispose();
+    nameController.dispose();
+    genderController.dispose();
+    birthController.dispose();
+    addressController.dispose();
+    villageController.dispose();
     super.onClose();
   }
 
@@ -77,7 +83,8 @@ class ProfileController extends GetxController {
       if (file != null) 'image': await _dio.MultipartFile.fromFile(file.path),
       'gender': genderController.text,
       'birth_date': birthController.text,
-      'address': addressController.text
+      'address': addressController.text,
+      'village': selectedVillage.value
     });
 
     print(formData.fields[1]);

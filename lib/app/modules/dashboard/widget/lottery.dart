@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:get/get.dart';
 import 'package:member_apps/app/animation/fadeanimation.dart';
 import 'package:member_apps/app/component/grey_text.dart';
@@ -31,22 +32,31 @@ class HeaderLottery extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Obx(
-      () => controller.user.value == null
-          ? const Center(child: CircularProgressIndicator(color: yellow))
-          : Container(
-              width: Get.width,
-              height: 350,
-              decoration: BoxDecoration(
-                image: DecorationImage(
-                  image: AssetImage('assets/images/head.png'),
-                  fit: BoxFit.cover,
-                ),
-              ),
-              child: SafeArea(
-                child: Padding(
-                  padding: const EdgeInsets.all(10),
-                  child: Column(
+    return Container(
+      width: Get.width,
+      height: 350,
+      decoration: BoxDecoration(
+        image: DecorationImage(
+          image: AssetImage('assets/images/head.png'),
+          fit: BoxFit.cover,
+        ),
+      ),
+      child: SafeArea(
+        child: Padding(
+          padding: const EdgeInsets.all(10),
+          child: Obx(
+            () => controller.user.value == null
+                ? SpinKitWave(
+                  size: 25,
+                  itemBuilder: (BuildContext context, int index) {
+                    return const DecoratedBox(
+                      decoration: BoxDecoration(
+                        color: yellow,
+                      ),
+                    );
+                  },
+                )
+                : Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       const WhiteText(
@@ -222,9 +232,9 @@ class HeaderLottery extends StatelessWidget {
                       ),
                     ],
                   ),
-                ),
-              ),
-            ),
+          ),
+        ),
+      ),
     );
   }
 }
