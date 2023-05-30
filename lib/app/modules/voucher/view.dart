@@ -133,6 +133,9 @@ class ListVoucher extends StatelessWidget {
                           qrcode: '${ApiUrl.voucherStorage}/${voucher.qrcode}',
                           voucherName:
                               'VOUCHER MEMBERSHIP\n${voucher.prizeName} ${voucher.prizeDesc}',
+                          onTap: () {
+                            print(voucher.qrcode);
+                          },
                         );
                       },
                     ),
