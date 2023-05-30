@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_custom_clippers/flutter_custom_clippers.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:icons_plus/icons_plus.dart';
 import 'package:member_apps/app/animation/fadeanimation.dart';
@@ -8,6 +9,7 @@ import 'package:member_apps/app/component/white_text.dart';
 import 'package:member_apps/app/core/utils/api_url.dart';
 import 'package:member_apps/app/core/value.dart';
 import 'package:member_apps/app/modules/dashboard/controller.dart';
+import 'package:member_apps/app/modules/input_pin_number.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class AccountPage extends StatelessWidget {
@@ -83,11 +85,11 @@ class HeaderAccount extends StatelessWidget {
                                           '/${controller.user.value!.image}'),
                                     ),
                                     SizedBox(width: Get.width * 0.04),
-                                    controller.user.value!.loyalty == 'Silver'
+                                    controller.user.value!.loyalty.toString().capitalize == 'Silver'
                                         ? Image.asset(
                                             'assets/images/silver.png',
                                             height: 50)
-                                        : controller.user.value!.loyalty ==
+                                        : controller.user.value!.loyalty.toString().capitalize ==
                                                 'Platinum'
                                             ? Image.asset(
                                                 'assets/images/platinum.png',
@@ -109,7 +111,7 @@ class HeaderAccount extends StatelessWidget {
                                                 color: Colors.white),
                                           ),
                                           const SizedBox(height: 5),
-                                          controller.user.value!.loyalty ==
+                                          controller.user.value!.loyalty.toString().capitalize ==
                                                   'Silver'
                                               ? Container(
                                                   height: 23,
@@ -124,7 +126,7 @@ class HeaderAccount extends StatelessWidget {
                                                       child: Text('Silver')),
                                                 )
                                               : controller.user.value!
-                                                          .loyalty ==
+                                                          .loyalty.toString().capitalize ==
                                                       'Platinum'
                                                   ? Container(
                                                       height: 23,
@@ -260,22 +262,36 @@ class BodyAccount extends StatelessWidget {
         Obx(
           () => controller.user.value == null
               ? Container()
-              : FadeAnimation(
-                  delay: 1,
-                  child: ListTile(
-                    leading: Image.asset('assets/images/point_icon_small.png'),
-                    title: const Text('Point'),
-                    trailing: const Icon(Icons.keyboard_arrow_right),
-                    onTap: () {
-                      Get.toNamed(
-                        '/point',
-                        // arguments: [
-                        //   controller.user.value!.loyalty!.capitalize!,
-                        //   controller.user.value!.spendingTotal!,
-                        // ],
-                      );
-                    },
-                  ),
+              : Column(
+                  children: [
+                    FadeAnimation(
+                      delay: 1,
+                      child: ListTile(
+                        leading:
+                            Image.asset('assets/images/point_icon_small.png'),
+                        title: const Text('Point'),
+                        trailing: const Icon(Icons.keyboard_arrow_right),
+                        onTap: () {
+                          Get.toNamed('/point');
+                        },
+                      ),
+                    ),
+                    FadeAnimation(
+                      delay: 1,
+                      child: ListTile(
+                        leading: SvgPicture.asset(
+                          'assets/images/icon_voucher.svg',
+                          width: 25,
+                        ),
+                        title: const Text('Your Voucher'),
+                        trailing: const Icon(Icons.keyboard_arrow_right),
+                        onTap: () {
+                          Get.toNamed('/voucher');
+                          // Get.to(InputPinNumber());
+                        },
+                      ),
+                    ),
+                  ],
                 ),
         ),
         FadeAnimation(

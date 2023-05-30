@@ -61,7 +61,7 @@ class PointController extends GetxController {
     } on DioError catch (e) {
       Get.snackbar(
         'Failed',
-        e.toString(),
+        e.response.toString(),
         backgroundColor: Colors.red.shade800,
         colorText: Colors.white,
       );

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:icons_plus/icons_plus.dart';
@@ -163,8 +164,9 @@ class HeaderPoint extends StatelessWidget {
                           FadeAnimation(
                             delay: 1,
                             child: WhiteText(
-                              text:
-                                  userController.user.value!.loyalty.toString().capitalize!,
+                              text: userController.user.value!.loyalty
+                                  .toString()
+                                  .capitalize!,
                               size: 16,
                               bold: FontWeight.bold,
                             ),
@@ -205,7 +207,9 @@ class HeaderPoint extends StatelessWidget {
                     FadeAnimation(
                       delay: 1,
                       child: WhiteText(
-                        text: controller.last_transaction.value,
+                        text: controller.last_transaction.value == null
+                            ? '-'
+                            : controller.last_transaction.value,
                       ),
                     ),
                   ],
@@ -366,127 +370,150 @@ class HistorySaldo extends StatelessWidget {
             ],
           ),
           const SizedBox(height: 10),
-          Expanded(
-            child: Obx(
-              () => controller.isLoading.value
-                  ? Center(
-                      child: SpinKitWave(
-                        size: 30,
-                        itemBuilder: (BuildContext context, int index) {
-                          return const DecoratedBox(
-                            decoration: BoxDecoration(
-                              color: baseColor,
-                            ),
-                          );
-                        },
-                      ),
-                    )
-                  : BaseRefresh(
-                      onRefresh: refreshListPoint,
-                      child: ListView.builder(
-                        itemCount: controller.point.length,
-                        itemBuilder: (context, index) {
-                          final formatter = DateFormat('dd/MM/yyyy');
-                          final tanggal = formatter
-                              .format(controller.point[index].transactionDate);
-
-                          return FadeAnimation(
-                            delay: 1,
-                            child: Card(
-                              color: Colors.transparent,
-                              margin: const EdgeInsets.only(bottom: 10),
-                              elevation: 0,
-                              child: controller.point[index].info == '0'
-                                  ? Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.spaceBetween,
-                                          children: [
-                                            const Text('Point added',
-                                                style: TextStyle(
-                                                    fontWeight:
-                                                        FontWeight.bold)),
-                                            Text(tanggal,
-                                                style: const TextStyle(
-                                                    fontWeight:
-                                                        FontWeight.bold)),
-                                          ],
-                                        ),
-                                        Text(
-                                          '+' +
-                                              controller
-                                                  .point[index].addSubAmount!,
-                                          style: const TextStyle(
-                                              color: Colors.green),
-                                        ),
-                                        Row(
-                                          children: [
-                                            const Text('Remaining Points : ',
-                                                style: TextStyle(
-                                                    color: baseColor)),
-                                            PointText(
-                                                text: controller.point[index]
-                                                    .remainingPoint!),
-                                          ],
-                                        ),
-                                        const SizedBox(height: 8),
-                                        const Divider(
-                                          height: 1,
-                                          color: Colors.grey,
-                                        )
-                                      ],
-                                    )
-                                  : Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.spaceBetween,
-                                          children: [
-                                            const Text('Point redeemed',
-                                                style: TextStyle(
-                                                    fontWeight:
-                                                        FontWeight.bold)),
-                                            Text(tanggal,
-                                                style: const TextStyle(
-                                                    fontWeight:
-                                                        FontWeight.bold)),
-                                          ],
-                                        ),
-                                        Text(
-                                          '-' +
-                                              controller
-                                                  .point[index].addSubAmount!,
-                                          style: const TextStyle(
-                                              color: Colors.red),
-                                        ),
-                                        Row(
-                                          children: [
-                                            const Text('Remaining Points : ',
-                                                style: TextStyle(
-                                                    color: baseColor)),
-                                            PointText(
-                                                text: controller.point[index]
-                                                    .remainingPoint!),
-                                          ],
-                                        ),
-                                        const SizedBox(height: 8),
-                                        const Divider(
-                                          height: 1,
-                                          color: Colors.grey,
-                                        )
-                                      ],
-                                    ),
-                            ),
-                          );
-                        },
+          Obx(
+            () => controller.isLoading.value
+                ? Expanded(
+                  child: Center(
+                      child: FadeAnimation(
+                        delay: 1,
+                        child: SpinKitWave(
+                          size: 30,
+                          itemBuilder: (BuildContext context, int index) {
+                            return const DecoratedBox(
+                              decoration: BoxDecoration(
+                                color: baseColor,
+                              ),
+                            );
+                          },
+                        ),
                       ),
                     ),
-            ),
+                )
+                : controller.point.length < 1
+                    ? Expanded(
+                        child: Center(
+                          child: FadeAnimation(
+                            delay: 1.3,
+                            child: SvgPicture.asset(
+                              'assets/images/nopointhistory.svg',
+                              height: 100,
+                            ),
+                          ),
+                        ),
+                      )
+                    : Expanded(
+                        child: BaseRefresh(
+                          onRefresh: refreshListPoint,
+                          child: ListView.builder(
+                            itemCount: controller.point.length,
+                            itemBuilder: (context, index) {
+                              final formatter = DateFormat('dd/MM/yyyy');
+                              final tanggal = formatter.format(
+                                  controller.point[index].transactionDate);
+
+                              return FadeAnimation(
+                                delay: 1,
+                                child: Card(
+                                  color: Colors.transparent,
+                                  margin: const EdgeInsets.only(bottom: 10),
+                                  elevation: 0,
+                                  child: controller.point[index].info == '0'
+                                      ? Column(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          children: [
+                                            Row(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment
+                                                      .spaceBetween,
+                                              children: [
+                                                const Text('Point added',
+                                                    style: TextStyle(
+                                                        fontWeight:
+                                                            FontWeight.bold)),
+                                                Text(tanggal,
+                                                    style: const TextStyle(
+                                                        fontWeight:
+                                                            FontWeight.bold)),
+                                              ],
+                                            ),
+                                            Text(
+                                              '+' +
+                                                  controller.point[index]
+                                                      .addSubAmount!,
+                                              style: const TextStyle(
+                                                  color: Colors.green),
+                                            ),
+                                            Row(
+                                              children: [
+                                                const Text(
+                                                    'Remaining Points : ',
+                                                    style: TextStyle(
+                                                        color: baseColor)),
+                                                PointText(
+                                                    text: controller
+                                                        .point[index]
+                                                        .remainingPoint!),
+                                              ],
+                                            ),
+                                            const SizedBox(height: 8),
+                                            const Divider(
+                                              height: 1,
+                                              color: Colors.grey,
+                                            )
+                                          ],
+                                        )
+                                      : Column(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          children: [
+                                            Row(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment
+                                                      .spaceBetween,
+                                              children: [
+                                                const Text('Point redeemed',
+                                                    style: TextStyle(
+                                                        fontWeight:
+                                                            FontWeight.bold)),
+                                                Text(tanggal,
+                                                    style: const TextStyle(
+                                                        fontWeight:
+                                                            FontWeight.bold)),
+                                              ],
+                                            ),
+                                            Text(
+                                              '-' +
+                                                  controller.point[index]
+                                                      .addSubAmount!,
+                                              style: const TextStyle(
+                                                  color: Colors.red),
+                                            ),
+                                            Row(
+                                              children: [
+                                                const Text(
+                                                    'Remaining Points : ',
+                                                    style: TextStyle(
+                                                        color: baseColor)),
+                                                PointText(
+                                                    text: controller
+                                                        .point[index]
+                                                        .remainingPoint!),
+                                              ],
+                                            ),
+                                            const SizedBox(height: 8),
+                                            const Divider(
+                                              height: 1,
+                                              color: Colors.grey,
+                                            )
+                                          ],
+                                        ),
+                                ),
+                              );
+                            },
+                          ),
+                        ),
+                      ),
           ),
         ],
       ),

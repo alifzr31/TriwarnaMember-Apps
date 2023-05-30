@@ -131,7 +131,7 @@ class Header extends StatelessWidget {
                                     size: 18,
                                   ),
                                   const SizedBox(height: 5),
-                                  controller.user.value!.loyalty == 'Silver'
+                                  controller.user.value!.loyalty.toString().capitalize == 'Silver'
                                       ? Container(
                                           height: 23,
                                           width: 80,
@@ -143,7 +143,7 @@ class Header extends StatelessWidget {
                                           child: const Center(
                                               child: Text('Silver')),
                                         )
-                                      : controller.user.value!.loyalty ==
+                                      : controller.user.value!.loyalty.toString().capitalize ==
                                               'Platinum'
                                           ? Container(
                                               height: 23,

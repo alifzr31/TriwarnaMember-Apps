@@ -23,6 +23,8 @@ import 'package:member_apps/app/modules/auth/register/view.dart';
 import 'package:member_apps/app/modules/promo/binding.dart';
 import 'package:member_apps/app/modules/promo/view.dart';
 import 'package:member_apps/app/modules/splash/view.dart';
+import 'package:member_apps/app/modules/voucher/binding.dart';
+import 'package:member_apps/app/modules/voucher/view.dart';
 import 'package:member_apps/app/routes/routes.dart';
 
 abstract class AppPages {
@@ -107,6 +109,12 @@ abstract class AppPages {
       name: Routes.inputpin,
       page: () => const InputPinPage(),
       binding: InputPinBinding(),
+      transition: Transition.rightToLeft,
+    ),
+    GetPage(
+      name: Routes.voucher,
+      page: () => const VoucherPage(),
+      binding: VoucherBinding(),
       transition: Transition.rightToLeft,
     ),
   ];

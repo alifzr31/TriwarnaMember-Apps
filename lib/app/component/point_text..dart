@@ -8,17 +8,20 @@ class PointText extends StatelessWidget {
     this.size,
     this.bold,
     this.letterSpacing,
+    this.textAlign,
   }) : super(key: key);
 
   final String text;
   final double? size;
   final double? letterSpacing;
+  final TextAlign? textAlign;
   final FontWeight? bold;
 
   @override
   Widget build(BuildContext context) {
     return Text(
       text,
+      textAlign: textAlign,
       style: TextStyle(
         color: yellow,
         fontSize: size,

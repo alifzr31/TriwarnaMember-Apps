@@ -116,20 +116,23 @@ class PointView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Obx(
-      () => Row(
-        children: [
-          Image.asset(
-            'assets/images/point_icon_large.png',
-            width: 40,
-          ),
-          FadeAnimation(
-            delay: 1.3,
-            child: PointText(
-              text: controller.jumlah.value,
-              size: 22,
+      () => FadeAnimation(
+        delay: 1,
+        child: Row(
+          children: [
+            Image.asset(
+              'assets/images/point_icon_large.png',
+              width: 40,
             ),
-          ),
-        ],
+            FadeAnimation(
+              delay: 1.3,
+              child: PointText(
+                text: controller.jumlah.value,
+                size: 22,
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }
@@ -141,7 +144,7 @@ class RedeemPrize extends StatelessWidget {
   final userController = Get.find<DashboardController>();
 
   Future<void> refreshPrize() async {
-    await Future.delayed(const Duration(seconds: 2), () async {
+    await Future.delayed(const Duration(milliseconds: 2500), () async {
       controller.fetchPrize();
 
       await Fluttertoast.showToast(
@@ -160,16 +163,19 @@ class RedeemPrize extends StatelessWidget {
   Widget build(BuildContext context) {
     return Obx(
       () => controller.isLoading.value
-          ? Center(
-              child: SpinKitWave(
-                size: 20,
-                itemBuilder: (BuildContext context, int index) {
-                  return const DecoratedBox(
-                    decoration: BoxDecoration(
-                      color: yellow,
-                    ),
-                  );
-                },
+          ? Expanded(
+              child: FadeAnimation(
+                delay: 1,
+                child: SpinKitWave(
+                  size: 30,
+                  itemBuilder: (BuildContext context, int index) {
+                    return const DecoratedBox(
+                      decoration: BoxDecoration(
+                        color: baseColor,
+                      ),
+                    );
+                  },
+                ),
               ),
             )
           : Expanded(

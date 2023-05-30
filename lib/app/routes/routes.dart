@@ -13,4 +13,5 @@ class Routes {
   static const changepin = '/changepin';
   static const changepass = '/changepass';
   static const inputpin = '/inputpin';
+  static const voucher = '/voucher';
 }
