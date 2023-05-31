@@ -20,7 +20,6 @@ class StorePage extends StatelessWidget {
         padding: const EdgeInsets.all(10),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
-          mainAxisAlignment: MainAxisAlignment.center,
           children: [
             FadeAnimation(
               delay: 1,
@@ -73,16 +72,18 @@ class ListStore extends StatelessWidget {
   Widget build(BuildContext context) {
     return Obx(
       () => controller.isLoading.value
-          ? Center(
-              child: SpinKitWave(
-                size: 30,
-                itemBuilder: (BuildContext context, int index) {
-                  return const DecoratedBox(
-                    decoration: BoxDecoration(
-                      color: baseColor,
-                    ),
-                  );
-                },
+          ? Expanded(
+              child: Center(
+                child: SpinKitWave(
+                  size: 30,
+                  itemBuilder: (BuildContext context, int index) {
+                    return const DecoratedBox(
+                      decoration: BoxDecoration(
+                        color: baseColor,
+                      ),
+                    );
+                  },
+                ),
               ),
             )
           : Expanded(
