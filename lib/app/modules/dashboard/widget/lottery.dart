@@ -34,7 +34,7 @@ class HeaderLottery extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       width: Get.width,
-      height: 350,
+      height: 370,
       decoration: BoxDecoration(
         image: DecorationImage(
           image: AssetImage('assets/images/head.png'),
@@ -47,115 +47,101 @@ class HeaderLottery extends StatelessWidget {
           child: Obx(
             () => controller.user.value == null
                 ? SpinKitWave(
-                  size: 25,
-                  itemBuilder: (BuildContext context, int index) {
-                    return const DecoratedBox(
-                      decoration: BoxDecoration(
-                        color: yellow,
-                      ),
-                    );
-                  },
-                )
+                    size: 25,
+                    itemBuilder: (BuildContext context, int index) {
+                      return const DecoratedBox(
+                        decoration: BoxDecoration(
+                          color: yellow,
+                        ),
+                      );
+                    },
+                  )
                 : Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       const WhiteText(
                           text: 'Data Diri', bold: FontWeight.bold, size: 18),
-                      const Divider(),
+                      const SizedBox(height: 20),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Row(
-                                children: [
-                                  const Icon(
-                                    Icons.contacts,
-                                    color: Colors.white,
-                                    size: 20,
-                                  ),
-                                  const SizedBox(width: 5),
-                                  const WhiteText(text: 'No Member'),
-                                ],
-                              ),
-                              Row(
-                                children: [
-                                  const SizedBox(width: 25),
-                                  FadeAnimation(
-                                    delay: 1,
-                                    child: GreyText(
-                                        text: controller.user.value!.noMember!),
-                                  ),
-                                ],
-                              ),
-                              const Divider(),
-                              Row(
-                                children: [
-                                  const Icon(
-                                    Icons.work,
-                                    color: Colors.white,
-                                    size: 20,
-                                  ),
-                                  const SizedBox(width: 5),
-                                  const WhiteText(text: 'Job'),
-                                ],
-                              ),
-                              Row(
-                                children: [
-                                  const SizedBox(width: 25),
-                                  FadeAnimation(
-                                    delay: 1,
-                                    child: GreyText(
-                                        text: controller.user.value!.job!),
-                                  ),
-                                ],
-                              ),
-                              const Divider(),
-                              Row(
-                                children: [
-                                  const Icon(
-                                    Icons.location_pin,
-                                    color: Colors.white,
-                                    size: 20,
-                                  ),
-                                  const SizedBox(width: 5),
-                                  const WhiteText(text: 'Address'),
-                                ],
-                              ),
-                              Row(
-                                children: [
-                                  const SizedBox(width: 25),
-                                  FadeAnimation(
-                                    delay: 1,
-                                    child: GreyText(
-                                        text: controller.user.value!.address!),
-                                  ),
-                                ],
-                              ),
-                              const Divider(),
-                              Row(
-                                children: [
-                                  const Icon(
-                                    Icons.card_membership,
-                                    color: Colors.white,
-                                    size: 20,
-                                  ),
-                                  const SizedBox(width: 5),
-                                  const WhiteText(text: 'Loyalty Level'),
-                                ],
-                              ),
-                              Row(
-                                children: [
-                                  const SizedBox(width: 25),
-                                  FadeAnimation(
-                                    delay: 1,
-                                    child: GreyText(
-                                        text: controller.user.value!.loyalty!),
-                                  ),
-                                ],
-                              ),
-                            ],
+                          Expanded(
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Row(
+                                  children: [
+                                    const Icon(
+                                      Icons.contacts,
+                                      color: Colors.white,
+                                      size: 20,
+                                    ),
+                                    const SizedBox(width: 5),
+                                    const WhiteText(text: 'No Member'),
+                                  ],
+                                ),
+                                const SizedBox(height: 5),
+                                FadeAnimation(
+                                  delay: 1,
+                                  child: GreyText(
+                                      text: controller.user.value!.noMember!),
+                                ),
+                                const SizedBox(height: 10),
+                                Row(
+                                  children: [
+                                    const Icon(
+                                      Icons.work,
+                                      color: Colors.white,
+                                      size: 20,
+                                    ),
+                                    const SizedBox(width: 5),
+                                    const WhiteText(text: 'Job'),
+                                  ],
+                                ),
+                                const SizedBox(height: 5),
+                                FadeAnimation(
+                                  delay: 1,
+                                  child: GreyText(
+                                      text: controller.user.value!.job!),
+                                ),
+                                const SizedBox(height: 10),
+                                Row(
+                                  children: [
+                                    const Icon(
+                                      Icons.location_pin,
+                                      color: Colors.white,
+                                      size: 20,
+                                    ),
+                                    const SizedBox(width: 5),
+                                    const WhiteText(text: 'Address'),
+                                  ],
+                                ),
+                                const SizedBox(height: 5),
+                                FadeAnimation(
+                                  delay: 1,
+                                  child: GreyText(
+                                      text: controller.user.value!.address!),
+                                ),
+                                const SizedBox(height: 10),
+                                Row(
+                                  children: [
+                                    const Icon(
+                                      Icons.card_membership,
+                                      color: Colors.white,
+                                      size: 20,
+                                    ),
+                                    const SizedBox(width: 5),
+                                    const WhiteText(text: 'Loyalty Level'),
+                                  ],
+                                ),
+                                const SizedBox(height: 5),
+                                FadeAnimation(
+                                  delay: 1,
+                                  child: GreyText(
+                                      text: controller.user.value!.loyalty!),
+                                ),
+                              ],
+                            ),
                           ),
                           Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
@@ -171,17 +157,13 @@ class HeaderLottery extends StatelessWidget {
                                   const WhiteText(text: 'Full Name'),
                                 ],
                               ),
-                              Row(
-                                children: [
-                                  const SizedBox(width: 25),
-                                  FadeAnimation(
-                                    delay: 1,
-                                    child: GreyText(
-                                        text: controller.user.value!.name!),
-                                  ),
-                                ],
+                              const SizedBox(height: 5),
+                              FadeAnimation(
+                                delay: 1,
+                                child: GreyText(
+                                    text: controller.user.value!.name!),
                               ),
-                              const Divider(),
+                              const SizedBox(height: 10),
                               Row(
                                 children: [
                                   const Icon(
@@ -193,17 +175,13 @@ class HeaderLottery extends StatelessWidget {
                                   const WhiteText(text: 'ID Number'),
                                 ],
                               ),
-                              Row(
-                                children: [
-                                  const SizedBox(width: 25),
-                                  FadeAnimation(
-                                    delay: 1,
-                                    child: GreyText(
-                                        text: controller.user.value!.idNumber!),
-                                  ),
-                                ],
+                              const SizedBox(height: 5),
+                              FadeAnimation(
+                                delay: 1,
+                                child: GreyText(
+                                    text: controller.user.value!.idNumber!),
                               ),
-                              const Divider(),
+                              const SizedBox(height: 10),
                               Row(
                                 children: [
                                   const Icon(
@@ -215,15 +193,11 @@ class HeaderLottery extends StatelessWidget {
                                   const WhiteText(text: 'Phone Number'),
                                 ],
                               ),
-                              Row(
-                                children: [
-                                  const SizedBox(width: 25),
-                                  FadeAnimation(
-                                    delay: 1,
-                                    child: GreyText(
-                                        text: controller.user.value!.contact!),
-                                  ),
-                                ],
+                              const SizedBox(height: 5),
+                              FadeAnimation(
+                                delay: 1,
+                                child: GreyText(
+                                    text: controller.user.value!.contact!),
                               ),
                               const SizedBox(height: 50)
                             ],

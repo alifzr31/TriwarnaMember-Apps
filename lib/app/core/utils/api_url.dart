@@ -4,6 +4,8 @@ class ApiUrl {
   static final String qrStorage = 'http://10.1.1.152/triwarna/storage/qr/members';
   static final String prizeStorage = 'http://10.1.1.152/triwarna/storage/prizes/';
   static final String voucherStorage = 'http://10.1.1.152/triwarna/storage/qr/points/';
+  static final String receiptImage = 'http://10.1.1.152/triwarna/storage/attachments/';
+  static final String receiptSignature = 'http://10.1.1.152/triwarna/storage/signatures/';
   static final EndPoint endPoint = EndPoint();
 }
 

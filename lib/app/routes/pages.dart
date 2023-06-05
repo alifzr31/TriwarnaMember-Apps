@@ -10,6 +10,8 @@ import 'package:member_apps/app/modules/auth/login/view.dart';
 import 'package:member_apps/app/modules/dashboard/view0.dart';
 import 'package:member_apps/app/modules/event/binding.dart';
 import 'package:member_apps/app/modules/event/view.dart';
+import 'package:member_apps/app/modules/gratis_ongkir/binding.dart';
+import 'package:member_apps/app/modules/gratis_ongkir/view.dart';
 import 'package:member_apps/app/modules/input_pin/binding.dart';
 import 'package:member_apps/app/modules/input_pin/view.dart';
 import 'package:member_apps/app/modules/onboard/view.dart';
@@ -23,6 +25,8 @@ import 'package:member_apps/app/modules/auth/register/view.dart';
 import 'package:member_apps/app/modules/promo/binding.dart';
 import 'package:member_apps/app/modules/promo/view.dart';
 import 'package:member_apps/app/modules/splash/view.dart';
+import 'package:member_apps/app/modules/tracking/binding.dart';
+import 'package:member_apps/app/modules/tracking/view.dart';
 import 'package:member_apps/app/modules/voucher/binding.dart';
 import 'package:member_apps/app/modules/voucher/view.dart';
 import 'package:member_apps/app/routes/routes.dart';
@@ -94,6 +98,12 @@ abstract class AppPages {
       transition: Transition.rightToLeftWithFade,
     ),
     GetPage(
+      name: Routes.gratisongkir,
+      page: () => const GratisOngkirPage(),
+      binding: GratisOngkirBinding(),
+      transition: Transition.rightToLeftWithFade,
+    ),
+    GetPage(
       name: Routes.changepin,
       page: () => const ChangePinPage(),
       binding: ChangePinBinding(),
@@ -116,6 +126,12 @@ abstract class AppPages {
       page: () => const VoucherPage(),
       binding: VoucherBinding(),
       transition: Transition.rightToLeft,
+    ),
+    GetPage(
+      name: Routes.tracking,
+      page: () => const TrackingPage(),
+      binding: TrackingBinding(),
+      transition: Transition.size,
     ),
   ];
 }

@@ -10,8 +10,10 @@ class Routes {
   static const tarikpoint = '/tarikpoint';
   static const event = '/event';
   static const promo = '/promo';
+  static const gratisongkir = '/gratisongkir';
   static const changepin = '/changepin';
   static const changepass = '/changepass';
   static const inputpin = '/inputpin';
   static const voucher = '/voucher';
+  static const tracking = '/tracking';
 }

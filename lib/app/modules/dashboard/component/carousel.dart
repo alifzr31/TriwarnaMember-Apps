@@ -25,6 +25,8 @@ class _CarouselFieldState extends State<CarouselField> {
       children: [
         Positioned(
           bottom: -20,
+          // left: 0,
+          // right: 0,
           child: Container(
             width: Get.width,
             height: 130,
@@ -59,13 +61,13 @@ class _CarouselFieldState extends State<CarouselField> {
                       onTap: () {},
                       splashColor: Colors.black.withOpacity(0.3),
                       child: Padding(
-                        padding: const EdgeInsets.all(15),
+                        padding: const EdgeInsets.all(10),
                         child: Container(
                           decoration: BoxDecoration(
                             image: DecorationImage(
                               image:
                                   AssetImage('assets/images/' + images[index]),
-                              fit: BoxFit.fill,
+                              fit: BoxFit.contain,
                             ),
                           ),
                         ),

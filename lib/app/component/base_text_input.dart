@@ -11,6 +11,7 @@ class BaseTextInput extends StatelessWidget {
     this.validator,
     this.enabled = true,
     this.keyboardType,
+    this.onChanged,
     this.obscureText = false,
   }) : super(key: key);
 
@@ -21,6 +22,7 @@ class BaseTextInput extends StatelessWidget {
   final TextInputType? keyboardType;
   final bool obscureText;
   final bool enabled;
+  final void Function(String?)? onChanged;
   final String? Function(String?)? validator;
 
   @override
@@ -29,6 +31,7 @@ class BaseTextInput extends StatelessWidget {
       controller: controller,
       obscureText: obscureText,
       enabled: enabled,
+      onChanged: onChanged,
       keyboardType: keyboardType,
       validator: validator,
       decoration: InputDecoration(

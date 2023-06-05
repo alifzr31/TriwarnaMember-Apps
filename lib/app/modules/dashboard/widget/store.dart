@@ -3,9 +3,11 @@ import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
+import 'package:icons_plus/icons_plus.dart';
 import 'package:maps_launcher/maps_launcher.dart';
 import 'package:member_apps/app/animation/fadeanimation.dart';
 import 'package:member_apps/app/component/base_refresh.dart';
+import 'package:member_apps/app/component/base_text_input.dart';
 import 'package:member_apps/app/core/value.dart';
 import 'package:member_apps/app/modules/dashboard/controller.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -35,7 +37,7 @@ class StorePage extends StatelessWidget {
               ),
             ),
             const SizedBox(height: 10),
-            ListStore(),
+            const ListStore(),
           ],
         ),
       ),
@@ -43,10 +45,16 @@ class StorePage extends StatelessWidget {
   }
 }
 
-class ListStore extends StatelessWidget {
-  ListStore({super.key});
+class ListStore extends StatefulWidget {
+  const ListStore({super.key});
 
+  @override
+  State<ListStore> createState() => _ListStoreState();
+}
+
+class _ListStoreState extends State<ListStore> {
   final controller = Get.find<DashboardController>();
+  String? search;
 
   Future<void> refreshListStore() async {
     await Future.delayed(
@@ -71,106 +79,149 @@ class ListStore extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Obx(
-      () => controller.isLoading.value
-          ? Expanded(
-              child: Center(
-                child: SpinKitWave(
-                  size: 30,
-                  itemBuilder: (BuildContext context, int index) {
-                    return const DecoratedBox(
-                      decoration: BoxDecoration(
-                        color: baseColor,
-                      ),
-                    );
-                  },
-                ),
-              ),
-            )
-          : Expanded(
-              child: BaseRefresh(
-                onRefresh: refreshListStore,
-                child: ListView.builder(
-                  itemCount: controller.store.length,
-                  itemBuilder: (context, index) {
-                    var store = controller.store[index];
+      () {
+        final filter = controller.store
+            .where((e) => e.storeName
+                .toString()
+                .toLowerCase()
+                .contains(search.toString().toLowerCase()))
+            .toList();
 
-                    return FadeAnimation(
-                      delay: 1,
-                      child: Card(
-                        margin: const EdgeInsets.only(bottom: 10),
-                        elevation: 5,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(20),
-                        ),
-                        child: Padding(
-                          padding: const EdgeInsets.all(10),
-                          child: Row(
-                            children: [
-                              SvgPicture.asset('assets/images/store_icon.svg'),
-                              const SizedBox(width: 15),
-                              Flexible(
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Text(
-                                      store.storeName!,
-                                      style: const TextStyle(
-                                        fontSize: 18,
-                                        fontWeight: FontWeight.bold,
-                                        color: baseColor,
-                                      ),
-                                    ),
-                                    const SizedBox(height: 5),
-                                    Text(
-                                      store.address!,
-                                      style: const TextStyle(
-                                        fontWeight: FontWeight.w600,
-                                        fontSize: 12,
-                                        color: baseColor,
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                              const SizedBox(width: 5),
-                              CircleAvatar(
-                                backgroundColor: baseColor,
-                                radius: 22,
-                                child: IconButton(
-                                  onPressed: () async {
-                                    final url = Uri.parse('tel:${store.phone}');
-                                    await launchUrl(url);
-                                  },
-                                  icon: const Icon(Icons.phone, color: yellow),
-                                ),
-                              ),
-                              const SizedBox(width: 5),
-                              CircleAvatar(
-                                backgroundColor: baseColor,
-                                radius: 22,
-                                child: IconButton(
-                                  onPressed: () async {
-                                    final lat = double.parse(store.lat!);
-                                    final long = double.parse(store.long!);
+        print(search);
 
-                                    MapsLauncher.launchCoordinates(
-                                      lat,
-                                      long,
-                                      store.storeName,
-                                    );
-                                  },
-                                  icon: const Icon(Icons.map, color: yellow),
+        return controller.isLoading.value
+            ? Expanded(
+                child: Center(
+                  child: SpinKitWave(
+                    size: 30,
+                    itemBuilder: (BuildContext context, int index) {
+                      return const DecoratedBox(
+                        decoration: BoxDecoration(
+                          color: baseColor,
+                        ),
+                      );
+                    },
+                  ),
+                ),
+              )
+            : Expanded(
+                child: Column(
+                  children: [
+                    // Align(
+                    //   alignment: Alignment.centerRight,
+                    //   child: SizedBox(
+                    //     width: Get.width / 2,
+                    //     child: BaseTextInput(
+                    //       label: 'Search Store',
+                    //       onChanged: (value) {
+                    //         setState(() {
+                    //           search = value;
+                    //         });
+                    //       },
+                    //       icon: const Icon(EvaIcons.search),
+                    //     ),
+                    //   ),
+                    // ),
+                    Expanded(
+                      child: BaseRefresh(
+                        onRefresh: refreshListStore,
+                        child: ListView.builder(
+                          itemCount: search == '' || search == null
+                              ? controller.store.length
+                              : filter.length,
+                          itemBuilder: (context, index) {
+                            var store = search == '' || search == null
+                                ? controller.store[index]
+                                : filter[index];
+
+                            return FadeAnimation(
+                              delay: 1,
+                              child: Card(
+                                margin: const EdgeInsets.only(bottom: 10),
+                                elevation: 5,
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(20),
+                                ),
+                                child: Padding(
+                                  padding: const EdgeInsets.all(10),
+                                  child: Row(
+                                    children: [
+                                      SvgPicture.asset(
+                                          'assets/images/store_icon.svg'),
+                                      const SizedBox(width: 15),
+                                      Flexible(
+                                        child: Column(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          children: [
+                                            Text(
+                                              store.storeName!,
+                                              style: const TextStyle(
+                                                fontSize: 18,
+                                                fontWeight: FontWeight.bold,
+                                                color: baseColor,
+                                              ),
+                                            ),
+                                            const SizedBox(height: 5),
+                                            Text(
+                                              store.address!,
+                                              style: const TextStyle(
+                                                fontWeight: FontWeight.w600,
+                                                fontSize: 12,
+                                                color: baseColor,
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                      const SizedBox(width: 5),
+                                      CircleAvatar(
+                                        backgroundColor: baseColor,
+                                        radius: 22,
+                                        child: IconButton(
+                                          onPressed: () async {
+                                            final url =
+                                                Uri.parse('tel:${store.phone}');
+                                            await launchUrl(url);
+                                          },
+                                          icon: const Icon(Icons.phone,
+                                              color: yellow),
+                                        ),
+                                      ),
+                                      const SizedBox(width: 5),
+                                      CircleAvatar(
+                                        backgroundColor: baseColor,
+                                        radius: 22,
+                                        child: IconButton(
+                                          onPressed: () async {
+                                            final lat =
+                                                double.parse(store.lat!);
+                                            final long =
+                                                double.parse(store.long!);
+
+                                            MapsLauncher.launchCoordinates(
+                                              lat,
+                                              long,
+                                              store.storeName,
+                                            );
+                                          },
+                                          icon: const Icon(Icons.map,
+                                              color: yellow),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
                                 ),
                               ),
-                            ],
-                          ),
+                            );
+                          },
                         ),
                       ),
-                    );
-                  },
+                    ),
+                  ],
                 ),
-              ),
-            ),
+              );
+      },
     );
   }
 }

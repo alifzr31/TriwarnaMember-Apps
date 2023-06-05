@@ -60,19 +60,19 @@ class PointPage extends StatelessWidget {
                                 WhiteText(
                                     text:
                                         '1. Points that can be redeemed in increments of 50'),
-                                Divider(),
+                                SizedBox(height: 10),
                                 WhiteText(
                                     text:
                                         '2. The balance taken cannot exceed your active points'),
-                                Divider(),
+                                SizedBox(height: 10),
                                 WhiteText(
                                     text:
                                         '3. The time limit of the disbursed balance is 1 month'),
-                                Divider(),
+                                SizedBox(height: 10),
                                 WhiteText(
                                     text:
                                         '4. If the balance that has been disbursed is not spent then the voucher cannot be used (Forfeited)'),
-                                Divider(),
+                                SizedBox(height: 10),
                                 WhiteText(
                                     text:
                                         '5. Forfeited vouchers will not give you back your points'),
@@ -373,7 +373,7 @@ class HistorySaldo extends StatelessWidget {
           Obx(
             () => controller.isLoading.value
                 ? Expanded(
-                  child: Center(
+                    child: Center(
                       child: FadeAnimation(
                         delay: 1,
                         child: SpinKitWave(
@@ -388,7 +388,7 @@ class HistorySaldo extends StatelessWidget {
                         ),
                       ),
                     ),
-                )
+                  )
                 : controller.point.length < 1
                     ? Expanded(
                         child: Center(

@@ -7,6 +7,7 @@ import 'package:member_apps/app/animation/fadeanimation.dart';
 import 'package:member_apps/app/component/base_refresh.dart';
 import 'package:member_apps/app/core/utils/api_url.dart';
 import 'package:member_apps/app/core/value.dart';
+import 'package:member_apps/app/modules/tracking/controller.dart';
 import 'package:member_apps/app/modules/voucher/component/voucher_card.dart';
 import 'package:member_apps/app/modules/voucher/controller.dart';
 
@@ -128,7 +129,12 @@ class ListVoucher extends StatelessWidget {
                           qrcode: '${ApiUrl.voucherStorage}/${voucher.qrcode}',
                           voucherName:
                               'VOUCHER MEMBERSHIP\n${voucher.prizeName} ${voucher.prizeDesc}',
-                          onTap: () {},
+                          onTap: () {
+                            final trackingController = Get.find<TrackingController>();
+                            trackingController.serialVoucher.value = voucher.serialnumber.toString();
+                            trackingController.fetchTracking();
+                            Get.toNamed('/tracking', arguments: voucher.serialnumber);
+                          },
                         );
                       },
                     ),

@@ -13,6 +13,7 @@ class PrizeController extends GetxController {
 
   var isLoading = true.obs;
   var prize = <Prize>[].obs;
+  final searchPrize = ''.obs;
 
   @override
   void onInit() {
