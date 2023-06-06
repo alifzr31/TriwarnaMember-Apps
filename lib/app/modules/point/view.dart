@@ -189,16 +189,84 @@ class HeaderPoint extends StatelessWidget {
                         ],
                       ),
                 const SizedBox(height: 5),
-                Container(
-                  height: 8,
-                  width: Get.width,
-                  decoration: BoxDecoration(
-                    color: Colors.grey.shade300,
-                    borderRadius: BorderRadius.all(
-                      Radius.circular(20),
-                    ),
-                  ),
-                ),
+                userController.user.value!.loyalty.toString().capitalize! ==
+                        'Silver'
+                    ? Stack(
+                        children: [
+                          Container(
+                            height: 8,
+                            width: Get.width,
+                            decoration: BoxDecoration(
+                              color: Colors.grey.shade100,
+                              borderRadius: BorderRadius.all(
+                                Radius.circular(20),
+                              ),
+                            ),
+                          ),
+                          Container(
+                            height: 8,
+                            width: spend * (Get.width / 100000000),
+                            decoration: BoxDecoration(
+                              color: yellow,
+                              borderRadius: BorderRadius.all(
+                                Radius.circular(20),
+                              ),
+                            ),
+                          ),
+                        ],
+                      )
+                    : userController.user.value!.loyalty
+                                .toString()
+                                .capitalize! ==
+                            'Gold'
+                        ? Stack(
+                            children: [
+                              Container(
+                                height: 8,
+                                width: Get.width,
+                                decoration: BoxDecoration(
+                                  color: Colors.grey.shade100,
+                                  borderRadius: BorderRadius.all(
+                                    Radius.circular(20),
+                                  ),
+                                ),
+                              ),
+                              Container(
+                                height: 8,
+                                width: spend * (Get.width / 100000000),
+                                decoration: BoxDecoration(
+                                  color: yellow,
+                                  borderRadius: BorderRadius.all(
+                                    Radius.circular(20),
+                                  ),
+                                ),
+                              ),
+                            ],
+                          )
+                        : Stack(
+                            children: [
+                              Container(
+                                height: 8,
+                                width: Get.width,
+                                decoration: BoxDecoration(
+                                  color: Colors.grey.shade100,
+                                  borderRadius: BorderRadius.all(
+                                    Radius.circular(20),
+                                  ),
+                                ),
+                              ),
+                              Container(
+                                height: 8,
+                                width: spend * (Get.width / 100000000),
+                                decoration: BoxDecoration(
+                                  color: yellow,
+                                  borderRadius: BorderRadius.all(
+                                    Radius.circular(20),
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
                 const Divider(),
                 Row(
                   children: [
