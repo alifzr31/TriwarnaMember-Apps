@@ -1,0 +1,70 @@
+# Add project-specific ProGuard rules here.
+# By default, the flags in this file are appended to flags specified
+# in C:\Users\<Username>\AppData\Local\Android\Sdk\tools\proguard\proguard-android.txt
+# You can edit the include path and order by changing the ProGuard
+# configuration in build.gradle.
+#
+# For more details, see
+#   http://developer.android.com/guide/developing/tools/proguard.html
+
+# Specify the maximum memory allocation pool for the VM, if running on a
+# memory-constrained system.
+#-Xmx384m
+
+# Optimization is turned off by default. Dex does not like code run
+# through the ProGuard optimize and preverify steps (and performs some
+# of these optimizations on its own).
+#-dontoptimize
+#-dontpreverify
+
+# If you want to enable optimization, you should include the
+# following:
+#-optimizations !code/simplification/arithmetic,!code/simplification/variable
+#-optimizationpasses 5
+#-allowaccessmodification
+#
+# Note that you cannot just include these flags in your own
+# configuration file; if you are including this file, optimization
+# will be turned off. You can redefine any of these settings in a
+# configuration file of your own.
+
+#-optimizations !class/marking/final
+
+# Keep - Applications. Keep all application classes, along with their
+# 'main' methods.
+-keepclasseswithmembers public class * {
+    public static void main(java.lang.String[]);
+}
+
+# Keep - Library. Keep all public and protected classes, along with their
+# 'main' methods.
+-keepclasseswithmembers class * {
+    public static void main(java.lang.String[]);
+}
+
+# The support library contains references to newer platform versions.
+# Don't warn about those in case this app is linking against an older
+# platform version. We know about them, and they are safe.
+-dontwarn android.support.**
+-dontwarn androidx.**
+-dontwarn com.google.android.gms.**
+-dontwarn com.google.firebase.**
+
+# Add any project specific keep options here:
+
+# If your project uses WebView with JS, uncomment the following
+# and specify the fully qualified class name to the JavaScript interface
+# class:
+#-keepclassmembers class fqcn.of.javascript.interface.for.webview {
+#   public *;
+#}
+
+# Uncomment this to preserve the line number information for
+# debugging stack traces.
+#-keepattributes SourceFile,LineNumberTable
+
+# If you keep the line number information, uncomment this to
+# hide the original source file name.
+#-renamesourcefileattribute SourceFile
+
+#-keepattributes *Annotation*
