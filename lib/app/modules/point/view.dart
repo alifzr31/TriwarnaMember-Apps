@@ -103,7 +103,6 @@ class PointPage extends StatelessWidget {
         child: Center(
           child: Column(
             children: [
-              // HeaderPoint(loyalty: loyalty, spendTotal: spendTotal),
               HeaderPoint(),
               const SizedBox(height: 10),
               HistorySaldo(),
@@ -290,113 +289,6 @@ class HeaderPoint extends StatelessWidget {
     );
   }
 }
-
-// class HeaderPoint extends StatelessWidget {
-//   HeaderPoint({
-//     Key? key,
-//     required this.loyalty,
-//     required this.spendTotal,
-//   }) : super(key: key);
-
-//   final controller = Get.find<PointController>();
-//   final String loyalty;
-//   final String spendTotal;
-
-//   @override
-//   Widget build(BuildContext context) {
-//     final spend = int.parse(spendTotal);
-//     final total_spending = NumberFormat.currency(
-//       locale: 'id_ID',
-//       symbol: 'Rp ',
-//     ).format(spend);
-
-//     return Obx(
-//       () => Column(
-//         children: [
-//           Image.asset('assets/images/point_icon_large.png'),
-//           FadeAnimation(
-//             delay: 1,
-//             child: PointText(text: controller.jumlah.value, size: 34),
-//           ),
-//           ElevatedButton(
-//             onPressed: () {
-//               Get.toNamed('/tarikpoint');
-//             },
-//             style: ElevatedButton.styleFrom(
-//               backgroundColor: baseColor,
-//               shape: const StadiumBorder(),
-//             ),
-//             child: const Text('Redeem Point'),
-//           ),
-//           Container(
-//             width: Get.width,
-//             padding: const EdgeInsets.all(10),
-//             decoration: const BoxDecoration(
-//               color: baseColor,
-//               borderRadius: BorderRadius.all(Radius.circular(10)),
-//             ),
-//             child: Column(
-//               children: [
-//                 Row(
-//                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-//                   children: [
-//                     FadeAnimation(
-//                       delay: 1,
-//                       child: WhiteText(
-//                         text: loyalty,
-//                         size: 16,
-//                         bold: FontWeight.bold,
-//                       ),
-//                     ),
-//                     Row(
-//                       children: [
-//                         FadeAnimation(
-//                           delay: 1,
-//                           child: WhiteText(
-//                             text: total_spending,
-//                             bold: FontWeight.bold,
-//                           ),
-//                         ),
-//                         WhiteText(
-//                           text: "/Rp 100.000.000,00",
-//                           bold: FontWeight.bold,
-//                         ),
-//                       ],
-//                     ),
-//                   ],
-//                 ),
-//                 const SizedBox(height: 5),
-//                 Container(
-//                   height: 8,
-//                   width: Get.width,
-//                   decoration: BoxDecoration(
-//                     color: Colors.grey.shade300,
-//                     borderRadius: BorderRadius.all(
-//                       Radius.circular(20),
-//                     ),
-//                   ),
-//                 ),
-//                 const Divider(),
-//                 Row(
-//                   children: [
-//                     WhiteText(
-//                         text: 'Last Transaction : ', bold: FontWeight.bold),
-//                     FadeAnimation(
-//                       delay: 1,
-//                       child: WhiteText(
-//                         text: controller.last_transaction.value,
-//                       ),
-//                     ),
-//                   ],
-//                 )
-//               ],
-//             ),
-//           ),
-//         ],
-//       ),
-//     );
-//   }
-// }
 
 class HistorySaldo extends StatelessWidget {
   HistorySaldo({super.key});

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
+import 'package:intl/intl.dart';
 import 'package:member_apps/app/component/point_text..dart';
 import 'package:member_apps/app/animation/fadeanimation.dart';
 import 'package:member_apps/app/core/utils/api_url.dart';
@@ -66,6 +67,35 @@ class _TrackingFieldState extends State<TrackingField> {
                       () {
                         final tracking = controller.tracking;
 
+                        final formatter = DateFormat('dd-MMM-yyyy');
+                        var dateWaiting;
+                        var dateValid;
+                        var dateSend;
+                        var dateReceive;
+                        if (tracking.length > 0) {
+                          if (tracking[0].date != null) {
+                            dateWaiting = formatter.format(tracking[0].date!);
+                          }
+                          if (tracking.length > 1) {
+                            if (tracking[1].date != null) {
+                              dateValid = formatter.format(tracking[1].date!);
+                            }
+
+                            if (tracking.length > 2) {
+                              if (tracking[2].date != null) {
+                                dateSend = formatter.format(tracking[2].date!);
+                              }
+
+                              if (tracking.length > 3) {
+                                if (tracking[3].date != null) {
+                                  dateReceive =
+                                      formatter.format(tracking[3].date!);
+                                }
+                              }
+                            }
+                          }
+                        }
+
                         return controller.isLoading.value
                             ? Expanded(
                                 child: Center(
@@ -114,9 +144,10 @@ class _TrackingFieldState extends State<TrackingField> {
                                               CrossAxisAlignment.start,
                                           children: [
                                             PointText(
-                                                text: tracking[0]
-                                                    .date
-                                                    .toString()),
+                                                text: dateWaiting == null ||
+                                                        dateWaiting.isEmpty
+                                                    ? ''
+                                                    : dateWaiting),
                                             PointText(
                                                 text: tracking[0]
                                                     .status
@@ -125,9 +156,10 @@ class _TrackingFieldState extends State<TrackingField> {
                                             tracking.length < 2
                                                 ? Container()
                                                 : PointText(
-                                                    text: tracking[1]
-                                                        .date
-                                                        .toString()),
+                                                    text: dateValid == null ||
+                                                            dateValid.isEmpty
+                                                        ? ''
+                                                        : dateValid),
                                             tracking.length < 2
                                                 ? Container()
                                                 : PointText(
@@ -138,9 +170,10 @@ class _TrackingFieldState extends State<TrackingField> {
                                             tracking.length < 3
                                                 ? Container()
                                                 : PointText(
-                                                    text: tracking[2]
-                                                        .date
-                                                        .toString()),
+                                                    text: dateSend == null ||
+                                                            dateSend.isEmpty
+                                                        ? ''
+                                                        : dateSend),
                                             tracking.length < 3
                                                 ? Container()
                                                 : PointText(
@@ -151,9 +184,10 @@ class _TrackingFieldState extends State<TrackingField> {
                                             tracking.length < 4
                                                 ? Container()
                                                 : PointText(
-                                                    text: tracking[3]
-                                                        .date
-                                                        .toString()),
+                                                    text: dateReceive == null ||
+                                                            dateReceive.isEmpty
+                                                        ? ''
+                                                        : dateReceive),
                                             tracking.length < 4
                                                 ? Container()
                                                 : PointText(

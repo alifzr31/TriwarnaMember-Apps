@@ -289,6 +289,20 @@ class BodyAccount extends StatelessWidget {
                         },
                       ),
                     ),
+                    FadeAnimation(
+                      delay: 1,
+                      child: ListTile(
+                        leading: SvgPicture.asset(
+                          'assets/images/shopping_icon.svg',
+                          width: 25,
+                        ),
+                        title: const Text('Shopping History'),
+                        trailing: const Icon(Icons.keyboard_arrow_right),
+                        onTap: () {
+                          Get.toNamed('/shopping');
+                        },
+                      ),
+                    ),
                   ],
                 ),
         ),

@@ -16,4 +16,5 @@ class Routes {
   static const inputpin = '/inputpin';
   static const voucher = '/voucher';
   static const tracking = '/tracking';
+  static const shopping = '/shopping';
 }

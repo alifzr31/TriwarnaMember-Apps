@@ -26,6 +26,9 @@ class EndPoint {
   // VOUCHER
   static final String voucher = '/voucher';
 
+  // SHOPPING
+  static final String shopping = '/history';
+  
   // ACCOUNT
   static final String updateProfile = '/profile/update';
   static final String changePin = '/profile/pin/update';

@@ -24,6 +24,8 @@ import 'package:member_apps/app/modules/profile/view.dart';
 import 'package:member_apps/app/modules/auth/register/view.dart';
 import 'package:member_apps/app/modules/promo/binding.dart';
 import 'package:member_apps/app/modules/promo/view.dart';
+import 'package:member_apps/app/modules/shopping/binding.dart';
+import 'package:member_apps/app/modules/shopping/view.dart';
 import 'package:member_apps/app/modules/splash/view.dart';
 import 'package:member_apps/app/modules/tracking/binding.dart';
 import 'package:member_apps/app/modules/tracking/view.dart';
@@ -132,6 +134,12 @@ abstract class AppPages {
       page: () => const TrackingPage(),
       binding: TrackingBinding(),
       transition: Transition.size,
+    ),
+    GetPage(
+      name: Routes.shopping,
+      page: () => const ShoppingPage(),
+      binding: ShoppingBinding(),
+      transition: Transition.rightToLeft,
     ),
   ];
 }
