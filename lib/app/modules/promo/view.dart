@@ -34,7 +34,7 @@ class PromoPage extends StatelessWidget {
             height: 200,
             width: Get.width,
             decoration: BoxDecoration(
-              image: DecorationImage(
+              image: const DecorationImage(
                 image: AssetImage('assets/images/header-event.png'),
                 fit: BoxFit.cover,
               ),

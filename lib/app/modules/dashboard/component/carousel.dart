@@ -31,7 +31,7 @@ class _CarouselFieldState extends State<CarouselField> {
             width: Get.width,
             height: 130,
             decoration: BoxDecoration(
-              image: DecorationImage(
+              image: const DecorationImage(
                 image: AssetImage('assets/images/wave2.png'),
                 fit: BoxFit.cover,
               ),

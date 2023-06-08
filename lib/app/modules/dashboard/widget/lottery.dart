@@ -36,7 +36,7 @@ class HeaderLottery extends StatelessWidget {
       width: Get.width,
       height: 370,
       decoration: BoxDecoration(
-        image: DecorationImage(
+        image: const DecorationImage(
           image: AssetImage('assets/images/head.png'),
           fit: BoxFit.cover,
         ),

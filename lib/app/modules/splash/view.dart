@@ -30,7 +30,7 @@ class _SplasScreenState extends State<SplasScreen> {
       children: [
         Container(
           decoration: const BoxDecoration(
-            image: DecorationImage(
+            image: const DecorationImage(
               image: AssetImage('assets/images/back-splash.png'),
               fit: BoxFit.fill,
             ),
