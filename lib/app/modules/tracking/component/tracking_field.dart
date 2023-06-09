@@ -20,12 +20,6 @@ class TrackingField extends StatefulWidget {
 class _TrackingFieldState extends State<TrackingField> {
   final controller = Get.find<TrackingController>();
 
-  Future<void> refreshTracking() async {
-    await Future.delayed(const Duration(milliseconds: 2500), () async {
-      controller.fetchTracking();
-    });
-  }
-
   final iconTracking = [
     'assets/images/buat_voucher.svg',
     'assets/images/validasi_voucher.svg',
@@ -52,226 +46,126 @@ class _TrackingFieldState extends State<TrackingField> {
             borderRadius: BorderRadius.circular(20),
           ),
           child: Column(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    PointText(
-                      text: 'Tracking',
-                      size: 18,
-                    ),
-                    const SizedBox(height: 10),
-                    Obx(
-                      () {
-                        final tracking = controller.tracking;
-
-                        final formatter = DateFormat('dd-MMM-yyyy');
-                        var dateWaiting;
-                        var dateValid;
-                        var dateSend;
-                        var dateReceive;
-                        if (tracking.length > 0) {
-                          if (tracking[0].date != null) {
-                            dateWaiting = formatter.format(tracking[0].date!);
-                          }
-                          if (tracking.length > 1) {
-                            if (tracking[1].date != null) {
-                              dateValid = formatter.format(tracking[1].date!);
+              PointText(
+                text: 'Tracking',
+                size: 18,
+              ),
+              const SizedBox(height: 10),
+              Obx(
+                () => controller.isLoading.value
+                    ? Expanded(
+                        child: Center(
+                          child: FadeAnimation(
+                            delay: 1,
+                            child: SpinKitWave(
+                              size: 30,
+                              itemBuilder: (BuildContext context, int index) {
+                                return const DecoratedBox(
+                                  decoration: BoxDecoration(
+                                    color: yellow,
+                                  ),
+                                );
+                              },
+                            ),
+                          ),
+                        ),
+                      )
+                    : Expanded(
+                        child: ListView.builder(
+                          physics: const ClampingScrollPhysics(),
+                          shrinkWrap: true,
+                          itemCount: controller.tracking.length,
+                          itemBuilder: (context, index) {
+                            final tracking = controller.tracking[index];
+                            final formatter = DateFormat('dd-MMM-yyyy');
+                            var date;
+                            
+                            if (controller.tracking.length > 0) {
+                              if (tracking.date != null) {
+                                date = formatter.format(tracking.date!);
+                              }
                             }
 
-                            if (tracking.length > 2) {
-                              if (tracking[2].date != null) {
-                                dateSend = formatter.format(tracking[2].date!);
-                              }
-
-                              if (tracking.length > 3) {
-                                if (tracking[3].date != null) {
-                                  dateReceive =
-                                      formatter.format(tracking[3].date!);
-                                }
-                              }
-                            }
-                          }
-                        }
-
-                        return controller.isLoading.value
-                            ? Expanded(
-                                child: Center(
-                                  child: FadeAnimation(
-                                    delay: 1,
-                                    child: SpinKitWave(
-                                      size: 30,
-                                      itemBuilder:
-                                          (BuildContext context, int index) {
-                                        return const DecoratedBox(
-                                          decoration: BoxDecoration(
-                                            color: yellow,
-                                          ),
-                                        );
-                                      },
+                            return Container(
+                              margin: const EdgeInsets.only(bottom: 15),
+                              child: Row(
+                                children: [
+                                  SvgPicture.asset(
+                                    iconTracking[index],
+                                    height: 30,
+                                    width: 30,
+                                  ),
+                                  const SizedBox(width: 10),
+                                  Expanded(
+                                    child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        PointText(
+                                            text: date == null
+                                                ? '00-00-0000'
+                                                : date),
+                                        PointText(
+                                            text: tracking.status.toString()),
+                                        if (tracking.process == '4')
+                                          Column(
+                                            children: [
+                                              const SizedBox(height: 5),
+                                              Row(
+                                                children: [
+                                                  GestureDetector(
+                                                    onTap: () {
+                                                      Get.to(
+                                                        ViewReceipt(
+                                                            title: 'VIEW IMAGE',
+                                                            image: ApiUrl
+                                                                    .receiptImage +
+                                                                controller.image
+                                                                    .value),
+                                                      );
+                                                    },
+                                                    child: const Text(
+                                                      'View Image',
+                                                      style: TextStyle(
+                                                          color: Colors.blue),
+                                                    ),
+                                                  ),
+                                                  const SizedBox(width: 15),
+                                                  GestureDetector(
+                                                    onTap: () {
+                                                      Get.to(
+                                                        ViewReceipt(
+                                                            title:
+                                                                'VIEW SIGNATURE',
+                                                            image: ApiUrl
+                                                                    .receiptSignature +
+                                                                controller
+                                                                    .signature
+                                                                    .value),
+                                                      );
+                                                    },
+                                                    child: const Text(
+                                                      'View Receipt',
+                                                      style: TextStyle(
+                                                          color: Colors.blue),
+                                                    ),
+                                                  ),
+                                                ],
+                                              ),
+                                            ],
+                                          )
+                                      ],
                                     ),
                                   ),
-                                ),
-                              )
-                            : Expanded(
-                                child: SingleChildScrollView(
-                                  child: Row(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      Column(
-                                        children: List.generate(
-                                          tracking.length,
-                                          (index) => Container(
-                                            margin: const EdgeInsets.only(
-                                              bottom: 30,
-                                              top: 10,
-                                            ),
-                                            child: SvgPicture.asset(
-                                              iconTracking[index],
-                                              height: 24,
-                                              width: 24,
-                                            ),
-                                          ),
-                                        ),
-                                      ),
-                                      const SizedBox(width: 10),
-                                      Expanded(
-                                        child: Column(
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.start,
-                                          children: [
-                                            PointText(
-                                                text: dateWaiting == null ||
-                                                        dateWaiting.isEmpty
-                                                    ? ''
-                                                    : dateWaiting),
-                                            PointText(
-                                                text: tracking[0]
-                                                    .status
-                                                    .toString()),
-                                            const SizedBox(height: 18),
-                                            tracking.length < 2
-                                                ? Container()
-                                                : PointText(
-                                                    text: dateValid == null ||
-                                                            dateValid.isEmpty
-                                                        ? ''
-                                                        : dateValid),
-                                            tracking.length < 2
-                                                ? Container()
-                                                : PointText(
-                                                    text: tracking[1]
-                                                        .status
-                                                        .toString()),
-                                            const SizedBox(height: 30),
-                                            tracking.length < 3
-                                                ? Container()
-                                                : PointText(
-                                                    text: dateSend == null ||
-                                                            dateSend.isEmpty
-                                                        ? ''
-                                                        : dateSend),
-                                            tracking.length < 3
-                                                ? Container()
-                                                : PointText(
-                                                    text: tracking[2]
-                                                        .status
-                                                        .toString()),
-                                            const SizedBox(height: 30),
-                                            tracking.length < 4
-                                                ? Container()
-                                                : PointText(
-                                                    text: dateReceive == null ||
-                                                            dateReceive.isEmpty
-                                                        ? ''
-                                                        : dateReceive),
-                                            tracking.length < 4
-                                                ? Container()
-                                                : PointText(
-                                                    text: tracking[3]
-                                                        .status
-                                                        .toString()),
-                                            const SizedBox(height: 10),
-                                            tracking.length < 4
-                                                ? Container()
-                                                : Row(
-                                                    children: [
-                                                      GestureDetector(
-                                                        onTap: () {
-                                                          Get.to(
-                                                            ViewReceipt(
-                                                                title:
-                                                                    'VIEW IMAGE',
-                                                                image: ApiUrl
-                                                                        .receiptImage +
-                                                                    controller
-                                                                        .image
-                                                                        .value),
-                                                          );
-                                                        },
-                                                        child: const Text(
-                                                          'View Image',
-                                                          style: TextStyle(
-                                                            color: Colors.blue,
-                                                            decoration:
-                                                                TextDecoration
-                                                                    .underline,
-                                                          ),
-                                                        ),
-                                                      ),
-                                                      const SizedBox(width: 20),
-                                                      GestureDetector(
-                                                        onTap: () {
-                                                          Get.to(
-                                                            ViewReceipt(
-                                                                title:
-                                                                    'VIEW SIGNATURE',
-                                                                image: ApiUrl
-                                                                        .receiptSignature +
-                                                                    controller
-                                                                        .signature
-                                                                        .value),
-                                                          );
-                                                        },
-                                                        child: const Text(
-                                                          'View Signature',
-                                                          style: TextStyle(
-                                                            color: Colors.blue,
-                                                            decoration:
-                                                                TextDecoration
-                                                                    .underline,
-                                                          ),
-                                                        ),
-                                                      ),
-                                                    ],
-                                                  )
-                                          ],
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                              );
-                      },
-                    )
-                  ],
-                ),
+                                ],
+                              ),
+                            );
+                          },
+                        ),
+                      ),
               ),
-              // SizedBox(
-              //   width: Get.width,
-              //   child: ElevatedButton(
-              //     style: ElevatedButton.styleFrom(
-              //       backgroundColor: yellow,
-              //       foregroundColor: baseColor,
-              //       shape: const StadiumBorder(),
-              //     ),
-              //     onPressed: () {},
-              //     child: const Text('I have received gift'),
-              //   ),
-              // )
             ],
           ),
         ),
