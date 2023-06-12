@@ -1,6 +1,6 @@
-# member_apps
+# Triwarna Member
 
-A new Flutter project.
+Triwarna Member Apps on Android/IOS by Flutter.
 
 ## Getting Started
 
