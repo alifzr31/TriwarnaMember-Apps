@@ -4,13 +4,12 @@ Triwarna Member Apps on Android/IOS by Flutter.
 
 ## Getting Started
 
-This project is a starting point for a Flutter application.
+This project was built for user's of Triwarna Member.
 
-A few resources to get you started if this is your first Flutter project:
+A few resources of this project:
 
 - [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
 - [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+- [Loyalty Triwarna](http://loyalty.triwarna.co.id:8080/triwarna/)
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+Copyright © AnyarTech 2023 || All Right Reserved
