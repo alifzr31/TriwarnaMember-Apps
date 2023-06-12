@@ -72,9 +72,9 @@ class EventPage extends StatelessWidget {
                   );
                 },
                 child: ListView(
-                  children: const [
+                  children: [
                     LotteryAnnouncement(),
-                    SizedBox(height: 10),
+                    const SizedBox(height: 5),
                     TodayEvent(),
                   ],
                 ),
