@@ -28,7 +28,7 @@ class MyApp extends StatelessWidget {
         return GetMaterialApp(
           title: 'Member Apps',
           theme: ThemeData(
-            colorScheme: ColorScheme.light(
+            colorScheme: const ColorScheme.light(
               primary: baseColor,
               secondary: yellow,
             ),
@@ -37,6 +37,10 @@ class MyApp extends StatelessWidget {
             fontFamily: 'Signika',
           ),
           darkTheme: ThemeData(
+            colorScheme: const ColorScheme.dark(
+              primary: baseColor,
+              secondary: yellow,
+            ),
             brightness: Brightness.dark,
             primarySwatch: Colors.deepPurple,
             fontFamily: 'Signika',
