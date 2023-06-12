@@ -1,3 +1,4 @@
+import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_custom_clippers/flutter_custom_clippers.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
@@ -10,6 +11,7 @@ import 'package:member_apps/app/core/utils/api_url.dart';
 import 'package:member_apps/app/core/value.dart';
 import 'package:member_apps/app/modules/dashboard/controller.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:member_apps/app/component/confirm_alert_button.dart';
 
 class AccountPage extends StatelessWidget {
   const AccountPage({super.key});
@@ -84,11 +86,16 @@ class HeaderAccount extends StatelessWidget {
                                           '/${controller.user.value!.image}'),
                                     ),
                                     SizedBox(width: Get.width * 0.04),
-                                    controller.user.value!.loyalty.toString().capitalize == 'Silver'
+                                    controller.user.value!.loyalty
+                                                .toString()
+                                                .capitalize ==
+                                            'Silver'
                                         ? Image.asset(
                                             'assets/images/silver.png',
                                             height: 50)
-                                        : controller.user.value!.loyalty.toString().capitalize ==
+                                        : controller.user.value!.loyalty
+                                                    .toString()
+                                                    .capitalize ==
                                                 'Platinum'
                                             ? Image.asset(
                                                 'assets/images/platinum.png',
@@ -110,7 +117,9 @@ class HeaderAccount extends StatelessWidget {
                                                 color: Colors.white),
                                           ),
                                           const SizedBox(height: 5),
-                                          controller.user.value!.loyalty.toString().capitalize ==
+                                          controller.user.value!.loyalty
+                                                      .toString()
+                                                      .capitalize ==
                                                   'Silver'
                                               ? Container(
                                                   height: 23,
@@ -124,8 +133,9 @@ class HeaderAccount extends StatelessWidget {
                                                   child: const Center(
                                                       child: Text('Silver')),
                                                 )
-                                              : controller.user.value!
-                                                          .loyalty.toString().capitalize ==
+                                              : controller.user.value!.loyalty
+                                                          .toString()
+                                                          .capitalize ==
                                                       'Platinum'
                                                   ? Container(
                                                       height: 23,
@@ -344,11 +354,45 @@ class BodyAccount extends StatelessWidget {
             title: const Text('Log Out'),
             trailing: const Icon(Icons.keyboard_arrow_right),
             onTap: () async {
-              SharedPreferences prefs = await SharedPreferences.getInstance();
-              await prefs.clear();
-              await prefs.setBool('opened', true);
+              AwesomeDialog(
+                context: context,
+                dialogType: DialogType.info,
+                animType: AnimType.topSlide,
+                dismissOnTouchOutside: true,
+                dismissOnBackKeyPress: false,
+                headerAnimationLoop: true,
+                btnCancel: ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                    shape: const StadiumBorder(),
+                    backgroundColor: yellow,
+                    foregroundColor: baseColor,
+                  ),
+                  onPressed: () {
+                    Get.back();
+                  },
+                  child: const Text('Cancel'),
+                ),
+                btnOkColor: baseColor,
+                btnOk: ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                    shape: const StadiumBorder(),
+                    backgroundColor: baseColor,
+                    foregroundColor: yellow,
+                  ),
+                  onPressed: () async {
+                    SharedPreferences prefs =
+                        await SharedPreferences.getInstance();
+                    await prefs.clear();
+                    await prefs.setBool('opened', true);
 
-              Get.offAllNamed('/dashboard0');
+                    Get.offAllNamed('/dashboard0');
+                  },
+                  child: const Text('Okay'),
+                ),
+                padding: const EdgeInsets.all(10),
+                title: 'Are you sure?',
+                desc: 'Are you sure want to log out?',
+              ).show();
             },
           ),
         ),
