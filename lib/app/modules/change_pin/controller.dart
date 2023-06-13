@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:dio/dio.dart' as _dio;
 import 'package:icons_plus/icons_plus.dart';
+import 'package:member_apps/app/core/utils/loading_function.dart';
 import 'package:member_apps/app/data/providers/profile_provider.dart';
 
 class ChangePinController extends GetxController {
@@ -14,12 +15,14 @@ class ChangePinController extends GetxController {
   final newPinController = TextEditingController();
   final confirmPinController = TextEditingController();
 
-  void changePin() async {
+  void changePin(BuildContext context) async {
     final formData = _dio.FormData.fromMap({
       'current_pin': currentPinController.text,
       'new_pin': newPinController.text,
       'confirm_pin': confirmPinController.text,
     });
+
+    loading(context);
 
     try {
       final response = await profileProvider.changePin(formData);
@@ -34,6 +37,8 @@ class ChangePinController extends GetxController {
 
       Get.offAllNamed('/dashboard');
     } on _dio.DioError catch (e) {
+      Get.back();
+      
       Get.snackbar(
         'Change PIN Failed',
         e.response!.data['message'].toString(),

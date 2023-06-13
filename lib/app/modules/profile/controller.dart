@@ -2,8 +2,10 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:icons_plus/icons_plus.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:dio/dio.dart' as _dio;
+import 'package:member_apps/app/core/utils/loading_function.dart';
 import 'package:member_apps/app/data/models/village.dart';
 import 'package:member_apps/app/data/providers/profile_provider.dart';
 import 'package:member_apps/app/modules/dashboard/controller.dart';
@@ -77,7 +79,7 @@ class ProfileController extends GetxController {
     update();
   }
 
-  void updateProfile(XFile? file) async {
+  void updateProfile(XFile? file, BuildContext context) async {
     final formData = _dio.FormData.fromMap({
       'name': nameController.text,
       if (file != null) 'image': await _dio.MultipartFile.fromFile(file.path),
@@ -86,6 +88,8 @@ class ProfileController extends GetxController {
       'address': addressController.text,
       'village': selectedVillage.value
     });
+
+    loading(context);
 
     print(formData.fields[1]);
 
@@ -107,7 +111,18 @@ class ProfileController extends GetxController {
       Get.offAndToNamed('/dashboard');
       userControl.fetchProfile();
     } on _dio.DioError catch (e) {
-      print(e.response!.statusMessage);
+      Get.back();
+      Get.snackbar(
+        'Update Profile Failed',
+        e.response!.data.toString(),
+        icon: const Icon(
+          Iconsax.danger,
+          color: Colors.white,
+          size: 30,
+        ),
+        backgroundColor: Colors.red.shade800,
+        colorText: Colors.white,
+      );
     }
   }
 }

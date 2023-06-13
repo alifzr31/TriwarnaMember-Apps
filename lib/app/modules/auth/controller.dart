@@ -4,6 +4,7 @@ import 'package:dio/dio.dart' as _dio;
 import 'package:icons_plus/icons_plus.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:member_apps/app/data/providers/auth_provider.dart';
+import 'package:member_apps/app/core/utils/loading_function.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class AuthController extends GetxController {
@@ -18,11 +19,13 @@ class AuthController extends GetxController {
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
 
-  void login() async {
+  void login(BuildContext context) async {
     final formData = _dio.FormData.fromMap({
       'username': emailController.text,
       'password': passwordController.text,
     });
+
+    loading(context);
 
     try {
       final response = await authProvider.login(formData);
@@ -32,20 +35,29 @@ class AuthController extends GetxController {
         _prefs.setString('token', response.data['token']);
 
         Get.snackbar(
-        'Log In Success',
-        response.data['message'].toString(),
-        icon: const Icon(Icons.check, color: Colors.white, size: 30,),
-        backgroundColor: Colors.green.shade800,
-        colorText: Colors.white,
-      );
+          'Log In Success',
+          response.data['message'].toString(),
+          icon: const Icon(
+            Icons.check,
+            color: Colors.white,
+            size: 30,
+          ),
+          backgroundColor: Colors.green.shade800,
+          colorText: Colors.white,
+        );
 
         Get.offAllNamed('/dashboard');
       }
     } on _dio.DioError catch (e) {
+      Get.back();
       Get.snackbar(
         'Log In Failed',
         e.response!.data['message'].toString(),
-        icon: const Icon(Iconsax.danger, color: Colors.white, size: 30,),
+        icon: const Icon(
+          Iconsax.danger,
+          color: Colors.white,
+          size: 30,
+        ),
         backgroundColor: Colors.red.shade800,
         colorText: Colors.white,
       );
@@ -54,7 +66,7 @@ class AuthController extends GetxController {
 
   void register(XFile file) async {
     final fl = await _dio.MultipartFile.fromFile(file.path);
-    
+
     final formData = _dio.FormData.fromMap({
       'nama': nameController.text,
       'file': await _dio.MultipartFile.fromFile(file.path),

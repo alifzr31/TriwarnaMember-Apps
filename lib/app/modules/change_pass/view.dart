@@ -149,7 +149,7 @@ class _FormChangePassState extends State<FormChangePass> {
           child: BaseButton(
             onPressed: () async {
               if (controller.formKey.currentState!.validate()) {
-                controller.changePass();
+                controller.changePass(context);
               }
             },
             text: 'Change Password',

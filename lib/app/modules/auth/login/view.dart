@@ -96,7 +96,7 @@ class _LoginFormState extends State<LoginForm> {
               text: 'Log In',
               onPressed: () async {
                 if (controller.formKeyLogin.currentState!.validate()) {
-                  controller.login();
+                  controller.login(context);
                   print(controller.emailController.text);
                   print(controller.passwordController.text);
                 }

@@ -174,7 +174,7 @@ class _HeaderProfileState extends State<HeaderProfile> {
                       onPressed: () async {
                         print(picked);
                         if (controller.formKey.currentState!.validate()) {
-                          controller.updateProfile(picked);
+                          controller.updateProfile(picked, context);
                         }
                       },
                     ),

@@ -183,7 +183,7 @@ class FormChangePinState extends State<FormChangePin> {
               focusNodeConfirm.unfocus();
 
               if (controller.formKey.currentState!.validate()) {
-                controller.changePin();
+                controller.changePin(context);
               }
             },
           ),
