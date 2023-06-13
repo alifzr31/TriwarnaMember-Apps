@@ -1,14 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 
 class CardMenu extends StatelessWidget {
   const CardMenu({
     Key? key,
     this.onTap,
-    required this.pathImage,
+    required this.svgAsset,
   }) : super(key: key);
 
   final void Function()? onTap;
-  final String pathImage;
+  final String svgAsset;
 
   @override
   Widget build(BuildContext context) {
@@ -25,7 +26,7 @@ class CardMenu extends StatelessWidget {
           onTap: onTap,
           child: Padding(
             padding: const EdgeInsets.all(20),
-            child: Image.asset(pathImage),
+            child: SvgPicture.asset(svgAsset),
           ),
         ),
       ),

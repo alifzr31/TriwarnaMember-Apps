@@ -22,7 +22,7 @@ class MenuButton extends StatelessWidget {
               Column(
                 children: [
                   CardMenu(
-                    pathImage: 'assets/images/event.png',
+                    svgAsset: 'assets/images/event.svg',
                     onTap: () async {
                       SharedPreferences sharedPreferences =
                           await SharedPreferences.getInstance();
@@ -46,7 +46,7 @@ class MenuButton extends StatelessWidget {
                     },
                   ),
                   CardMenu(
-                    pathImage: 'assets/images/konsul.png',
+                    svgAsset: 'assets/images/konsul.svg',
                     onTap: () {
                       _showBottomSheet(
                         'free_consult.svg',
@@ -60,7 +60,7 @@ class MenuButton extends StatelessWidget {
               Column(
                 children: [
                   CardMenu(
-                    pathImage: 'assets/images/promo.png',
+                    svgAsset: 'assets/images/promo.svg',
                     onTap: () async {
                       SharedPreferences sharedPreferences =
                           await SharedPreferences.getInstance();
@@ -84,12 +84,8 @@ class MenuButton extends StatelessWidget {
                     },
                   ),
                   CardMenu(
-                    pathImage: 'assets/images/ongkir.png',
+                    svgAsset: 'assets/images/ongkir.svg',
                     onTap: () {
-                      // _showBottomSheet(
-                      //   'free_shipping.svg',
-                      //   ''
-                      // );
                       _showBottomSheet(
                         'free_shipping.svg',
                         'Free Shipping',
@@ -102,7 +98,7 @@ class MenuButton extends StatelessWidget {
             ],
           ),
           CardMenu(
-            pathImage: 'assets/images/member.png',
+            svgAsset: 'assets/images/member.svg',
             onTap: () {
               Get.toNamed('/membermenu');
             },
