@@ -5,6 +5,7 @@ import 'package:member_apps/app/core/value.dart';
 void loading(BuildContext context) {
   showDialog(
     context: context,
+    barrierDismissible: false,
     barrierColor: Colors.black.withOpacity(0.3),
     builder: (context) {
       return LoadingAnimationWidget.flickr(
