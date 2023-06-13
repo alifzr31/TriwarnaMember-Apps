@@ -16,11 +16,16 @@ class DashboardController extends GetxController {
   var isLoading = true.obs;
   var user = Rx<User?>(null);
   var store = <Store>[].obs;
+  final token = ''.obs;
 
   @override
-  void onInit() {
+  void onInit() async {
     fetchProfile();
     fetchStore();
+
+    SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
+    var token_access = sharedPreferences.getString('token');
+    token.value = token_access.toString();
     super.onInit();
   }
 

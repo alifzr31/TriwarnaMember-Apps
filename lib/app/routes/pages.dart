@@ -5,13 +5,12 @@ import 'package:member_apps/app/modules/change_pass/view.dart';
 import 'package:member_apps/app/modules/change_pin/binding.dart';
 import 'package:member_apps/app/modules/change_pin/view.dart';
 import 'package:member_apps/app/modules/dashboard/binding.dart';
+import 'package:member_apps/app/modules/dashboard/menu_page/member_menu.dart';
 import 'package:member_apps/app/modules/dashboard/view.dart';
 import 'package:member_apps/app/modules/auth/login/view.dart';
 import 'package:member_apps/app/modules/dashboard/view0.dart';
 import 'package:member_apps/app/modules/event/binding.dart';
 import 'package:member_apps/app/modules/event/view.dart';
-import 'package:member_apps/app/modules/gratis_ongkir/binding.dart';
-import 'package:member_apps/app/modules/gratis_ongkir/view.dart';
 import 'package:member_apps/app/modules/input_pin/binding.dart';
 import 'package:member_apps/app/modules/input_pin/view.dart';
 import 'package:member_apps/app/modules/onboard/view.dart';
@@ -100,9 +99,8 @@ abstract class AppPages {
       transition: Transition.rightToLeftWithFade,
     ),
     GetPage(
-      name: Routes.gratisongkir,
-      page: () => const GratisOngkirPage(),
-      binding: GratisOngkirBinding(),
+      name: Routes.membermenu,
+      page: () => const MemberMenuPage(),
       transition: Transition.rightToLeftWithFade,
     ),
     GetPage(

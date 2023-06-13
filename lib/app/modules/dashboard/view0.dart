@@ -2,7 +2,7 @@ import 'package:custom_navigation_bar/custom_navigation_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:icons_plus/icons_plus.dart';
 import 'package:member_apps/app/core/value.dart';
-import 'package:member_apps/app/modules/dashboard/widget/home0.dart';
+import 'package:member_apps/app/modules/dashboard/widget/home.dart';
 import 'package:member_apps/app/modules/dashboard/widget/store.dart';
 
 class DashboardPage0 extends StatefulWidget {
@@ -21,7 +21,7 @@ class _DashboardPage0State extends State<DashboardPage0> {
       body: IndexedStack(
         index: _page,
         children: [
-          HomePage0(),
+          HomePage(),
           StorePage(),
         ],
       ),
