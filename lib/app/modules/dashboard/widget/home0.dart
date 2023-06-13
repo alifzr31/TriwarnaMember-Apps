@@ -1,13 +1,9 @@
-import 'package:card_swiper/card_swiper.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_custom_clippers/flutter_custom_clippers.dart';
 import 'package:get/get.dart';
 import 'package:member_apps/app/component/card_menu.dart';
 import 'package:member_apps/app/core/value.dart';
 import 'package:member_apps/app/modules/dashboard/component/carousel.dart';
 import 'package:member_apps/app/modules/webview/view.dart';
-import 'package:smart_alert_dialog/models/alert_dialog_text.dart';
-import 'package:smart_alert_dialog/smart_alert_dialog.dart';
 
 class HomePage0 extends StatelessWidget {
   const HomePage0({super.key});
@@ -157,19 +153,7 @@ class MenuButton extends StatelessWidget {
                   ),
                   CardMenu(
                     pathImage: 'assets/images/konsul.png',
-                    onTap: () {
-                      showDialog(
-                        context: context,
-                        builder: (_) => SmartAlertDialog(
-                          title: "You are not logged in",
-                          message: "Please login first to enjoy this feature.",
-                          text: AlertDialogText(),
-                          onConfirmPressed: () {
-                            Get.toNamed('/login');
-                          },
-                        ),
-                      );
-                    },
+                    onTap: () {},
                   ),
                 ],
               ),
@@ -183,19 +167,7 @@ class MenuButton extends StatelessWidget {
                   ),
                   CardMenu(
                     pathImage: 'assets/images/ongkir.png',
-                    onTap: () {
-                      showDialog(
-                        context: context,
-                        builder: (_) => SmartAlertDialog(
-                          title: "You are not logged in",
-                          message: "Please login first to enjoy this feature.",
-                          text: AlertDialogText(),
-                          onConfirmPressed: () {
-                            Get.toNamed('/login');
-                          },
-                        ),
-                      );
-                    },
+                    onTap: () {},
                   ),
                 ],
               ),
@@ -203,19 +175,7 @@ class MenuButton extends StatelessWidget {
           ),
           CardMenu(
             pathImage: 'assets/images/member.png',
-            onTap: () {
-              showDialog(
-                context: context,
-                builder: (_) => SmartAlertDialog(
-                  title: "You are not logged in",
-                  message: "Please login first to enjoy this feature.",
-                  text: AlertDialogText(),
-                  onConfirmPressed: () {
-                    Get.toNamed('/login');
-                  },
-                ),
-              );
-            },
+            onTap: () {},
           ),
         ],
       ),

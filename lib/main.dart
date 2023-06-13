@@ -3,7 +3,6 @@ import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:member_apps/app/core/value.dart';
 import 'package:member_apps/app/routes/pages.dart';
-import 'package:responsive_sizer/responsive_sizer.dart';
 
 void main() {
   SystemChrome.setSystemUIOverlayStyle(
@@ -23,36 +22,32 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return ResponsiveSizer(
-      builder: (context, orientation, screentype) {
-        return GetMaterialApp(
-          title: 'Member Apps',
-          theme: ThemeData(
-            colorScheme: const ColorScheme.light(
-              primary: baseColor,
-              secondary: yellow,
-            ),
-            brightness: Brightness.light,
-            primarySwatch: Colors.deepPurple,
-            fontFamily: 'Signika',
-          ),
-          darkTheme: ThemeData(
-            colorScheme: const ColorScheme.dark(
-              primary: baseColor,
-              secondary: yellow,
-            ),
-            brightness: Brightness.dark,
-            primarySwatch: Colors.deepPurple,
-            fontFamily: 'Signika',
-          ),
-          themeMode: ThemeMode.light,
-          enableLog: true,
-          smartManagement: SmartManagement.full,
-          debugShowCheckedModeBanner: false,
-          initialRoute: '/',
-          getPages: AppPages.pages,
-        );
-      },
+    return GetMaterialApp(
+      title: 'Member Apps',
+      theme: ThemeData(
+        colorScheme: const ColorScheme.light(
+          primary: baseColor,
+          secondary: yellow,
+        ),
+        brightness: Brightness.light,
+        primarySwatch: Colors.deepPurple,
+        fontFamily: 'Signika',
+      ),
+      darkTheme: ThemeData(
+        colorScheme: const ColorScheme.dark(
+          primary: baseColor,
+          secondary: yellow,
+        ),
+        brightness: Brightness.dark,
+        primarySwatch: Colors.deepPurple,
+        fontFamily: 'Signika',
+      ),
+      themeMode: ThemeMode.light,
+      enableLog: true,
+      smartManagement: SmartManagement.full,
+      debugShowCheckedModeBanner: false,
+      initialRoute: '/',
+      getPages: AppPages.pages,
     );
   }
 }

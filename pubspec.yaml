@@ -36,7 +36,6 @@ dependencies:
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.2
   get: ^4.6.5
-  http: ^0.13.6
   dio: ^5.1.1
   flutter_spinkit: ^5.1.0
   custom_navigation_bar: ^0.8.2
@@ -54,21 +53,20 @@ dependencies:
   url_launcher: ^6.1.10
   flutter_svg: ^2.0.5
   map_launcher: ^2.5.0+1
-  custom_refresh_indicator: ^2.0.1
   fluttertoast: ^8.2.1
-  responsive_sizer: ^3.1.1
-  font_awesome_flutter: 
   intl: ^0.17.0
-  smart_alert_dialog: ^4.0.4
   simple_animations: ^4.0.1
   supercharged: ^2.1.1
   pinput: ^2.2.31
   webview_flutter: ^3.0.4
   flutter_typeahead: ^4.3.8
-  flutter_expanded_tile: ^0.3.7
   awesome_dialog: ^3.1.0
-  easy_stepper: ^0.6.0
   loading_animation_widget: ^1.2.0+4
+
+  # NOT/NOT YET USE LIBRARY
+  # http: ^0.13.6
+  # custom_refresh_indicator: ^2.0.1
+  # flutter_expanded_tile: ^0.3.7
 
 dev_dependencies:
   flutter_test:

@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
+import 'package:icons_plus/icons_plus.dart';
 import 'package:member_apps/app/animation/fadeanimation.dart';
 import 'package:member_apps/app/component/base_alert.dart';
 import 'package:member_apps/app/component/base_refresh.dart';
@@ -13,7 +14,6 @@ import 'package:member_apps/app/core/utils/api_url.dart';
 import 'package:member_apps/app/core/value.dart';
 import 'package:member_apps/app/modules/dashboard/component/carousel.dart';
 import 'package:member_apps/app/modules/dashboard/controller.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -200,8 +200,8 @@ class Header extends StatelessWidget {
                                       },
                                     );
                                   },
-                                  icon: Icon(
-                                    FontAwesomeIcons.qrcode,
+                                  icon: const Icon(
+                                    FontAwesome.qrcode,
                                     color: Colors.white,
                                     size: 30,
                                   ),
