@@ -383,7 +383,7 @@ class BodyAccount extends StatelessWidget {
                   onPressed: () async {
                     loading(context);
 
-                    await Future.delayed(const Duration(seconds: 1), () async {
+                    await Future.delayed(const Duration(milliseconds: 600), () async {
                       SharedPreferences prefs =
                           await SharedPreferences.getInstance();
                       await prefs.clear();
