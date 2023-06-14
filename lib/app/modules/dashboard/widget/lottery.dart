@@ -34,7 +34,7 @@ class HeaderLottery extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       width: Get.width,
-      height: 370,
+      height: 400,
       decoration: BoxDecoration(
         image: const DecorationImage(
           image: AssetImage('assets/images/head.png'),
@@ -63,6 +63,7 @@ class HeaderLottery extends StatelessWidget {
                           text: 'Data Diri', bold: FontWeight.bold, size: 18),
                       const SizedBox(height: 20),
                       Row(
+                        crossAxisAlignment: CrossAxisAlignment.start,
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Expanded(
@@ -120,7 +121,10 @@ class HeaderLottery extends StatelessWidget {
                                 FadeAnimation(
                                   delay: 1,
                                   child: GreyText(
-                                      text: controller.user.value!.address!),
+                                    text: controller
+                                        .user.value!.fullAddress!.capitalize!,
+                                    // textAlign: TextAlign.justify,
+                                  ),
                                 ),
                                 const SizedBox(height: 10),
                                 Row(
@@ -143,6 +147,7 @@ class HeaderLottery extends StatelessWidget {
                               ],
                             ),
                           ),
+                          const SizedBox(width: 15),
                           Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
