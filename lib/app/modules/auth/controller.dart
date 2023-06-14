@@ -35,6 +35,7 @@ class AuthController extends GetxController {
         _prefs.setString('token', response.data['token']);
 
         Get.snackbar(
+          margin: const EdgeInsets.all(10),
           'Log In Success',
           response.data['message'].toString(),
           icon: const Icon(
@@ -42,7 +43,7 @@ class AuthController extends GetxController {
             color: Colors.white,
             size: 30,
           ),
-          backgroundColor: Colors.green.shade800,
+          backgroundColor: Colors.green.shade800.withOpacity(0.8),
           colorText: Colors.white,
         );
 
@@ -51,6 +52,7 @@ class AuthController extends GetxController {
     } on _dio.DioError catch (e) {
       Get.back();
       Get.snackbar(
+        margin: const EdgeInsets.all(10),
         'Log In Failed',
         e.response!.data['message'].toString(),
         icon: const Icon(

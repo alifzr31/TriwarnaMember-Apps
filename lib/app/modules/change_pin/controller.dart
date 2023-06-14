@@ -28,9 +28,14 @@ class ChangePinController extends GetxController {
       final response = await profileProvider.changePin(formData);
 
       Get.snackbar(
+        margin: const EdgeInsets.all(10),
         'Change PIN Success',
         response.data['message'].toString(),
-        icon: const Icon(Icons.check, color: Colors.white, size: 30,),
+        icon: const Icon(
+          Icons.check,
+          color: Colors.white,
+          size: 30,
+        ),
         backgroundColor: Colors.green.shade800,
         colorText: Colors.white,
       );
@@ -38,12 +43,17 @@ class ChangePinController extends GetxController {
       Get.offAllNamed('/dashboard');
     } on _dio.DioError catch (e) {
       Get.back();
-      
+
       Get.snackbar(
+        margin: const EdgeInsets.all(10),
         'Change PIN Failed',
         e.response!.data['message'].toString(),
-        icon: const Icon(Iconsax.danger, color: Colors.white, size: 30,),
-        backgroundColor: Colors.red.shade800,
+        icon: const Icon(
+          Iconsax.danger,
+          color: Colors.white,
+          size: 30,
+        ),
+        backgroundColor: Colors.red.shade800.withOpacity(0.8),
         colorText: Colors.white,
       );
     }

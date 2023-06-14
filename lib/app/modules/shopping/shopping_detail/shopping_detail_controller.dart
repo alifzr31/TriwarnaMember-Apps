@@ -49,9 +49,10 @@ class ShoppingDetailController extends GetxController {
       update();
     } on DioError catch (e) {
       Get.snackbar(
+        margin: const EdgeInsets.all(10),
         'Failed',
         e.response.toString(),
-        backgroundColor: Colors.red.shade800,
+        backgroundColor: Colors.red.shade800.withOpacity(0.8),
         colorText: Colors.white,
       );
     }

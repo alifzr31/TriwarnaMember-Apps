@@ -56,6 +56,7 @@ class DashboardController extends GetxController {
           update();
         } else {
           Get.snackbar(
+            margin: const EdgeInsets.all(10),
             'Failed',
             response.statusCode.toString() +
                 ' ' +
@@ -66,6 +67,7 @@ class DashboardController extends GetxController {
         }
       } on DioError catch (e) {
         Get.snackbar(
+          margin: const EdgeInsets.all(10),
           'Failed',
           e.toString(),
           backgroundColor: Colors.red.shade800,
@@ -89,17 +91,19 @@ class DashboardController extends GetxController {
         store.value = body.map((e) => Store.fromJson(e)).toList();
       } else {
         Get.snackbar(
+          margin: const EdgeInsets.all(10),
           'Failed',
           response.statusCode.toString(),
-          backgroundColor: Colors.red.shade800,
+          backgroundColor: Colors.red.shade800.withOpacity(0.8),
           colorText: Colors.white,
         );
       }
     } on DioError catch (e) {
       Get.snackbar(
+        margin: const EdgeInsets.all(10),
         'Failed',
         e.toString(),
-        backgroundColor: Colors.red.shade800,
+        backgroundColor: Colors.red.shade800.withOpacity(0.8),
         colorText: Colors.white,
       );
     }

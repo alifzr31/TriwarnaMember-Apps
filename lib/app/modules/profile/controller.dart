@@ -67,6 +67,7 @@ class ProfileController extends GetxController {
       update();
     } on _dio.DioError catch (e) {
       Get.snackbar(
+        margin: const EdgeInsets.all(10),
         'Failed',
         e.response!.statusCode.toString() +
             ' ' +
@@ -97,6 +98,7 @@ class ProfileController extends GetxController {
       final response = await profileProvider.updateProfile(formData);
 
       Get.snackbar(
+        margin: const EdgeInsets.all(10),
         'Update Profile Success',
         response.data['success'].toString(),
         icon: const Icon(
@@ -104,7 +106,7 @@ class ProfileController extends GetxController {
           color: Colors.white,
           size: 30,
         ),
-        backgroundColor: Colors.green.shade800,
+        backgroundColor: Colors.green.shade800.withOpacity(0.8),
         colorText: Colors.white,
       );
 
@@ -113,6 +115,7 @@ class ProfileController extends GetxController {
     } on _dio.DioError catch (e) {
       Get.back();
       Get.snackbar(
+        margin: const EdgeInsets.all(10),
         'Update Profile Failed',
         e.response!.data.toString(),
         icon: const Icon(
@@ -120,7 +123,7 @@ class ProfileController extends GetxController {
           color: Colors.white,
           size: 30,
         ),
-        backgroundColor: Colors.red.shade800,
+        backgroundColor: Colors.red.shade800.withOpacity(0.8),
         colorText: Colors.white,
       );
     }

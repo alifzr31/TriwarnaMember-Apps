@@ -28,6 +28,7 @@ class ChangePassController extends GetxController {
       final response = await profileProvider.changePass(formData);
 
       Get.snackbar(
+        margin: const EdgeInsets.all(10),
         'Change Password Success',
         response.data['message'].toString(),
         icon: const Icon(
@@ -42,8 +43,9 @@ class ChangePassController extends GetxController {
       Get.offAllNamed('/dashboard');
     } on _dio.DioError catch (e) {
       Get.back();
-      
+
       Get.snackbar(
+        margin: const EdgeInsets.all(10),
         'Change Password Failed',
         e.response!.data['message'].toString(),
         icon: const Icon(
@@ -51,7 +53,7 @@ class ChangePassController extends GetxController {
           color: Colors.white,
           size: 30,
         ),
-        backgroundColor: Colors.red.shade800,
+        backgroundColor: Colors.red.shade800.withOpacity(0.8),
         colorText: Colors.white,
       );
     }

@@ -29,6 +29,7 @@ class MenuButton extends StatelessWidget {
                       final token = sharedPreferences.getString('token');
                       if (token == null) {
                         Get.snackbar(
+                          margin: const EdgeInsets.all(10),
                           "You're not logged in",
                           'You must log in first to access this feature',
                           backgroundColor: Colors.blue.withOpacity(0.8),
@@ -67,6 +68,7 @@ class MenuButton extends StatelessWidget {
                       final token = sharedPreferences.getString('token');
                       if (token == null) {
                         Get.snackbar(
+                          margin: const EdgeInsets.all(10),
                           "You're not logged in",
                           'You must log in first to access this feature',
                           backgroundColor: Colors.blue.withOpacity(0.8),

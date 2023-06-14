@@ -19,8 +19,9 @@ class InputPinController extends GetxController {
       print(response.statusMessage);
     } on _dio.DioError catch (e) {
       print(e.response?.statusCode.toString());
-      
+
       Get.snackbar(
+        margin: const EdgeInsets.all(10),
         'Redeem Failed',
         e.response.toString(),
         icon: const Icon(
@@ -28,7 +29,7 @@ class InputPinController extends GetxController {
           color: Colors.white,
           size: 30,
         ),
-        backgroundColor: Colors.red.shade800,
+        backgroundColor: Colors.red.shade800.withOpacity(0.8),
         colorText: Colors.white,
       );
     }

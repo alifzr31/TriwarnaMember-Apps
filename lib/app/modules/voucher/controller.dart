@@ -44,19 +44,21 @@ class VoucherController extends GetxController {
         update();
       } else {
         Get.snackbar(
+          margin: const EdgeInsets.all(10),
           'Failed',
           response.statusCode.toString() +
               ' ' +
               response.statusMessage.toString(),
-          backgroundColor: Colors.red.shade800,
+          backgroundColor: Colors.red.shade800.withOpacity(0.8),
           colorText: Colors.white,
         );
       }
     } on DioError catch (e) {
       Get.snackbar(
+        margin: const EdgeInsets.all(10),
         'Failed',
         e.response.toString(),
-        backgroundColor: Colors.red.shade800,
+        backgroundColor: Colors.red.shade800.withOpacity(0.8),
         colorText: Colors.white,
       );
     }
