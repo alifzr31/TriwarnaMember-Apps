@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:member_apps/app/animation/fadeanimation.dart';
 import 'package:member_apps/app/component/grey_text.dart';
@@ -13,14 +14,12 @@ class LotteryPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: SingleChildScrollView(
-        child: Column(
-          children: [
-            HeaderLottery(),
-            const SizedBox(height: 5),
-            BodyLottery(),
-          ],
-        ),
+      body: Column(
+        children: [
+          HeaderLottery(),
+          const SizedBox(height: 5),
+          BodyLottery(),
+        ],
       ),
     );
   }
@@ -223,18 +222,12 @@ class BodyLottery extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.all(10),
-      child: Column(
-        children: [
-          SizedBox(height: Get.height * 0.1),
-          Image.asset('assets/images/nodata.png'),
-          const SizedBox(height: 10),
-          const Text(
-            'Lottery Number Not Found',
-            style: TextStyle(fontSize: 20),
-          ),
-        ],
+    return Expanded(
+      child: Center(
+        child: SvgPicture.asset(
+          'assets/images/lotterynotfound.svg',
+          width: Get.width < 390 ? 200 : 230,
+        ),
       ),
     );
   }
