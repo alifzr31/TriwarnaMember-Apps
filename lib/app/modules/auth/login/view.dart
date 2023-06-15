@@ -21,7 +21,7 @@ class LoginPage extends StatelessWidget {
             children: [
               Positioned(
                 right: -300,
-                bottom: -30,
+                bottom: Get.width < 390 ? -100 : -30,
                 child: Image.asset('assets/images/wave.png', fit: BoxFit.cover),
               ),
               SingleChildScrollView(

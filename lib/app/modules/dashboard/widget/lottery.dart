@@ -14,12 +14,18 @@ class LotteryPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Column(
-        children: [
-          HeaderLottery(),
-          const SizedBox(height: 5),
-          BodyLottery(),
-        ],
+      body: SingleChildScrollView(
+        child: SizedBox(
+          height: Get.height,
+          width: Get.width,
+          child: Column(
+            children: [
+              HeaderLottery(),
+              const SizedBox(height: 5),
+              BodyLottery(),
+            ],
+          ),
+        ),
       ),
     );
   }
@@ -33,7 +39,7 @@ class HeaderLottery extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       width: Get.width,
-      height: 400,
+      height: Get.width < 390 ? 380 : 400,
       decoration: BoxDecoration(
         image: const DecorationImage(
           image: AssetImage('assets/images/head.png'),
