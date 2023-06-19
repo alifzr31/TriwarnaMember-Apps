@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
+import 'package:liquid_pull_to_refresh/liquid_pull_to_refresh.dart';
 import 'package:member_apps/app/component/base_refresh.dart';
+import 'package:member_apps/app/core/value.dart';
 import 'package:member_apps/app/modules/dashboard/component/carousel.dart';
 import 'package:member_apps/app/modules/dashboard/component/header_home.dart';
 import 'package:member_apps/app/modules/dashboard/component/menu_button.dart';
@@ -55,23 +57,28 @@ class _HomePageState extends State<HomePage> {
                 ],
               ),
             )
-          : BaseRefresh(
-              onRefresh: refreshHome,
-              child: SingleChildScrollView(
-                child: Column(
-                  children: [
-                    HeaderHome(),
-                    const SizedBox(height: 10),
-                    const MenuButton(),
-                    SizedBox(
-                      height: 200,
-                      width: Get.width,
-                      child: CarouselField(),
-                    ),
-                  ],
-                ),
+          : LiquidPullToRefresh(
+            onRefresh: refreshHome,
+            color: baseColor,
+            showChildOpacityTransition: false,
+            backgroundColor: yellow,
+            springAnimationDurationInMilliseconds: 300,
+            height: 80,
+            child: SingleChildScrollView(
+              child: Column(
+                children: [
+                  HeaderHome(),
+                  const SizedBox(height: 10),
+                  const MenuButton(),
+                  SizedBox(
+                    height: 200,
+                    width: Get.width,
+                    child: CarouselField(),
+                  ),
+                ],
               ),
             ),
+          ),
     );
   }
 }
