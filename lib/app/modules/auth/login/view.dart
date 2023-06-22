@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:icons_plus/icons_plus.dart';
-import 'package:member_apps/app/component/yellow_button.dart';
 import 'package:member_apps/app/component/base_text_input.dart';
-import 'package:member_apps/app/core/utils/api_url.dart';
+import 'package:member_apps/app/component/yellow_button.dart';
 import 'package:member_apps/app/core/value.dart';
 import 'package:member_apps/app/modules/auth/controller.dart';
 import 'package:member_apps/app/modules/webview/view.dart';

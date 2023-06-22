@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
-import 'package:icons_plus/icons_plus.dart';
 import 'package:member_apps/app/component/card_menu.dart';
 import 'package:member_apps/app/component/point_text..dart';
 import 'package:member_apps/app/core/utils/snackbar.dart';

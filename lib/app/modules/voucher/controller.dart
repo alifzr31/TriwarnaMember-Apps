@@ -1,8 +1,7 @@
 import 'dart:convert';
 
-import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'package:dio/dio.dart';
+import 'package:get/get.dart';
 import 'package:member_apps/app/core/utils/snackbar.dart';
 import 'package:member_apps/app/data/models/voucher.dart';
 import 'package:member_apps/app/data/providers/voucher_provider.dart';

@@ -1,13 +1,10 @@
-import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
-import 'package:icons_plus/icons_plus.dart';
 import 'package:member_apps/app/animation/fadeanimation.dart';
 import 'package:member_apps/app/component/base_refresh.dart';
 import 'package:member_apps/app/component/base_search_input.dart';
-import 'package:member_apps/app/component/base_text_input.dart';
 import 'package:member_apps/app/component/confirm_alert_button.dart';
 import 'package:member_apps/app/component/point_text..dart';
 import 'package:member_apps/app/core/utils/api_url.dart';

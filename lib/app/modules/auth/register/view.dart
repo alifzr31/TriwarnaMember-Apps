@@ -3,7 +3,6 @@ import 'package:get/get.dart';
 import 'package:icons_plus/icons_plus.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:member_apps/app/component/base_button.dart';
-import 'package:member_apps/app/component/base_dropdown.dart';
 import 'package:member_apps/app/component/base_text_input.dart';
 import 'package:member_apps/app/core/value.dart';
 import 'package:member_apps/app/modules/auth/controller.dart';
@@ -71,11 +70,6 @@ class RegisterForm extends StatefulWidget {
 
 class _RegisterFormState extends State<RegisterForm> {
   bool showPass = true;
-
-  final List<String> _items = [
-    'KTP',
-    'SIM',
-  ];
 
   final controller = Get.find<AuthController>();
   late final XFile? imagePicked;

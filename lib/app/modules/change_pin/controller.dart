@@ -1,7 +1,6 @@
+import 'package:dio/dio.dart' as _dio;
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:dio/dio.dart' as _dio;
-import 'package:icons_plus/icons_plus.dart';
 import 'package:member_apps/app/core/utils/loading_function.dart';
 import 'package:member_apps/app/core/utils/snackbar.dart';
 import 'package:member_apps/app/data/providers/profile_provider.dart';

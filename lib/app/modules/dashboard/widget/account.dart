@@ -12,7 +12,6 @@ import 'package:member_apps/app/core/utils/loading_function.dart';
 import 'package:member_apps/app/core/value.dart';
 import 'package:member_apps/app/modules/dashboard/controller.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:member_apps/app/component/confirm_alert_button.dart';
 
 class AccountPage extends StatelessWidget {
   const AccountPage({super.key});

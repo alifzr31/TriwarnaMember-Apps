@@ -6,7 +6,6 @@ import 'package:member_apps/app/component/base_pin_input.dart';
 import 'package:member_apps/app/core/value.dart';
 import 'package:member_apps/app/modules/change_pin/controller.dart';
 import 'package:member_apps/app/modules/dashboard/controller.dart';
-import 'package:pinput/pinput.dart';
 
 class ChangePinPage extends StatelessWidget {
   const ChangePinPage({super.key});
