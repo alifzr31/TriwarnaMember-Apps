@@ -15,6 +15,14 @@ class ChangePinController extends GetxController {
   final newPinController = TextEditingController();
   final confirmPinController = TextEditingController();
 
+  @override
+  void onClose() {
+    currentPinController.dispose();
+    newPinController.dispose();
+    confirmPinController.dispose();
+    super.onClose();
+  }
+
   void changePin(BuildContext context) async {
     final formData = _dio.FormData.fromMap({
       'current_pin': currentPinController.text,

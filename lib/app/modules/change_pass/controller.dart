@@ -15,6 +15,14 @@ class ChangePassController extends GetxController {
   final newPassController = TextEditingController();
   final confirmPassController = TextEditingController();
 
+  @override
+  void onClose() {
+    currentPassController.dispose();
+    newPassController.dispose();
+    confirmPassController.dispose();
+    super.onClose();
+  }
+
   void changePass(BuildContext context) async {
     final formData = _dio.FormData.fromMap({
       'current_password': currentPassController.text,

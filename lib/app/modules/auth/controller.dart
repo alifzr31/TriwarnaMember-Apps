@@ -19,6 +19,14 @@ class AuthController extends GetxController {
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
 
+  @override
+  void onClose() {
+    nameController.dispose();
+    emailController.dispose();
+    passwordController.dispose();
+    super.onClose();
+  }
+
   void login(BuildContext context) async {
     final formData = _dio.FormData.fromMap({
       'username': emailController.text,
