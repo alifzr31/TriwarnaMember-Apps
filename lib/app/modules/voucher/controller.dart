@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:dio/dio.dart';
+import 'package:member_apps/app/core/utils/snackbar.dart';
 import 'package:member_apps/app/data/models/voucher.dart';
 import 'package:member_apps/app/data/providers/voucher_provider.dart';
 
@@ -43,24 +44,15 @@ class VoucherController extends GetxController {
         voucher.value = body;
         update();
       } else {
-        Get.snackbar(
-          margin: const EdgeInsets.all(10),
+        failedSnackbar(
           'Failed',
           response.statusCode.toString() +
               ' ' +
               response.statusMessage.toString(),
-          backgroundColor: Colors.red.shade800.withOpacity(0.8),
-          colorText: Colors.white,
         );
       }
     } on DioError catch (e) {
-      Get.snackbar(
-        margin: const EdgeInsets.all(10),
-        'Failed',
-        e.response.toString(),
-        backgroundColor: Colors.red.shade800.withOpacity(0.8),
-        colorText: Colors.white,
-      );
+      failedSnackbar('Failed', e.response.toString());
     }
 
     isLoading.value = false;

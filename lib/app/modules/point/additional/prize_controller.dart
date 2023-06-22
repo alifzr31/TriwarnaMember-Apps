@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:member_apps/app/core/utils/snackbar.dart';
 import 'package:member_apps/app/data/models/prize.dart';
 import 'package:member_apps/app/data/providers/prize_provider.dart';
 
@@ -45,25 +46,17 @@ class PrizeController extends GetxController {
 
         update();
       } else {
-        Get.snackbar(
-          margin: const EdgeInsets.all(10),
+        failedSnackbar(
           'Failed',
           response.statusCode.toString() +
               ' ' +
               response.statusMessage.toString(),
-          backgroundColor: Colors.red.shade800.withOpacity(0.8),
-          colorText: Colors.white,
         );
       }
     } on DioError catch (e) {
-      Get.snackbar(
-        margin: const EdgeInsets.all(10),
+      failedSnackbar(
         'Failed',
-        e.response!.statusCode.toString() +
-            ' ' +
-            e.response!.statusMessage.toString(),
-        backgroundColor: Colors.red.shade800.withOpacity(0.8),
-        colorText: Colors.white,
+        e.response.toString(),
       );
     }
 

@@ -6,6 +6,7 @@ import 'package:icons_plus/icons_plus.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:dio/dio.dart' as _dio;
 import 'package:member_apps/app/core/utils/loading_function.dart';
+import 'package:member_apps/app/core/utils/snackbar.dart';
 import 'package:member_apps/app/data/models/village.dart';
 import 'package:member_apps/app/data/providers/profile_provider.dart';
 import 'package:member_apps/app/modules/dashboard/controller.dart';
@@ -66,15 +67,7 @@ class ProfileController extends GetxController {
 
       update();
     } on _dio.DioError catch (e) {
-      Get.snackbar(
-        margin: const EdgeInsets.all(10),
-        'Failed',
-        e.response!.statusCode.toString() +
-            ' ' +
-            e.response!.statusMessage.toString(),
-        backgroundColor: Colors.red.shade800,
-        colorText: Colors.white,
-      );
+      failedSnackbar('Failed', e.response.toString());
     }
 
     update();
@@ -97,35 +90,14 @@ class ProfileController extends GetxController {
     try {
       final response = await profileProvider.updateProfile(formData);
 
-      Get.snackbar(
-        margin: const EdgeInsets.all(10),
-        'Update Profile Success',
-        response.data['success'].toString(),
-        icon: const Icon(
-          Icons.check,
-          color: Colors.white,
-          size: 30,
-        ),
-        backgroundColor: Colors.green.shade800.withOpacity(0.8),
-        colorText: Colors.white,
-      );
+      successSnackbar(
+          'Update Profile Success', response.data['success'].toString());
 
       Get.offAndToNamed('/dashboard');
       userControl.fetchProfile();
     } on _dio.DioError catch (e) {
       Get.back();
-      Get.snackbar(
-        margin: const EdgeInsets.all(10),
-        'Update Profile Failed',
-        e.response!.data.toString(),
-        icon: const Icon(
-          Iconsax.danger,
-          color: Colors.white,
-          size: 30,
-        ),
-        backgroundColor: Colors.red.shade800.withOpacity(0.8),
-        colorText: Colors.white,
-      );
+      failedSnackbar('Update Profile Failed', e.response!.data.toString());
     }
   }
 }

@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:dio/dio.dart' as _dio;
 import 'package:icons_plus/icons_plus.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:member_apps/app/core/utils/snackbar.dart';
 import 'package:member_apps/app/data/providers/auth_provider.dart';
 import 'package:member_apps/app/core/utils/loading_function.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -34,35 +35,13 @@ class AuthController extends GetxController {
         SharedPreferences _prefs = await SharedPreferences.getInstance();
         _prefs.setString('token', response.data['token']);
 
-        Get.snackbar(
-          margin: const EdgeInsets.all(10),
-          'Log In Success',
-          response.data['message'].toString(),
-          icon: const Icon(
-            Icons.check,
-            color: Colors.white,
-            size: 30,
-          ),
-          backgroundColor: Colors.green.shade800.withOpacity(0.8),
-          colorText: Colors.white,
-        );
+        successSnackbar('Log In Success', response.data['message'].toString());
 
         Get.offAllNamed('/dashboard');
       }
     } on _dio.DioError catch (e) {
       Get.back();
-      Get.snackbar(
-        margin: const EdgeInsets.all(10),
-        'Log In Failed',
-        e.response!.data['message'].toString(),
-        icon: const Icon(
-          Iconsax.danger,
-          color: Colors.white,
-          size: 30,
-        ),
-        backgroundColor: Colors.red.shade800,
-        colorText: Colors.white,
-      );
+      failedSnackbar('Log In Failed', e.response!.data['message'].toString());
     }
   }
 

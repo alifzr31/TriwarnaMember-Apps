@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:member_apps/app/core/utils/snackbar.dart';
 import 'package:member_apps/app/data/models/shopping.dart';
 import 'package:member_apps/app/data/models/shopping_detail.dart';
 import 'package:member_apps/app/data/providers/shopping_provider.dart';
@@ -43,13 +44,7 @@ class ShoppingController extends GetxController {
       shopping.value = body;
       update();
     } on DioError catch (e) {
-      Get.snackbar(
-        margin: const EdgeInsets.all(10),
-        'Failed',
-        e.response.toString(),
-        backgroundColor: Colors.red.shade800.withOpacity(0.8),
-        colorText: Colors.white,
-      );
+      failedSnackbar('Failed', e.response.toString());
     }
 
     isLoading.value = false;

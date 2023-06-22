@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:icons_plus/icons_plus.dart';
 import 'package:member_apps/app/component/card_menu.dart';
 import 'package:member_apps/app/component/point_text..dart';
+import 'package:member_apps/app/core/utils/snackbar.dart';
 import 'package:member_apps/app/core/value.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -28,17 +29,9 @@ class MenuButton extends StatelessWidget {
                           await SharedPreferences.getInstance();
                       final token = sharedPreferences.getString('token');
                       if (token == null) {
-                        Get.snackbar(
-                          margin: const EdgeInsets.all(10),
+                        infoSnackbar(
                           "You're not logged in",
                           'You must log in first to access this feature',
-                          backgroundColor: Colors.blue.withOpacity(0.8),
-                          colorText: Colors.white,
-                          icon: const Icon(
-                            Iconsax.info_circle,
-                            size: 30,
-                            color: Colors.white,
-                          ),
                         );
                         Get.toNamed('/login');
                       } else {
@@ -67,17 +60,9 @@ class MenuButton extends StatelessWidget {
                           await SharedPreferences.getInstance();
                       final token = sharedPreferences.getString('token');
                       if (token == null) {
-                        Get.snackbar(
-                          margin: const EdgeInsets.all(10),
+                        infoSnackbar(
                           "You're not logged in",
                           'You must log in first to access this feature',
-                          backgroundColor: Colors.blue.withOpacity(0.8),
-                          colorText: Colors.white,
-                          icon: const Icon(
-                            Iconsax.info_circle,
-                            size: 30,
-                            color: Colors.white,
-                          ),
                         );
                         Get.toNamed('/login');
                       } else {

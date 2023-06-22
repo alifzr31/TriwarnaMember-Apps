@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:member_apps/app/core/utils/snackbar.dart';
 import 'package:member_apps/app/data/models/store.dart';
 import 'package:member_apps/app/data/models/user.dart';
 import 'package:member_apps/app/data/providers/dashboard_provider.dart';
@@ -55,24 +56,14 @@ class DashboardController extends GetxController {
 
           update();
         } else {
-          Get.snackbar(
-            margin: const EdgeInsets.all(10),
-            'Failed',
-            response.statusCode.toString() +
-                ' ' +
-                response.statusMessage.toString(),
-            backgroundColor: Colors.red.shade800,
-            colorText: Colors.white,
-          );
+          failedSnackbar(
+              'Failed',
+              response.statusCode.toString() +
+                  ' ' +
+                  response.statusMessage.toString());
         }
       } on DioError catch (e) {
-        Get.snackbar(
-          margin: const EdgeInsets.all(10),
-          'Failed',
-          e.toString(),
-          backgroundColor: Colors.red.shade800,
-          colorText: Colors.white,
-        );
+        failedSnackbar('Failed', e.response!.data.toString());
       }
 
       isLoading.value = false;
@@ -90,22 +81,10 @@ class DashboardController extends GetxController {
       if (response.statusCode == 200) {
         store.value = body.map((e) => Store.fromJson(e)).toList();
       } else {
-        Get.snackbar(
-          margin: const EdgeInsets.all(10),
-          'Failed',
-          response.statusCode.toString(),
-          backgroundColor: Colors.red.shade800.withOpacity(0.8),
-          colorText: Colors.white,
-        );
+        failedSnackbar('Failed', response.statusCode.toString());
       }
     } on DioError catch (e) {
-      Get.snackbar(
-        margin: const EdgeInsets.all(10),
-        'Failed',
-        e.toString(),
-        backgroundColor: Colors.red.shade800.withOpacity(0.8),
-        colorText: Colors.white,
-      );
+      failedSnackbar('Failed', e.response!.data.toString());
     }
 
     isLoading.value = false;
