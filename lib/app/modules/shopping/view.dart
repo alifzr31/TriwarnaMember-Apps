@@ -93,13 +93,16 @@ class _ListHistoryState extends State<ListHistory> {
               )
             : controller.shopping.length < 1
                 ? Expanded(
+                  child: FadeAnimation(
+                    delay: 1,
                     child: Center(
-                      child: SvgPicture.asset(
-                        'assets/images/noshoppinghistory.svg',
-                        width: Get.width < 390 ? 170 : 200,
+                        child: SvgPicture.asset(
+                          'assets/images/noshoppinghistory.svg',
+                          width: Get.width < 390 ? 170 : 200,
+                        ),
                       ),
-                    ),
-                  )
+                  ),
+                )
                 : Expanded(
                     child: BaseRefresh(
                       onRefresh: () async {
