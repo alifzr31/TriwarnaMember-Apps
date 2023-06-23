@@ -42,7 +42,7 @@ class ShoppingDetailController extends GetxController {
           : listShoppingDetailFromJson(jsonEncode(response.data['data']));
 
       shoppingDetail.value = body;
-      fetchTotal.value = response.data['total'];
+      fetchTotal.value = response.data['total'] == null ? 0 : response.data['total'];
       print(fetchTotal.value);
 
       update();

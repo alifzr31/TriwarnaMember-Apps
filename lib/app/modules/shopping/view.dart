@@ -93,16 +93,16 @@ class _ListHistoryState extends State<ListHistory> {
               )
             : controller.shopping.length < 1
                 ? Expanded(
-                  child: FadeAnimation(
-                    delay: 1,
-                    child: Center(
+                    child: FadeAnimation(
+                      delay: 1,
+                      child: Center(
                         child: SvgPicture.asset(
                           'assets/images/noshoppinghistory.svg',
                           width: Get.width < 390 ? 170 : 200,
                         ),
                       ),
-                  ),
-                )
+                    ),
+                  )
                 : Expanded(
                     child: BaseRefresh(
                       onRefresh: () async {
@@ -191,12 +191,17 @@ class _ListHistoryState extends State<ListHistory> {
                                                     final shoppingDetailController =
                                                         Get.find<
                                                             ShoppingDetailController>();
-                                                    shoppingDetailController
-                                                            .docnum.value =
-                                                        shopping.docnum
-                                                            .toString();
-                                                    shoppingDetailController
-                                                        .fetchShoppingDetail();
+                                                    setState(() {
+                                                      shoppingDetailController
+                                                              .docnum.value =
+                                                          shopping.docnum
+                                                              .toString();
+                                                      shoppingDetailController
+                                                          .fetchShoppingDetail();
+                                                      shoppingDetailController
+                                                          .shoppingDetail
+                                                          .refresh();
+                                                    });
 
                                                     final total = NumberFormat
                                                         .currency(
@@ -204,13 +209,7 @@ class _ListHistoryState extends State<ListHistory> {
                                                       symbol: 'Rp ',
                                                     ).format(
                                                         shoppingDetailController
-                                                                    .fetchTotal
-                                                                    .value ==
-                                                                null
-                                                            ? 0
-                                                            : shoppingDetailController
-                                                                .fetchTotal
-                                                                .value);
+                                                            .fetchTotal.value);
 
                                                     print(total);
 
@@ -317,25 +316,35 @@ class _ListHistoryState extends State<ListHistory> {
                                                                           shoppingDetailController
                                                                               .shoppingDetail[index];
 
-                                                                      final harga = NumberFormat
-                                                                          .currency(
-                                                                        locale:
-                                                                            'id_ID',
-                                                                        symbol:
-                                                                            'Rp ',
-                                                                      ).format(int.parse(shoppingDetail
-                                                                          .harga
-                                                                          .toString()));
+                                                                      late final String
+                                                                          harga;
+                                                                      late final String
+                                                                          subtotal;
 
-                                                                      final subtotal = NumberFormat
-                                                                          .currency(
-                                                                        locale:
-                                                                            'id_ID',
-                                                                        symbol:
-                                                                            'Rp ',
-                                                                      ).format(int.parse(shoppingDetail
-                                                                          .subTotal
-                                                                          .toString()));
+                                                                      if (shoppingDetailController
+                                                                              .shoppingDetail
+                                                                              .length >
+                                                                          0) {
+                                                                        harga = NumberFormat
+                                                                            .currency(
+                                                                          locale:
+                                                                              'id_ID',
+                                                                          symbol:
+                                                                              'Rp ',
+                                                                        ).format(int.parse(shoppingDetail
+                                                                            .harga
+                                                                            .toString()));
+
+                                                                        subtotal = NumberFormat
+                                                                            .currency(
+                                                                          locale:
+                                                                              'id_ID',
+                                                                          symbol:
+                                                                              'Rp ',
+                                                                        ).format(int.parse(shoppingDetail
+                                                                            .subTotal
+                                                                            .toString()));
+                                                                      }
 
                                                                       return Column(
                                                                         children: [
