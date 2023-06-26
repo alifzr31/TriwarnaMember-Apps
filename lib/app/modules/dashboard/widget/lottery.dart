@@ -299,7 +299,8 @@ class BodyLottery extends StatelessWidget {
                                     const SizedBox(width: 10),
                                     Expanded(
                                       child: Row(
-                                        crossAxisAlignment: CrossAxisAlignment.start,
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
                                         children: [
                                           Expanded(
                                             child: Column(
@@ -325,6 +326,7 @@ class BodyLottery extends StatelessWidget {
                                               ],
                                             ),
                                           ),
+                                          const SizedBox(width: 10),
                                           Text(
                                             tanggal,
                                             style: const TextStyle(
@@ -345,7 +347,6 @@ class BodyLottery extends StatelessWidget {
                                   margin:
                                       const EdgeInsets.symmetric(vertical: 10),
                                 ),
-                                const SizedBox(height: 10),
                               ],
                             ),
                           ),
