@@ -317,6 +317,7 @@ class BodyLottery extends StatelessWidget {
                                                 Text(
                                                   lottery.no.toString(),
                                                   style: const TextStyle(
+                                                    fontWeight: FontWeight.w600,
                                                     fontSize: 16,
                                                     color: baseColor,
                                                   ),
@@ -327,6 +328,7 @@ class BodyLottery extends StatelessWidget {
                                           Text(
                                             tanggal,
                                             style: const TextStyle(
+                                              fontWeight: FontWeight.w600,
                                               fontSize: 16,
                                               color: baseColor,
                                             ),
