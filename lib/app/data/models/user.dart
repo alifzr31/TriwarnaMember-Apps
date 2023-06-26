@@ -21,7 +21,7 @@ class User {
   String? group;
   String? pin;
   String? gender;
-  DateTime birthDate;
+  DateTime? birthDate;
   String? image;
   String? contact;
   String? religion;
@@ -90,7 +90,7 @@ class User {
         group: json["group"],
         pin: json["pin"],
         gender: json["gender"],
-        birthDate: DateTime.parse(json["birth_date"]),
+        birthDate: json["birth_date"] == null ? null : DateTime.parse(json["birth_date"]),
         image: json["image"],
         contact: json["contact"],
         religion: json["religion"],
@@ -129,7 +129,7 @@ class User {
         "group": group,
         "pin": pin,
         "gender": gender,
-        "birth_date": birthDate.toIso8601String(),
+        "birth_date": birthDate?.toIso8601String(),
         "image": image,
         "contact": contact,
         "religion": religion,
