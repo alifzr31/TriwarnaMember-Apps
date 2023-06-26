@@ -236,14 +236,14 @@ class BodyLottery extends StatelessWidget {
       controller.lottery.refresh();
 
       await Fluttertoast.showToast(
-          msg: 'Lottery Data Refreshed',
-          toastLength: Toast.LENGTH_SHORT,
-          gravity: ToastGravity.BOTTOM,
-          timeInSecForIosWeb: 1,
-          backgroundColor: Colors.black.withOpacity(0.8),
-          textColor: Colors.white,
-          fontSize: 12.0,
-        );
+        msg: 'Lottery Data Refreshed',
+        toastLength: Toast.LENGTH_SHORT,
+        gravity: ToastGravity.BOTTOM,
+        timeInSecForIosWeb: 1,
+        backgroundColor: Colors.black.withOpacity(0.8),
+        textColor: Colors.white,
+        fontSize: 12.0,
+      );
     });
   }
 
@@ -283,50 +283,67 @@ class BodyLottery extends StatelessWidget {
                         final lottery = controller.lottery[index];
                         final formatter = DateFormat('dd-MMM-yyyy');
                         final tanggal = formatter.format(lottery.tanggal!);
-                  
-                        return Card(
-                          margin: const EdgeInsets.only(
-                              right: 10, left: 10, bottom: 10),
-                          elevation: 5,
-                          color: baseColor,
-                          shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(12)),
+
+                        return FadeAnimation(
+                          delay: 1,
                           child: Padding(
-                            padding: const EdgeInsets.all(10),
-                            child: Row(
-                              crossAxisAlignment: CrossAxisAlignment.center,
+                            padding: const EdgeInsets.symmetric(horizontal: 10),
+                            child: Column(
                               children: [
-                                SvgPicture.asset(
-                                  'assets/images/balon.svg',
-                                  width: 40,
-                                ),
-                                const SizedBox(width: 20),
-                                Expanded(
-                                  child: Row(
-                                    crossAxisAlignment: CrossAxisAlignment.start,
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
-                                    children: [
-                                      Expanded(
-                                        child: Column(
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.start,
-                                          children: [
-                                            PointText(
-                                              text: lottery.noUndian.toString(),
-                                              bold: FontWeight.bold,
-                                              size: 16,
+                                Row(
+                                  children: [
+                                    SvgPicture.asset(
+                                      'assets/images/tiket.svg',
+                                      width: 80,
+                                    ),
+                                    const SizedBox(width: 10),
+                                    Expanded(
+                                      child: Row(
+                                        crossAxisAlignment: CrossAxisAlignment.start,
+                                        children: [
+                                          Expanded(
+                                            child: Column(
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.start,
+                                              children: [
+                                                Text(
+                                                  lottery.noUndian.toString(),
+                                                  style: const TextStyle(
+                                                    fontSize: 16,
+                                                    fontWeight: FontWeight.bold,
+                                                    color: baseColor,
+                                                  ),
+                                                ),
+                                                Text(
+                                                  lottery.no.toString(),
+                                                  style: const TextStyle(
+                                                    fontSize: 16,
+                                                    color: baseColor,
+                                                  ),
+                                                ),
+                                              ],
                                             ),
-                                            const SizedBox(height: 5),
-                                            PointText(
-                                                text: lottery.no.toString(), size: 16),
-                                          ],
-                                        ),
+                                          ),
+                                          Text(
+                                            tanggal,
+                                            style: const TextStyle(
+                                              fontSize: 16,
+                                              color: baseColor,
+                                            ),
+                                          ),
+                                        ],
                                       ),
-                                      PointText(text: tanggal, size: 16),
-                                    ],
-                                  ),
+                                    ),
+                                  ],
                                 ),
+                                Container(
+                                  color: baseColor,
+                                  width: Get.width,
+                                  height: 2,
+                                  margin:
+                                      const EdgeInsets.symmetric(vertical: 10),
+                                ),
+                                const SizedBox(height: 10),
                               ],
                             ),
                           ),
