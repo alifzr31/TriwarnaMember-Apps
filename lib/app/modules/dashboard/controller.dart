@@ -108,7 +108,6 @@ class DashboardController extends GetxController {
       final List<Lottery> body = response.data['data'] == null
           ? []
           : listLotteryFromJson(jsonEncode(response.data['data']));
-      print(response.data['data']);
 
       lottery.value = body;
       update();
