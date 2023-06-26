@@ -17,6 +17,7 @@ class EndPoint {
   // DASHBOARD
   static final String store = '/triwarna_store';
   static final String profile = '/profile';
+  static final String lottery = '/undian';
 
   // POINT
   static final String point = '/point';
