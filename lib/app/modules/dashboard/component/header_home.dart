@@ -68,7 +68,7 @@ class HeaderHome extends StatelessWidget {
                         const SizedBox(width: 10),
                         SizedBox(
                           height: 30,
-                          width: 85,
+                          width: 88,
                           child: ElevatedButton(
                             onPressed: () async {
                               Get.to(
