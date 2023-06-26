@@ -29,4 +29,14 @@ class DashboardProvider {
   Future<Response> fetchStore() async {
     return await dio.get(EndPoint.store);
   }
+
+  Future<Response> fetchLottery() async {
+    await _getToken();
+    return await dio.get(
+      EndPoint.lottery,
+      options: Options(
+        headers: _setHeaders(),
+      ),
+    );
+  }
 }

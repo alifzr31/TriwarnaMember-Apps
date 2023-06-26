@@ -1,9 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
+import 'package:intl/intl.dart';
 import 'package:member_apps/app/animation/fadeanimation.dart';
+import 'package:member_apps/app/component/base_refresh.dart';
 import 'package:member_apps/app/component/grey_text.dart';
+import 'package:member_apps/app/component/point_text..dart';
 import 'package:member_apps/app/component/white_text.dart';
 import 'package:member_apps/app/core/value.dart';
 import 'package:member_apps/app/modules/dashboard/controller.dart';
@@ -21,7 +25,6 @@ class LotteryPage extends StatelessWidget {
           child: Column(
             children: [
               HeaderLottery(),
-              const SizedBox(height: 5),
               BodyLottery(),
             ],
           ),
@@ -39,7 +42,7 @@ class HeaderLottery extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       width: Get.width,
-      height: Get.width < 390 ? 380 : 400,
+      height: Get.width < 390 ? 380 : 380,
       decoration: BoxDecoration(
         image: const DecorationImage(
           image: AssetImage('assets/images/head.png'),
@@ -224,17 +227,114 @@ class HeaderLottery extends StatelessWidget {
 }
 
 class BodyLottery extends StatelessWidget {
-  const BodyLottery({super.key});
+  BodyLottery({super.key});
+  final controller = Get.find<DashboardController>();
+
+  Future<void> refreshLottery() async {
+    await Future.delayed(const Duration(milliseconds: 2500), () async {
+      controller.fetchLottery();
+      controller.lottery.refresh();
+
+      await Fluttertoast.showToast(
+          msg: 'Lottery Data Refreshed',
+          toastLength: Toast.LENGTH_SHORT,
+          gravity: ToastGravity.BOTTOM,
+          timeInSecForIosWeb: 1,
+          backgroundColor: Colors.black.withOpacity(0.8),
+          textColor: Colors.white,
+          fontSize: 12.0,
+        );
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
-    return Expanded(
-      child: Center(
-        child: SvgPicture.asset(
-          'assets/images/lotterynotfound.svg',
-          width: Get.width < 390 ? 200 : 230,
-        ),
-      ),
+    return Obx(
+      () => controller.isLoading.value
+          ? Expanded(
+              child: Center(
+                child: SpinKitWave(
+                  size: 30,
+                  itemBuilder: (BuildContext context, int index) {
+                    return const DecoratedBox(
+                      decoration: BoxDecoration(
+                        color: baseColor,
+                      ),
+                    );
+                  },
+                ),
+              ),
+            )
+          : controller.lottery.length < 1
+              ? Expanded(
+                  child: Center(
+                    child: SvgPicture.asset(
+                      'assets/images/lotterynotfound.svg',
+                      width: Get.width < 390 ? 200 : 230,
+                    ),
+                  ),
+                )
+              : Expanded(
+                  child: BaseRefresh(
+                    onRefresh: refreshLottery,
+                    child: ListView.builder(
+                      itemCount: controller.lottery.length,
+                      itemBuilder: (context, index) {
+                        final lottery = controller.lottery[index];
+                        final formatter = DateFormat('dd-MMM-yyyy');
+                        final tanggal = formatter.format(lottery.tanggal!);
+                  
+                        return Card(
+                          margin: const EdgeInsets.only(
+                              right: 10, left: 10, bottom: 10),
+                          elevation: 5,
+                          color: baseColor,
+                          shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(12)),
+                          child: Padding(
+                            padding: const EdgeInsets.all(10),
+                            child: Row(
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+                                SvgPicture.asset(
+                                  'assets/images/balon.svg',
+                                  width: 40,
+                                ),
+                                const SizedBox(width: 20),
+                                Expanded(
+                                  child: Row(
+                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      Expanded(
+                                        child: Column(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          children: [
+                                            PointText(
+                                              text: lottery.noUndian.toString(),
+                                              bold: FontWeight.bold,
+                                              size: 16,
+                                            ),
+                                            const SizedBox(height: 5),
+                                            PointText(
+                                                text: lottery.no.toString(), size: 16),
+                                          ],
+                                        ),
+                                      ),
+                                      PointText(text: tanggal, size: 16),
+                                    ],
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        );
+                      },
+                    ),
+                  ),
+                ),
     );
   }
 }
