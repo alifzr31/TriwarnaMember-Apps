@@ -107,9 +107,15 @@ class _HeaderProfileState extends State<HeaderProfile> {
                         ),
                       ),
                       SizedBox(width: Get.width * 0.04),
-                      userController.user.value!.loyalty.toString().capitalize == 'Silver'
+                      userController.user.value!.loyalty
+                                  .toString()
+                                  .capitalize ==
+                              'Silver'
                           ? Image.asset('assets/images/silver.png', height: 50)
-                          : userController.user.value!.loyalty.toString().capitalize == 'Platinum'
+                          : userController.user.value!.loyalty
+                                      .toString()
+                                      .capitalize ==
+                                  'Platinum'
                               ? Image.asset('assets/images/platinum.png',
                                   height: 50)
                               : Image.asset('assets/images/gold.png',
@@ -125,7 +131,10 @@ class _HeaderProfileState extends State<HeaderProfile> {
                                   fontSize: 22, fontWeight: FontWeight.bold),
                             ),
                             const SizedBox(height: 5),
-                            userController.user.value!.loyalty.toString().capitalize == 'Silver'
+                            userController.user.value!.loyalty
+                                        .toString()
+                                        .capitalize ==
+                                    'Silver'
                                 ? Container(
                                     height: 23,
                                     width: 80,
@@ -135,7 +144,9 @@ class _HeaderProfileState extends State<HeaderProfile> {
                                     ),
                                     child: const Center(child: Text('Silver')),
                                   )
-                                : userController.user.value!.loyalty.toString().capitalize ==
+                                : userController.user.value!.loyalty
+                                            .toString()
+                                            .capitalize ==
                                         'Platinum'
                                     ? Container(
                                         height: 23,
@@ -207,7 +218,10 @@ class _HeaderProfileState extends State<HeaderProfile> {
     }
 
     final formatter = DateFormat('yyyy-MM-dd');
-    final date = formatter.format(userController.user.value!.birthDate);
+    var date;
+    if (userController.user.value!.birthDate != null) {
+      date = formatter.format(userController.user.value!.birthDate!);
+    }
     var selectedDate = date;
     // controller.birthController.text = date.toString();
 
@@ -274,7 +288,7 @@ class _HeaderProfileState extends State<HeaderProfile> {
                               print(value);
                               setState(() {
                                 selectedGender = value as String;
-                                
+
                                 if (selectedGender == 'Male') {
                                   controller.genderController.text =
                                       'Laki-Laki';
