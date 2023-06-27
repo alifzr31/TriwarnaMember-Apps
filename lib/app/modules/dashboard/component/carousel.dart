@@ -24,7 +24,7 @@ class _CarouselFieldState extends State<CarouselField> {
     return Stack(
       children: [
         Positioned(
-          bottom: -20,
+          bottom: Get.width < 390 ? -15 : 0,
           // left: 0,
           // right: 0,
           child: Container(
