@@ -22,6 +22,8 @@ class _SplasScreenState extends State<SplasScreen> {
         navigate();
       },
     );
+
+    super.initState();
   }
 
   @override
@@ -51,7 +53,7 @@ class _SplasScreenState extends State<SplasScreen> {
                     child: Column(
                       children: [
                         SpinKitWave(
-                          size: 20,
+                          size: 25,
                           itemBuilder: (BuildContext context, int index) {
                             return const DecoratedBox(
                               decoration: BoxDecoration(
