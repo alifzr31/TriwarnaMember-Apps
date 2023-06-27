@@ -4,6 +4,7 @@ import 'package:flutter_custom_clippers/flutter_custom_clippers.dart';
 import 'package:get/get.dart';
 import 'package:icons_plus/icons_plus.dart';
 import 'package:member_apps/app/component/transparent_appbar.dart';
+import 'package:member_apps/app/core/utils/loading_function.dart';
 import 'package:member_apps/app/core/value.dart';
 import 'package:member_apps/app/modules/dashboard/controller.dart';
 import 'package:member_apps/app/modules/input_pin/controller.dart';
@@ -165,22 +166,26 @@ class _InputPinPageState extends State<InputPinPage> {
         final prize = Get.arguments;
         final prizeCode = prize[0];
 
+        loading(context);
+
         controller.redeemPoint(prizeCode);
 
-        await AwesomeDialog(
-          context: context,
-          animType: AnimType.scale,
-          dialogType: DialogType.success,
-          dismissOnTouchOutside: false,
-          dismissOnBackKeyPress: false,
-          headerAnimationLoop: true,
-          title: 'Redeem Successfully',
-          desc: '${prize[1]} has been redeemed',
-          btnOkColor: baseColor,
-          btnOkOnPress: () {
-            Get.offAllNamed('/dashboard');
-          },
-        ).show();
+        await Future.delayed(const Duration(milliseconds: 1000), () async {
+          await AwesomeDialog(
+            context: context,
+            animType: AnimType.scale,
+            dialogType: DialogType.success,
+            dismissOnTouchOutside: false,
+            dismissOnBackKeyPress: false,
+            headerAnimationLoop: true,
+            title: 'Redeem Successfully',
+            desc: '${prize[1]} has been redeemed',
+            btnOkColor: baseColor,
+            btnOkOnPress: () {
+              Get.offAllNamed('/dashboard');
+            },
+          ).show();
+        });
       } else {
         setState(() {
           visible = true;
