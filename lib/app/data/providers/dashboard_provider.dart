@@ -30,10 +30,10 @@ class DashboardProvider {
     return await dio.get(EndPoint.store);
   }
 
-  Future<Response> fetchLottery() async {
+  Future<Response> fetchLottery(page, limit) async {
     await _getToken();
     return await dio.get(
-      EndPoint.lottery,
+      EndPoint.lottery+'?page=$page&limit=$limit',
       options: Options(
         headers: _setHeaders(),
       ),

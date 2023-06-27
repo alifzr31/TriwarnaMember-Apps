@@ -1,6 +1,8 @@
 import 'dart:convert';
 
 import 'package:dio/dio.dart';
+import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:member_apps/app/core/utils/snackbar.dart';
 import 'package:member_apps/app/data/models/lottery.dart';
@@ -14,15 +16,17 @@ class DashboardController extends GetxController {
 
   DashboardController({required this.dashboardProvider});
 
-  var isLoading = true.obs;
+  var isLoading = false.obs;
   var user = Rx<User?>(null);
   var store = <Store>[].obs;
   var lottery = <Lottery>[].obs;
   final token = ''.obs;
 
-  var page = 1;
-  final limit = 10;
+  int page = 1;
+  final int limit = 15;
   var hasMore = true.obs;
+  final ScrollController scrollController = ScrollController();
+  var firstLoading = true.obs;
 
   @override
   void onInit() async {
@@ -33,6 +37,14 @@ class DashboardController extends GetxController {
     if (token.value != 'null') {
       fetchProfile();
       fetchLottery();
+
+      scrollController.addListener(() {
+        if (scrollController.position.maxScrollExtent ==
+                scrollController.offset &&
+            hasMore.value) {
+          fetchLottery();
+        }
+      });
     }
 
     fetchStore();
@@ -45,6 +57,14 @@ class DashboardController extends GetxController {
     if (token.value != 'null') {
       fetchProfile();
       fetchLottery();
+
+      scrollController.addListener(() {
+        if (scrollController.position.maxScrollExtent ==
+                scrollController.offset &&
+            hasMore.value) {
+          fetchLottery();
+        }
+      });
     }
 
     fetchStore();
@@ -56,6 +76,7 @@ class DashboardController extends GetxController {
   void onClose() {
     store.clear();
     lottery.clear();
+    scrollController.dispose();
     // user.close();
     // store.close();
     super.onClose();
@@ -102,21 +123,55 @@ class DashboardController extends GetxController {
     update();
   }
 
-  void fetchLottery() async {
-    try {
-      final response = await dashboardProvider.fetchLottery();
-      final List<Lottery> body = response.data['data'] == null
-          ? []
-          : listLotteryFromJson(jsonEncode(response.data['data']));
+  Future<void> fetchLottery() async {
+    if (isLoading.value) return;
+    isLoading.value = true;
 
-      lottery.value = body;
-      update();
+    try {
+      final response = await dashboardProvider.fetchLottery(page, limit);
+      final List<Lottery> body = response.data['data']['data'] == null
+          ? []
+          : listLotteryFromJson(jsonEncode(response.data['data']['data']));
+
+      if (response.statusCode == 200) {
+        page++;
+
+        if (body.length < limit) {
+          hasMore.value = false;
+        }
+
+        lottery.addAll(body);
+
+        update();
+      }
     } on DioError catch (e) {
       failedSnackbar('Failed Fetching Lottery', e.response.toString());
     } finally {
       isLoading.value = false;
+      firstLoading.value = false;
     }
 
     update();
+  }
+
+  Future<void> refreshLottery() async {
+    await Future.delayed(const Duration(milliseconds: 2500), () async {
+      isLoading.value = false;
+      hasMore.value = true;
+      page = 1;
+      lottery.clear();
+
+      await fetchLottery();
+
+      await Fluttertoast.showToast(
+        msg: 'Lottery Data Refreshed',
+        toastLength: Toast.LENGTH_SHORT,
+        gravity: ToastGravity.BOTTOM,
+        timeInSecForIosWeb: 1,
+        backgroundColor: Colors.black.withOpacity(0.8),
+        textColor: Colors.white,
+        fontSize: 12.0,
+      );
+    });
   }
 }

@@ -1,13 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:member_apps/app/animation/fadeanimation.dart';
 import 'package:member_apps/app/component/base_refresh.dart';
 import 'package:member_apps/app/component/grey_text.dart';
-import 'package:member_apps/app/component/point_text..dart';
 import 'package:member_apps/app/component/white_text.dart';
 import 'package:member_apps/app/core/value.dart';
 import 'package:member_apps/app/modules/dashboard/controller.dart';
@@ -20,8 +18,8 @@ class LotteryPage extends StatelessWidget {
     return Scaffold(
       body: SingleChildScrollView(
         child: SizedBox(
-          height: Get.height,
           width: Get.width,
+          height: Get.height,
           child: Column(
             children: [
               HeaderLottery(),
@@ -230,27 +228,10 @@ class BodyLottery extends StatelessWidget {
   BodyLottery({super.key});
   final controller = Get.find<DashboardController>();
 
-  Future<void> refreshLottery() async {
-    await Future.delayed(const Duration(milliseconds: 2500), () async {
-      controller.fetchLottery();
-      controller.lottery.refresh();
-
-      await Fluttertoast.showToast(
-        msg: 'Lottery Data Refreshed',
-        toastLength: Toast.LENGTH_SHORT,
-        gravity: ToastGravity.BOTTOM,
-        timeInSecForIosWeb: 1,
-        backgroundColor: Colors.black.withOpacity(0.8),
-        textColor: Colors.white,
-        fontSize: 12.0,
-      );
-    });
-  }
-
   @override
   Widget build(BuildContext context) {
     return Obx(
-      () => controller.isLoading.value
+      () => controller.firstLoading.value
           ? Expanded(
               child: Center(
                 child: SpinKitWave(
@@ -276,81 +257,108 @@ class BodyLottery extends StatelessWidget {
                 )
               : Expanded(
                   child: BaseRefresh(
-                    onRefresh: refreshLottery,
+                    onRefresh: controller.refreshLottery,
                     child: ListView.builder(
-                      itemCount: controller.lottery.length,
+                      controller: controller.scrollController,
+                      itemCount: controller.lottery.length + 1,
                       itemBuilder: (context, index) {
-                        final lottery = controller.lottery[index];
-                        final formatter = DateFormat('dd-MMM-yyyy');
-                        final tanggal = formatter.format(lottery.tanggal!);
+                        if (index < controller.lottery.length) {
+                          final lottery = controller.lottery[index];
+                          final formatter = DateFormat('dd-MMM-yyyy');
+                          final tanggal = formatter.format(lottery.tanggal!);
 
-                        return FadeAnimation(
-                          delay: 1,
-                          child: Padding(
-                            padding: const EdgeInsets.symmetric(horizontal: 10),
-                            child: Column(
-                              children: [
-                                Row(
-                                  children: [
-                                    SvgPicture.asset(
-                                      'assets/images/tiket.svg',
-                                      width: 80,
-                                    ),
-                                    const SizedBox(width: 10),
-                                    Expanded(
-                                      child: Row(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
-                                        children: [
-                                          Expanded(
-                                            child: Column(
-                                              crossAxisAlignment:
-                                                  CrossAxisAlignment.start,
-                                              children: [
-                                                Text(
-                                                  lottery.noUndian.toString(),
-                                                  style: const TextStyle(
-                                                    fontSize: 16,
-                                                    fontWeight: FontWeight.bold,
-                                                    color: baseColor,
-                                                  ),
-                                                ),
-                                                Text(
-                                                  lottery.no.toString(),
-                                                  style: const TextStyle(
-                                                    fontWeight: FontWeight.w600,
-                                                    fontSize: 16,
-                                                    color: baseColor,
-                                                  ),
-                                                ),
-                                              ],
-                                            ),
-                                          ),
-                                          const SizedBox(width: 10),
-                                          Text(
-                                            tanggal,
-                                            style: const TextStyle(
-                                              fontWeight: FontWeight.w600,
-                                              fontSize: 16,
-                                              color: baseColor,
-                                            ),
-                                          ),
-                                        ],
+                          return FadeAnimation(
+                            delay: 1,
+                            child: Padding(
+                              padding:
+                                  const EdgeInsets.symmetric(horizontal: 10),
+                              child: Column(
+                                children: [
+                                  Row(
+                                    children: [
+                                      SvgPicture.asset(
+                                        'assets/images/tiket.svg',
+                                        width: 80,
                                       ),
-                                    ),
-                                  ],
-                                ),
-                                Container(
-                                  color: baseColor,
-                                  width: Get.width,
-                                  height: 2,
-                                  margin:
-                                      const EdgeInsets.symmetric(vertical: 10),
-                                ),
-                              ],
+                                      const SizedBox(width: 10),
+                                      Expanded(
+                                        child: Row(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          children: [
+                                            Expanded(
+                                              child: Column(
+                                                crossAxisAlignment:
+                                                    CrossAxisAlignment.start,
+                                                children: [
+                                                  Text(
+                                                    lottery.noUndian
+                                                            .toString() +
+                                                        ' (${index + 1})',
+                                                    style: const TextStyle(
+                                                      fontSize: 16,
+                                                      fontWeight:
+                                                          FontWeight.bold,
+                                                      color: baseColor,
+                                                    ),
+                                                  ),
+                                                  Text(
+                                                    lottery.no.toString(),
+                                                    style: const TextStyle(
+                                                      fontWeight:
+                                                          FontWeight.w600,
+                                                      fontSize: 16,
+                                                      color: baseColor,
+                                                    ),
+                                                  ),
+                                                ],
+                                              ),
+                                            ),
+                                            const SizedBox(width: 10),
+                                            Text(
+                                              tanggal,
+                                              style: const TextStyle(
+                                                fontWeight: FontWeight.w600,
+                                                fontSize: 16,
+                                                color: baseColor,
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                  Container(
+                                    color: yellow,
+                                    width: Get.width,
+                                    height: 2,
+                                    margin: const EdgeInsets.symmetric(
+                                        vertical: 10),
+                                  ),
+                                ],
+                              ),
                             ),
-                          ),
-                        );
+                          );
+                        } else {
+                          if (controller.hasMore.value) {
+                            return Padding(
+                              padding: const EdgeInsets.symmetric(vertical: 20),
+                              child: Center(
+                                child: SpinKitWave(
+                                  size: 20,
+                                  itemBuilder:
+                                      (BuildContext context, int index) {
+                                    return const DecoratedBox(
+                                      decoration: BoxDecoration(
+                                        color: baseColor,
+                                      ),
+                                    );
+                                  },
+                                ),
+                              ),
+                            );
+                          }
+                        }
                       },
                     ),
                   ),
