@@ -86,6 +86,7 @@ class _DetailShoppingModalState extends State<DetailShoppingModal> {
                       const SizedBox(height: 10),
                       Expanded(
                         child: ListView.builder(
+                          physics: const ClampingScrollPhysics(),
                           itemCount: controller.shoppingDetail.length,
                           itemBuilder: (context, index) {
                             final shoppingDetail =
