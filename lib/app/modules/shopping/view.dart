@@ -7,6 +7,7 @@ import 'package:intl/intl.dart';
 import 'package:member_apps/app/animation/fadeanimation.dart';
 import 'package:member_apps/app/component/base_refresh.dart';
 import 'package:member_apps/app/core/value.dart';
+import 'package:member_apps/app/data/providers/shopping_provider.dart';
 import 'package:member_apps/app/modules/shopping/controller.dart';
 import 'package:member_apps/app/modules/shopping/shopping_detail/shopping_detail_controller.dart';
 
@@ -188,215 +189,34 @@ class _ListHistoryState extends State<ListHistory> {
                                                 height: 25,
                                                 child: ElevatedButton(
                                                   onPressed: () async {
-                                                    final shoppingDetailController =
-                                                        Get.find<
-                                                            ShoppingDetailController>();
-                                                    setState(() {
-                                                      shoppingDetailController
-                                                              .docnum.value =
-                                                          shopping.docnum
-                                                              .toString();
-                                                      shoppingDetailController
-                                                          .fetchShoppingDetail();
-                                                      shoppingDetailController
-                                                          .shoppingDetail
-                                                          .refresh();
-                                                    });
+                                                    // setState(() {
+                                                    //   shoppingDetailController
+                                                    //           .docnum.value =
+                                                    //       shopping.docnum
+                                                    //           .toString();
+                                                    //   shoppingDetailController
+                                                    //       .fetchShoppingDetail();
+                                                    //   shoppingDetailController
+                                                    //       .shoppingDetail
+                                                    //       .refresh();
+                                                    // });
+                                                    final controller = Get.put<
+                                                            ShoppingDetailController>(
+                                                        ShoppingDetailController(
+                                                            shoppingProvider:
+                                                                ShoppingProvider()));
 
-                                                    final total = NumberFormat
-                                                        .currency(
-                                                      locale: 'id_ID',
-                                                      symbol: 'Rp ',
-                                                    ).format(
-                                                        shoppingDetailController
-                                                            .fetchTotal.value);
-
-                                                    print(total);
+                                                    controller.docnum.value =
+                                                        shopping.docnum
+                                                            .toString();
+                                                    await controller
+                                                        .fetchShoppingDetail;
 
                                                     _showBottomSheet(
-                                                      [
-                                                        const Text(
-                                                          'Shopping Detail',
-                                                          style: TextStyle(
-                                                            fontSize: 20,
-                                                            color: baseColor,
-                                                          ),
-                                                        ),
-                                                        Text(
-                                                          shopping.noStruk
-                                                              .toString(),
-                                                          style:
-                                                              const TextStyle(
-                                                            color: baseColor,
-                                                            fontSize: 16,
-                                                          ),
-                                                        ),
-                                                        const SizedBox(
-                                                            height: 20),
-                                                        Align(
-                                                          alignment: Alignment
-                                                              .centerRight,
-                                                          child: Text(
-                                                            'Total : $total',
-                                                            style: const TextStyle(
-                                                                color:
-                                                                    baseColor),
-                                                          ),
-                                                        ),
-                                                        const SizedBox(
-                                                            height: 10),
-                                                        shoppingDetailController
-                                                                .isLoading.value
-                                                            ? Expanded(
-                                                                child:
-                                                                    FadeAnimation(
-                                                                  delay: 1,
-                                                                  child:
-                                                                      SpinKitWave(
-                                                                    size: 25,
-                                                                    itemBuilder:
-                                                                        (BuildContext
-                                                                                context,
-                                                                            int index) {
-                                                                      return const DecoratedBox(
-                                                                        decoration:
-                                                                            BoxDecoration(
-                                                                          color:
-                                                                              baseColor,
-                                                                        ),
-                                                                      );
-                                                                    },
-                                                                  ),
-                                                                ),
-                                                              )
-                                                            : Expanded(
-                                                                child:
-                                                                    BaseRefresh(
-                                                                  onRefresh:
-                                                                      () async {
-                                                                    await Future.delayed(
-                                                                        const Duration(
-                                                                            milliseconds:
-                                                                                2500),
-                                                                        () async {
-                                                                      shoppingDetailController
-                                                                          .fetchShoppingDetail();
-
-                                                                      await Fluttertoast
-                                                                          .showToast(
-                                                                        msg:
-                                                                            'Shopping Detail Refreshed',
-                                                                        toastLength:
-                                                                            Toast.LENGTH_SHORT,
-                                                                        gravity:
-                                                                            ToastGravity.BOTTOM,
-                                                                        timeInSecForIosWeb:
-                                                                            1,
-                                                                        backgroundColor: Colors
-                                                                            .black
-                                                                            .withOpacity(0.8),
-                                                                        textColor:
-                                                                            Colors.white,
-                                                                        fontSize:
-                                                                            12.0,
-                                                                      );
-                                                                    });
-                                                                  },
-                                                                  child: ListView
-                                                                      .builder(
-                                                                    shrinkWrap:
-                                                                        true,
-                                                                    itemCount: shoppingDetailController
-                                                                        .shoppingDetail
-                                                                        .length,
-                                                                    itemBuilder:
-                                                                        (context,
-                                                                            index) {
-                                                                      final shoppingDetail =
-                                                                          shoppingDetailController
-                                                                              .shoppingDetail[index];
-
-                                                                      late final String
-                                                                          harga;
-                                                                      late final String
-                                                                          subtotal;
-
-                                                                      if (shoppingDetailController
-                                                                              .shoppingDetail
-                                                                              .length >
-                                                                          0) {
-                                                                        harga = NumberFormat
-                                                                            .currency(
-                                                                          locale:
-                                                                              'id_ID',
-                                                                          symbol:
-                                                                              'Rp ',
-                                                                        ).format(int.parse(shoppingDetail
-                                                                            .harga
-                                                                            .toString()));
-
-                                                                        subtotal = NumberFormat
-                                                                            .currency(
-                                                                          locale:
-                                                                              'id_ID',
-                                                                          symbol:
-                                                                              'Rp ',
-                                                                        ).format(int.parse(shoppingDetail
-                                                                            .subTotal
-                                                                            .toString()));
-                                                                      }
-
-                                                                      return Column(
-                                                                        children: [
-                                                                          Row(
-                                                                            mainAxisAlignment:
-                                                                                MainAxisAlignment.spaceBetween,
-                                                                            crossAxisAlignment:
-                                                                                CrossAxisAlignment.start,
-                                                                            children: [
-                                                                              Expanded(
-                                                                                child: Column(
-                                                                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                                                                  children: [
-                                                                                    Text(
-                                                                                      shoppingDetail.dscription.toString(),
-                                                                                      style: const TextStyle(color: baseColor),
-                                                                                    ),
-                                                                                    Text(
-                                                                                      'Quantity : ' + shoppingDetail.qty.toString(),
-                                                                                      style: const TextStyle(color: baseColor),
-                                                                                    ),
-                                                                                    Text(
-                                                                                      'Price : ' + harga,
-                                                                                      style: const TextStyle(color: baseColor),
-                                                                                    ),
-                                                                                  ],
-                                                                                ),
-                                                                              ),
-                                                                              const SizedBox(width: 10),
-                                                                              Text(
-                                                                                'Subtotal : ' + subtotal,
-                                                                                style: const TextStyle(color: baseColor),
-                                                                              ),
-                                                                            ],
-                                                                          ),
-                                                                          Container(
-                                                                            height:
-                                                                                1,
-                                                                            width:
-                                                                                Get.width,
-                                                                            margin:
-                                                                                const EdgeInsets.symmetric(vertical: 10),
-                                                                            color:
-                                                                                yellow,
-                                                                          )
-                                                                        ],
-                                                                      );
-                                                                    },
-                                                                  ),
-                                                                ),
-                                                              ),
-                                                      ],
+                                                      shopping.noStruk
+                                                          .toString(),
+                                                      shopping.docnum
+                                                          .toString(),
                                                     );
                                                   },
                                                   style:
@@ -439,7 +259,152 @@ class _ListHistoryState extends State<ListHistory> {
   }
 }
 
-void _showBottomSheet(List<Widget> children) async {
+class DetailShopping extends StatefulWidget {
+  const DetailShopping({
+    Key? key,
+    required this.no_struk,
+    required this.docnum,
+  }) : super(key: key);
+
+  final String no_struk;
+  final String docnum;
+
+  @override
+  State<DetailShopping> createState() => _DetailShoppingState();
+}
+
+class _DetailShoppingState extends State<DetailShopping> {
+  final controller = Get.put<ShoppingDetailController>(
+      ShoppingDetailController(shoppingProvider: ShoppingProvider()));
+
+  @override
+  void initState() {
+    controller.fetchShoppingDetail();
+    controller.fetchTotal.refresh();
+    super.initState();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.center,
+      children: [
+        const Text(
+          'Shopping Detail',
+          style: TextStyle(
+            fontSize: 20,
+            color: baseColor,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+        Text(
+          widget.no_struk,
+          style: const TextStyle(
+            color: baseColor,
+            fontSize: 16,
+          ),
+        ),
+        const SizedBox(height: 20),
+        Align(
+          alignment: Alignment.centerRight,
+          child: Text(
+            'Total : ${controller.fetchTotal.value}',
+            style: const TextStyle(color: baseColor),
+          ),
+        ),
+        const SizedBox(height: 10),
+        Obx(() {
+          return controller.isLoading.value
+              ? const Expanded(
+                  child: Center(child: CircularProgressIndicator()))
+              : Expanded(
+                  child: BaseRefresh(
+                    onRefresh: () async {
+                      await Future.delayed(const Duration(milliseconds: 2500),
+                          () async {
+                        setState(() {
+                          controller.fetchShoppingDetail();
+                          controller.shoppingDetail.refresh();
+                        });
+                      });
+                    },
+                    child: ListView.builder(
+                      itemCount: controller.shoppingDetail.length,
+                      itemBuilder: (context, index) {
+                        final shoppingDetail = controller.shoppingDetail[index];
+
+                        late final String harga;
+                        late final String subtotal;
+
+                        if (controller.shoppingDetail.isNotEmpty) {
+                          harga = NumberFormat.currency(
+                            locale: 'id_ID',
+                            symbol: 'Rp ',
+                          ).format(int.parse(shoppingDetail.harga ?? '0'));
+
+                          subtotal = NumberFormat.currency(
+                            locale: 'id_ID',
+                            symbol: 'Rp ',
+                          ).format(
+                              int.parse(shoppingDetail.subTotal ?? '0'));
+                        }
+
+                        return Column(
+                          children: [
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Expanded(
+                                  child: Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      Text(
+                                        shoppingDetail.dscription.toString(),
+                                        style:
+                                            const TextStyle(color: baseColor),
+                                      ),
+                                      Text(
+                                        'Quantity : ' +
+                                            shoppingDetail.qty.toString(),
+                                        style:
+                                            const TextStyle(color: baseColor),
+                                      ),
+                                      Text(
+                                        'Price : $harga',
+                                        style:
+                                            const TextStyle(color: baseColor),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                                const SizedBox(width: 10),
+                                Text(
+                                  'Subtotal : $subtotal',
+                                  style: const TextStyle(color: baseColor),
+                                ),
+                              ],
+                            ),
+                            Container(
+                              height: 1,
+                              width: Get.width,
+                              margin: const EdgeInsets.symmetric(vertical: 10),
+                              color: yellow,
+                            )
+                          ],
+                        );
+                      },
+                    ),
+                  ),
+                );
+        }),
+      ],
+    );
+  }
+}
+
+void _showBottomSheet(String no_struk, String docnum) async {
   await Get.bottomSheet(
     elevation: 5,
     shape: const RoundedRectangleBorder(
@@ -453,8 +418,9 @@ void _showBottomSheet(List<Widget> children) async {
       height: 400,
       child: Padding(
         padding: const EdgeInsets.all(10),
-        child: Column(
-          children: children,
+        child: DetailShopping(
+          no_struk: no_struk,
+          docnum: docnum,
         ),
       ),
     ),
