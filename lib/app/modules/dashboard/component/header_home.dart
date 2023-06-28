@@ -70,13 +70,8 @@ class HeaderHome extends StatelessWidget {
                           height: 30,
                           width: 88,
                           child: ElevatedButton(
-                            onPressed: () async {
-                              Get.to(
-                                WebViewPage(
-                                  url: 'http://10.1.1.152/triwarna/register',
-                                  title: 'Register Member',
-                                ),
-                              );
+                            onPressed: () {
+                              Get.toNamed('/register');
                             },
                             style: ElevatedButton.styleFrom(
                               backgroundColor: yellow,

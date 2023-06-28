@@ -111,12 +111,7 @@ class _LoginFormState extends State<LoginForm> {
               ),
               TextButton(
                 onPressed: () {
-                  Get.to(
-                    WebViewPage(
-                      url: 'http://10.1.1.152/triwarna/register',
-                      title: 'Register Member',
-                    ),
-                  );
+                  Get.offAndToNamed('/register');
                 },
                 child: const Text(
                   'Register here',
