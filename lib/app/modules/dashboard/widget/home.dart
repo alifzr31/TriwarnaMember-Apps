@@ -1,29 +1,41 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:liquid_pull_to_refresh/liquid_pull_to_refresh.dart';
+import 'package:member_apps/app/animation/fadeanimation.dart';
+import 'package:member_apps/app/component/circle_menu.dart';
 import 'package:member_apps/app/core/value.dart';
-import 'package:member_apps/app/modules/dashboard/component/carousel.dart';
+import 'package:member_apps/app/modules/dashboard/component/content_home.dart';
 import 'package:member_apps/app/modules/dashboard/component/header_home.dart';
 import 'package:member_apps/app/modules/dashboard/component/menu_button.dart';
 import 'package:member_apps/app/modules/dashboard/controller.dart';
+import 'package:member_apps/app/modules/shopping/controller.dart';
 
-class HomePage extends StatefulWidget {
+class HomePage extends StatelessWidget {
   const HomePage({super.key});
 
   @override
-  State<HomePage> createState() => _HomePageState();
+  Widget build(BuildContext context) {
+    return SafeArea(
+      child: HomeBody(),
+    );
+  }
 }
 
-class _HomePageState extends State<HomePage> {
+class HomeBody extends StatelessWidget {
+  HomeBody({super.key});
   final controller = Get.find<DashboardController>();
+  final shoppingController = Get.find<ShoppingController>();
 
   Future<void> refreshHome() async {
     await Future.delayed(
       const Duration(milliseconds: 2500),
       () async {
         controller.fetchProfile();
+        shoppingController.fetchShopping();
         controller.user.refresh();
+        shoppingController.shopping.refresh();
 
         await Fluttertoast.showToast(
           msg: 'Data Refreshed',
@@ -40,44 +52,34 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: controller.token.value == 'null'
-          ? SingleChildScrollView(
-              child: Column(
-                children: [
-                  HeaderHome(),
-                  const SizedBox(height: 10),
-                  const MenuButton(),
-                  SizedBox(
-                    height: 200,
-                    width: Get.width,
-                    child: CarouselField(),
-                  ),
-                ],
-              ),
-            )
-          : LiquidPullToRefresh(
-            onRefresh: refreshHome,
-            color: baseColor,
-            showChildOpacityTransition: false,
-            backgroundColor: yellow,
-            springAnimationDurationInMilliseconds: 300,
-            height: 80,
-            child: SingleChildScrollView(
-              child: Column(
-                children: [
-                  HeaderHome(),
-                  const SizedBox(height: 10),
-                  const MenuButton(),
-                  SizedBox(
-                    height: 200,
-                    width: Get.width,
-                    child: CarouselField(),
-                  ),
-                ],
-              ),
-            ),
+    if (controller.token.value == 'null') {
+      return SingleChildScrollView(
+        child: Column(
+          children: [
+            HeaderHome(),
+            const MenuButton(),
+            ContentHome(),
+          ],
+        ),
+      );
+    } else {
+      return LiquidPullToRefresh(
+        onRefresh: refreshHome,
+        color: baseColor,
+        showChildOpacityTransition: false,
+        backgroundColor: yellow,
+        springAnimationDurationInMilliseconds: 300,
+        height: 80,
+        child: SingleChildScrollView(
+          child: Column(
+            children: [
+              HeaderHome(),
+              const MenuButton(),
+              ContentHome(),
+            ],
           ),
-    );
+        ),
+      );
+    }
   }
 }

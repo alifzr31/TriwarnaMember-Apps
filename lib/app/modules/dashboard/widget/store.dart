@@ -52,7 +52,6 @@ class ListStore extends StatefulWidget {
 
 class _ListStoreState extends State<ListStore> {
   final controller = Get.find<DashboardController>();
-  String? search;
 
   Future<void> refreshListStore() async {
     await Future.delayed(
@@ -78,15 +77,6 @@ class _ListStoreState extends State<ListStore> {
   Widget build(BuildContext context) {
     return Obx(
       () {
-        final filter = controller.store
-            .where((e) => e.storeName
-                .toString()
-                .toLowerCase()
-                .contains(search.toString().toLowerCase()))
-            .toList();
-
-        print(search);
-
         return controller.isLoading.value
             ? Expanded(
                 child: Center(
@@ -106,14 +96,10 @@ class _ListStoreState extends State<ListStore> {
                 child: BaseRefresh(
                   onRefresh: refreshListStore,
                   child: ListView.builder(
-                    itemCount: search == '' || search == null
-                        ? controller.store.length
-                        : filter.length,
+                    itemCount: controller.store.length,
                     itemBuilder: (context, index) {
-                      var store = search == '' || search == null
-                          ? controller.store[index]
-                          : filter[index];
-                
+                      var store = controller.store[index];
+
                       return FadeAnimation(
                         delay: 1,
                         child: Card(
@@ -176,7 +162,7 @@ class _ListStoreState extends State<ListStore> {
                                     onPressed: () async {
                                       final lat = double.parse(store.lat!);
                                       final long = double.parse(store.long!);
-                
+
                                       MapsLauncher.launchCoordinates(
                                         lat,
                                         long,

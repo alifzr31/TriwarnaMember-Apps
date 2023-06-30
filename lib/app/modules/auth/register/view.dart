@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:icons_plus/icons_plus.dart';
-import 'package:image_picker/image_picker.dart';
 import 'package:member_apps/app/component/base_button.dart';
+import 'package:member_apps/app/component/base_dropdown.dart';
 import 'package:member_apps/app/component/base_text_input.dart';
 import 'package:member_apps/app/core/value.dart';
 import 'package:member_apps/app/modules/auth/controller.dart';
@@ -24,8 +23,8 @@ class RegisterPage extends StatelessWidget {
             ),
           ),
           Positioned(
-            top: -40,
-            right: -50,
+            top: -30,
+            right: -45,
             child: CircleAvatar(
               radius: 80,
               backgroundColor: baseColor.withOpacity(0.5),
@@ -33,7 +32,7 @@ class RegisterPage extends StatelessWidget {
           ),
           SafeArea(
             child: Padding(
-              padding: const EdgeInsets.all(15),
+              padding: const EdgeInsets.all(10),
               child: Column(
                 children: [
                   Row(
@@ -72,7 +71,11 @@ class _RegisterFormState extends State<RegisterForm> {
   bool showPass = true;
 
   final controller = Get.find<AuthController>();
-  late final XFile? imagePicked;
+
+  final List<String> _idType = [
+    'KTP',
+    'SIM',
+  ];
 
   @override
   Widget build(BuildContext context) {
@@ -86,98 +89,95 @@ class _RegisterFormState extends State<RegisterForm> {
                 child: Column(
                   children: [
                     BaseTextInput(
-                      controller: controller.nameController,
                       label: 'Full Name',
-                      validator: (val) {
-                        if (controller.nameController.text.isEmpty ||
-                            controller.nameController.text == null) {
-                          return 'Input your name';
-                        }
-
-                        return null;
-                      },
+                      controller: controller.fullNameController,
                     ),
                     const SizedBox(height: 20),
-                    const BaseTextInput(
+                    BaseTextInput(
                       label: 'Email',
+                      controller: controller.emailRegisController,
+                      keyboardType: TextInputType.emailAddress,
                     ),
                     const SizedBox(height: 20),
-                    // BaseDropdown(
-                    //   label: 'ID Type',
-                    //   items: _items.map((e) {
-                    //     return DropdownMenuItem(
-                    //       value: e,
-                    //       child: Text(e),
-                    //     );
-                    //   }).toList(),
-                    //   onChanged: (val) {},
-                    // ),
-                    const SizedBox(height: 20),
-                    const BaseTextInput(
-                      label: 'ID Number',
-                    ),
-                    const SizedBox(height: 20),
-                    const BaseTextInput(
-                      label: 'Contact',
+                    BaseTextInput(
+                      label: 'Username',
+                      controller: controller.usernameController,
                     ),
                     const SizedBox(height: 20),
                     BaseTextInput(
                       label: 'Password',
+                      controller: controller.passwordRegisController,
                       obscureText: showPass,
+                      keyboardType: TextInputType.visiblePassword,
                       icon: IconButton(
                         onPressed: () {
                           setState(() {
                             showPass = !showPass;
                           });
                         },
-                        icon: showPass
-                            ? const Icon(HeroIcons.eye)
-                            : const Icon(HeroIcons.eye_slash),
+                        icon: Icon(
+                            showPass ? Icons.visibility : Icons.visibility_off),
                       ),
                     ),
-                    BaseButton(
-                      text: 'text',
-                      onPressed: () async {
-                        final ImagePicker _picker = ImagePicker();
-                        imagePicked = await _picker.pickImage(
-                          source: ImageSource.gallery,
-                          imageQuality: 80,
-                        );
+                    const SizedBox(height: 20),
+                    BaseDropdown(
+                      items: _idType
+                          .map((e) => DropdownMenuItem<String>(
+                                value: e,
+                                child: Text(e),
+                              ))
+                          .toList(),
+                      onChanged: (value) {
+                        controller.idTypeController.text = value as String;
                       },
+                      hint: 'ID Type',
                     ),
+                    const SizedBox(height: 20),
+                    BaseTextInput(
+                      label: 'ID Number',
+                      controller: controller.idNumberController,
+                      keyboardType: TextInputType.number,
+                    ),
+                    const SizedBox(height: 20),
+                    BaseTextInput(
+                      label: 'Contact',
+                      controller: controller.contactController,
+                      keyboardType: TextInputType.phone,
+                    ),
+                    const SizedBox(height: 10),
                   ],
                 ),
               ),
             ),
           ),
-          const Divider(),
           SizedBox(
             height: 40,
             width: Get.width,
             child: BaseButton(
-              onPressed: () async {
-                if (controller.formKeyRegister.currentState!.validate()) {
-                  print('Submitted');
-                  controller.register(imagePicked!);
-                } else {
-                  print('Complete your input please');
-                }
-              },
               text: 'Register',
+              onPressed: () {
+                controller.register(context);
+              },
             ),
           ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              const Text("Already have an account?"),
-              TextButton(
-                onPressed: () {
-                  Get.offAndToNamed('/login');
-                },
-                child: const Text('Log In here'),
-              ),
-            ],
-          ),
+          Padding(
+            padding: const EdgeInsets.only(top: 8, bottom: 2),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text('Already have an account? '),
+                GestureDetector(
+                  onTap: () {
+                    Get.offAndToNamed('/login');
+                  },
+                  child: const Text(
+                    'Log In here',
+                    style: TextStyle(color: baseColor),
+                  ),
+                ),
+              ],
+            ),
+          )
         ],
       ),
     );

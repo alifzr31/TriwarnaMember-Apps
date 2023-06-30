@@ -259,6 +259,7 @@ class BodyLottery extends StatelessWidget {
                   child: BaseRefresh(
                     onRefresh: controller.refreshLottery,
                     child: ListView.builder(
+                      physics: const ClampingScrollPhysics(),
                       controller: controller.scrollController,
                       itemCount: controller.lottery.length + 1,
                       itemBuilder: (context, index) {
@@ -292,9 +293,7 @@ class BodyLottery extends StatelessWidget {
                                                     CrossAxisAlignment.start,
                                                 children: [
                                                   Text(
-                                                    lottery.noUndian
-                                                            .toString() +
-                                                        ' (${index + 1})',
+                                                    lottery.noUndian.toString(),
                                                     style: const TextStyle(
                                                       fontSize: 16,
                                                       fontWeight:

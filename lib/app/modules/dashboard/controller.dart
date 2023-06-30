@@ -116,7 +116,7 @@ class DashboardController extends GetxController {
         failedSnackbar('Failed Fetching Store', response.statusCode.toString());
       }
     } on DioError catch (e) {
-      failedSnackbar('Failed', e.response!.data.toString());
+      failedSnackbar('Failed', e.response.toString());
     }
 
     isLoading.value = false;

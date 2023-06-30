@@ -5,6 +5,7 @@ import 'package:get/get.dart';
 import 'package:member_apps/app/core/utils/snackbar.dart';
 import 'package:member_apps/app/data/models/shopping.dart';
 import 'package:member_apps/app/data/providers/shopping_provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class ShoppingController extends GetxController {
   final ShoppingProvider shoppingProvider;
@@ -15,14 +16,26 @@ class ShoppingController extends GetxController {
   var shopping = <Shopping>[].obs;
 
   @override
-  void onInit() {
-    fetchShopping();
+  void onInit() async {
+    SharedPreferences _prefs = await SharedPreferences.getInstance();
+    final token = _prefs.getString('token');
+
+    if (token != null) {
+      fetchShopping();
+    }
+
     super.onInit();
   }
 
   @override
-  void onReady() {
-    fetchShopping();
+  void onReady() async {
+    SharedPreferences _prefs = await SharedPreferences.getInstance();
+    final token = _prefs.getString('token');
+
+    if (token != null) {
+      fetchShopping();
+    }
+    
     super.onReady();
   }
 

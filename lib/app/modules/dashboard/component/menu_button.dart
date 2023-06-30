@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
-import 'package:member_apps/app/component/card_menu.dart';
+import 'package:member_apps/app/animation/fadeanimation.dart';
+import 'package:member_apps/app/component/circle_menu.dart';
 import 'package:member_apps/app/component/point_text..dart';
 import 'package:member_apps/app/core/utils/snackbar.dart';
 import 'package:member_apps/app/core/value.dart';
@@ -13,81 +14,95 @@ class MenuButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.all(15),
+      padding: const EdgeInsets.all(10),
       child: Column(
         children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
-            children: [
-              Column(
-                children: [
-                  CardMenu(
-                    svgAsset: 'assets/images/event.svg',
-                    onTap: () async {
-                      SharedPreferences sharedPreferences =
-                          await SharedPreferences.getInstance();
-                      final token = sharedPreferences.getString('token');
-                      if (token == null) {
-                        infoSnackbar(
-                          "You're not logged in",
-                          'You must log in first to access this feature',
-                        );
-                        Get.toNamed('/login');
-                      } else {
-                        Get.toNamed('/event');
-                      }
-                    },
-                  ),
-                  CardMenu(
-                    svgAsset: 'assets/images/konsul.svg',
-                    onTap: () {
-                      _showBottomSheet(
-                        'free_consult.svg',
-                        'Free Consult',
-                        'Free consultation with Triwarna consultants regarding the selection of colors and types of paint according to customer needs.',
-                      );
-                    },
-                  ),
-                ],
+          FadeAnimation(
+            delay: 1,
+            child: const Align(
+              alignment: Alignment.centerLeft,
+              child: Text(
+                'Check Here',
+                style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
               ),
-              Column(
-                children: [
-                  CardMenu(
-                    svgAsset: 'assets/images/promo.svg',
-                    onTap: () async {
-                      SharedPreferences sharedPreferences =
-                          await SharedPreferences.getInstance();
-                      final token = sharedPreferences.getString('token');
-                      if (token == null) {
-                        infoSnackbar(
-                          "You're not logged in",
-                          'You must log in first to access this feature',
-                        );
-                        Get.toNamed('/login');
-                      } else {
-                        Get.toNamed('/promo');
-                      }
-                    },
-                  ),
-                  CardMenu(
-                    svgAsset: 'assets/images/ongkir.svg',
-                    onTap: () {
-                      _showBottomSheet(
-                        'free_shipping.svg',
-                        'Free Shipping',
-                        'Free shipping with the provision of maximum shipping distance according to Triwarna management policy.',
-                      );
-                    },
-                  ),
-                ],
+            ),
+          ),
+          const SizedBox(height: 10),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              CircleMenu(
+                svgIcon: 'member_circle.svg',
+                sizeIcon: 35,
+                label: 'Member',
+                onTap: () {
+                  Get.toNamed('/membermenu');
+                },
+              ),
+              CircleMenu(
+                svgIcon: 'event_circle.svg',
+                sizeIcon: 28,
+                label: 'Event',
+                onTap: () async {
+                  SharedPreferences sharedPreferences =
+                      await SharedPreferences.getInstance();
+                  final token = sharedPreferences.getString('token');
+                  if (token == null) {
+                    infoSnackbar(
+                      "You're not logged in",
+                      'You must log in first to access this feature',
+                    );
+                    Get.toNamed('/login');
+                  } else {
+                    Get.toNamed('/event');
+                  }
+                },
+              ),
+              CircleMenu(
+                svgIcon: 'promo_circle.svg',
+                sizeIcon: 32,
+                label: 'Promo',
+                onTap: () async {
+                  SharedPreferences sharedPreferences =
+                      await SharedPreferences.getInstance();
+                  final token = sharedPreferences.getString('token');
+                  if (token == null) {
+                    infoSnackbar(
+                      "You're not logged in",
+                      'You must log in first to access this feature',
+                    );
+                    Get.toNamed('/login');
+                  } else {
+                    Get.toNamed('/promo');
+                  }
+                },
+              ),
+              CircleMenu(
+                svgIcon: 'ongkir_circle.svg',
+                sizeIcon: 40,
+                label: 'Free\nShipping',
+                onTap: () {
+                  _showBottomSheet(
+                    'free_shipping.svg',
+                    'Free Shipping',
+                    'Free shipping with the provision of maximum shipping distance according to Triwarna management policy.',
+                  );
+                },
+              ),
+              CircleMenu(
+                svgIcon: 'konsul_circle.svg',
+                sizeIcon: 40,
+                label: 'Free\nConsult',
+                onTap: () {
+                  _showBottomSheet(
+                    'free_consult.svg',
+                    'Free Consult',
+                    'Free consultation with Triwarna consultants regarding the selection of colors and types of paint according to customer needs.',
+                  );
+                },
               ),
             ],
-          ),
-          CardMenu(
-            svgAsset: 'assets/images/member.svg',
-            onTap: () {
-              Get.toNamed('/membermenu');
-            },
           ),
         ],
       ),

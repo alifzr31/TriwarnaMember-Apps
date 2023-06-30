@@ -60,13 +60,13 @@ abstract class AppPages {
       name: Routes.login,
       page: () => const LoginPage(),
       binding: AuthBinding(),
-      transition: Transition.downToUp,
+      transition: Transition.fadeIn,
     ),
     GetPage(
       name: Routes.register,
       page: () => const RegisterPage(),
       binding: AuthBinding(),
-      transition: Transition.upToDown,
+      transition: Transition.fadeIn,
     ),
     GetPage(
       name: Routes.point,

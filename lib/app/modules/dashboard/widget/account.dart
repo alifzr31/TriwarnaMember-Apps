@@ -10,6 +10,7 @@ import 'package:member_apps/app/component/white_text.dart';
 import 'package:member_apps/app/core/utils/api_url.dart';
 import 'package:member_apps/app/core/utils/loading_function.dart';
 import 'package:member_apps/app/core/value.dart';
+import 'package:member_apps/app/modules/auth/controller.dart';
 import 'package:member_apps/app/modules/dashboard/controller.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -263,6 +264,7 @@ class HeaderAccount extends StatelessWidget {
 class BodyAccount extends StatelessWidget {
   BodyAccount({super.key});
   final controller = Get.find<DashboardController>();
+  final authController = Get.find<AuthController>();
 
   @override
   Widget build(BuildContext context) {
@@ -380,16 +382,7 @@ class BodyAccount extends StatelessWidget {
                     foregroundColor: yellow,
                   ),
                   onPressed: () async {
-                    loading(context);
-
-                    await Future.delayed(const Duration(milliseconds: 600), () async {
-                      SharedPreferences prefs =
-                          await SharedPreferences.getInstance();
-                      await prefs.clear();
-                      await prefs.setBool('opened', true);
-
-                      Get.offAllNamed('/dashboard0');
-                    });
+                    authController.logout(context);
                   },
                   child: const Text('Okay'),
                 ),

@@ -15,17 +15,26 @@ class AuthController extends GetxController {
   final formKeyLogin = GlobalKey<FormState>();
   final formKeyRegister = GlobalKey<FormState>();
 
-  final nameController = TextEditingController();
+  // LOGIN
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
 
-  @override
-  void onClose() {
-    nameController.dispose();
-    emailController.dispose();
-    passwordController.dispose();
-    super.onClose();
-  }
+  // REGISTER
+  final fullNameController = TextEditingController();
+  final emailRegisController = TextEditingController();
+  final usernameController = TextEditingController();
+  final passwordRegisController = TextEditingController();
+  final idTypeController = TextEditingController();
+  final idNumberController = TextEditingController();
+  final contactController = TextEditingController();
+
+  // @override
+  // void onClose() {
+  //   nameController.dispose();
+  //   emailController.dispose();
+  //   passwordController.dispose();
+  //   super.onClose();
+  // }
 
   void login(BuildContext context) async {
     final formData = _dio.FormData.fromMap({
@@ -52,21 +61,47 @@ class AuthController extends GetxController {
     }
   }
 
-  void register(XFile file) async {
-    final fl = await _dio.MultipartFile.fromFile(file.path);
-
+  void register(BuildContext context) async {
     final formData = _dio.FormData.fromMap({
-      'nama': nameController.text,
-      'file': await _dio.MultipartFile.fromFile(file.path),
+      "full_name": fullNameController.text,
+      "email": emailRegisController.text,
+      "username": usernameController.text,
+      "password": passwordRegisController.text,
+      "id_type": idTypeController.text,
+      "id_number": idNumberController.text,
+      "contact": contactController.text,
     });
 
+    loading(context);
+
     try {
-      final response = await authProvider.register(formData);
-      print(response);
-    } catch (e) {
-      print(e);
       print(formData.fields);
-      print(fl.contentType);
+    } on _dio.DioError catch (e) {
+      print(e);
+    } finally {
+      await Future.delayed(const Duration(milliseconds: 1000), () {
+        Get.back();
+      });
+    }
+  }
+
+  void logout(BuildContext context) async {
+    loading(context);
+
+    try {
+      final response = await authProvider.logout();
+      SharedPreferences sharedPreferences =
+          await SharedPreferences.getInstance();
+      await sharedPreferences.clear();
+      await sharedPreferences.setBool('opened', true);
+
+      print(response.data);
+
+      infoSnackbar('Log Out Success', 'You have been logged out');
+      Get.offAllNamed('/dashboard0');
+    } on _dio.DioError catch (e) {
+      Get.back();
+      failedSnackbar('Failed', e.response.toString());
     }
   }
 }
