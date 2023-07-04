@@ -75,13 +75,33 @@ class HeaderHome extends StatelessWidget {
           width: Get.width,
           height: 180,
           decoration: BoxDecoration(
-            color: controller.user.value?.loyalty.toString().capitalize ==
+            gradient: controller.user.value?.loyalty.toString().capitalize ==
                     'Silver'
-                ? Colors.grey.shade300.withOpacity(0.6)
-                : controller.user.value?.loyalty.toString().capitalize ==
-                        'Gold'
-                    ? gold.withOpacity(0.8)
-                    : Colors.grey.shade400.withOpacity(0.8),
+                ? LinearGradient(
+                    colors: [
+                      Color(0xFFC0C0C0),
+                      Color(0xFFA9A9A9),
+                    ],
+                    begin: Alignment.centerLeft,
+                    end: Alignment.centerRight,
+                  )
+                : controller.user.value?.loyalty.toString().capitalize == 'Gold'
+                    ? LinearGradient(
+                        colors: [
+                          Color(0xFFD4AF37),
+                          Color(0xFFFFD700),
+                        ],
+                        begin: Alignment.bottomLeft,
+                        end: Alignment.topRight,
+                      )
+                    : LinearGradient(
+                        colors: [
+                          Color(0xFFE5E4E2),
+                          Color(0xFFB4B3B1),
+                        ],
+                        begin: Alignment.bottomLeft,
+                        end: Alignment.topRight,
+                      ),
             borderRadius: BorderRadius.circular(20),
           ),
           padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 20),
@@ -112,8 +132,7 @@ class HeaderHome extends StatelessWidget {
                               children: [
                                 const Text('ID Member'),
                                 Text(
-                                  controller.user.value!.noMember
-                                      .toString(),
+                                  controller.user.value!.noMember.toString(),
                                   style: const TextStyle(fontSize: 16),
                                 ),
                               ],
@@ -136,11 +155,10 @@ class HeaderHome extends StatelessWidget {
                                     controller.user.value == null
                                         ? CupertinoActivityIndicator()
                                         : Text(
-                                            controller
-                                                .user.value!.loyaltyPoint
+                                            controller.user.value!.loyaltyPoint
                                                 .toString(),
-                                            style: const TextStyle(
-                                                fontSize: 16),
+                                            style:
+                                                const TextStyle(fontSize: 16),
                                           ),
                                   ],
                                 ),
@@ -168,12 +186,15 @@ class HeaderHome extends StatelessWidget {
                                       ApiUrl.qrStorage +
                                           '/${controller.user.value!.noMember}.png',
                                       colorBlendMode: BlendMode.difference,
-                                      errorBuilder: (context, error, stackTrace) {
+                                      errorBuilder:
+                                          (context, error, stackTrace) {
                                         return const Text('Load image failed');
                                       },
                                     ),
-                                    Text(controller.user.value!.noMember.toString()),
-                                    Text(controller.user.value!.contact.toString()),
+                                    Text(controller.user.value!.noMember
+                                        .toString()),
+                                    Text(controller.user.value!.contact
+                                        .toString()),
                                   ],
                                 ),
                               ),
