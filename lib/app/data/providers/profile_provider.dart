@@ -27,6 +27,17 @@ class ProfileProvider {
     );
   }
 
+  Future<Response> createPin(FormData formData) async {
+    await _getToken();
+    return await dio.post(
+      EndPoint.createPin,
+      data: formData,
+      options: Options(
+        headers: _setHeaders(),
+      ),
+    );
+  }
+
   Future<Response> changePin(FormData formData) async {
     await _getToken();
     return await dio.post(
