@@ -5,6 +5,7 @@ import 'package:get/get.dart';
 import 'package:member_apps/app/animation/fadeanimation.dart';
 import 'package:member_apps/app/component/base_alert.dart';
 import 'package:member_apps/app/core/utils/api_url.dart';
+import 'package:member_apps/app/core/utils/gradient_color.dart';
 import 'package:member_apps/app/core/value.dart';
 import 'package:member_apps/app/modules/dashboard/controller.dart';
 
@@ -77,31 +78,10 @@ class HeaderHome extends StatelessWidget {
           decoration: BoxDecoration(
             gradient: controller.user.value?.loyalty.toString().capitalize ==
                     'Silver'
-                ? LinearGradient(
-                    colors: [
-                      Color(0xFFC0C0C0),
-                      Color(0xFFA9A9A9),
-                    ],
-                    begin: Alignment.centerLeft,
-                    end: Alignment.centerRight,
-                  )
+                ? GradientColor.silver
                 : controller.user.value?.loyalty.toString().capitalize == 'Gold'
-                    ? LinearGradient(
-                        colors: [
-                          Color(0xFFD4AF37),
-                          Color(0xFFFFD700),
-                        ],
-                        begin: Alignment.bottomLeft,
-                        end: Alignment.topRight,
-                      )
-                    : LinearGradient(
-                        colors: [
-                          Color(0xFFE5E4E2),
-                          Color(0xFFB4B3B1),
-                        ],
-                        begin: Alignment.bottomLeft,
-                        end: Alignment.topRight,
-                      ),
+                    ? GradientColor.gold
+                    : GradientColor.platinum,
             borderRadius: BorderRadius.circular(20),
           ),
           padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 20),

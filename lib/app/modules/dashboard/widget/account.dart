@@ -8,6 +8,7 @@ import 'package:icons_plus/icons_plus.dart';
 import 'package:member_apps/app/animation/fadeanimation.dart';
 import 'package:member_apps/app/component/white_text.dart';
 import 'package:member_apps/app/core/utils/api_url.dart';
+import 'package:member_apps/app/core/utils/gradient_color.dart';
 import 'package:member_apps/app/core/utils/loading_function.dart';
 import 'package:member_apps/app/core/value.dart';
 import 'package:member_apps/app/modules/auth/controller.dart';
@@ -136,7 +137,7 @@ class HeaderAccount extends StatelessWidget {
                                                   height: 23,
                                                   width: 80,
                                                   decoration: BoxDecoration(
-                                                    color: Colors.grey.shade100,
+                                                    gradient: GradientColor.silver,
                                                     borderRadius:
                                                         BorderRadius.circular(
                                                             30),
@@ -152,8 +153,7 @@ class HeaderAccount extends StatelessWidget {
                                                       height: 23,
                                                       width: 80,
                                                       decoration: BoxDecoration(
-                                                        color: Colors
-                                                            .grey.shade300,
+                                                        gradient: GradientColor.platinum,
                                                         borderRadius:
                                                             BorderRadius
                                                                 .circular(30),
@@ -166,8 +166,7 @@ class HeaderAccount extends StatelessWidget {
                                                       height: 23,
                                                       width: 80,
                                                       decoration: BoxDecoration(
-                                                        color: Colors
-                                                            .amber.shade400,
+                                                        gradient: GradientColor.gold,
                                                         borderRadius:
                                                             BorderRadius
                                                                 .circular(30),
