@@ -24,6 +24,10 @@ class AuthProvider {
     return await dio.post(EndPoint.register, data: formData);
   }
 
+  Future<Response> verifyEmail(FormData formData) async {
+    return await dio.post(EndPoint.verifyEmail, data: formData);
+  }
+
   Future<Response> logout() async {
     await _getToken();
     return await dio.post(

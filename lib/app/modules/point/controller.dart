@@ -44,7 +44,7 @@ class PointController extends GetxController {
             ));
       if (response.statusCode == 200) {
         jumlah.value = response.data['point']['last_point'];
-        last_transaction.value = response.data['last_transaction'];
+        last_transaction.value = response.data['last_transaction'] ?? '-';
         point.value = body;
 
         update();

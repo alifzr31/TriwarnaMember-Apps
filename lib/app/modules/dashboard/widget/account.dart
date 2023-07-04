@@ -79,13 +79,23 @@ class HeaderAccount extends StatelessWidget {
                                 delay: 1,
                                 child: Row(
                                   children: [
-                                    CircleAvatar(
-                                      radius: 50,
-                                      backgroundColor: Colors.transparent,
-                                      backgroundImage: NetworkImage(ApiUrl
-                                              .profileStorage +
-                                          '/${controller.user.value!.image}'),
-                                    ),
+                                    controller.user.value!.image == null
+                                        ? const CircleAvatar(
+                                            radius: 50,
+                                            backgroundColor: yellow,
+                                            child: Icon(
+                                              Icons.person,
+                                              size: 60,
+                                              color: baseColor,
+                                            ),
+                                          )
+                                        : CircleAvatar(
+                                            radius: 50,
+                                            backgroundColor: Colors.transparent,
+                                            backgroundImage: NetworkImage(ApiUrl
+                                                    .profileStorage +
+                                                '/${controller.user.value!.image}'),
+                                          ),
                                     SizedBox(width: Get.width * 0.04),
                                     controller.user.value!.loyalty
                                                 .toString()
@@ -315,22 +325,26 @@ class BodyAccount extends StatelessWidget {
                         },
                       ),
                     ),
+                    FadeAnimation(
+                      delay: 1,
+                      child: ListTile(
+                        leading: const Icon(
+                          Iconsax.password_check,
+                          color: baseColor,
+                        ),
+                        title: Text(controller.user.value!.pin == null
+                            ? 'Create a New PIN'
+                            : 'Change PIN'),
+                        trailing: const Icon(Icons.keyboard_arrow_right),
+                        onTap: () {
+                          controller.user.value!.pin == null
+                              ? Get.toNamed('/createpin')
+                              : Get.toNamed('/changepin');
+                        },
+                      ),
+                    ),
                   ],
                 ),
-        ),
-        FadeAnimation(
-          delay: 1,
-          child: ListTile(
-            leading: const Icon(
-              Iconsax.password_check,
-              color: baseColor,
-            ),
-            title: const Text('Change PIN'),
-            trailing: const Icon(Icons.keyboard_arrow_right),
-            onTap: () {
-              Get.toNamed('/changepin');
-            },
-          ),
         ),
         FadeAnimation(
           delay: 1,

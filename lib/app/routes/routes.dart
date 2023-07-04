@@ -11,10 +11,12 @@ class Routes {
   static const event = '/event';
   static const promo = '/promo';
   static const membermenu = '/membermenu';
+  static const createpin = '/createpin';
   static const changepin = '/changepin';
   static const changepass = '/changepass';
   static const inputpin = '/inputpin';
   static const voucher = '/voucher';
   static const tracking = '/tracking';
   static const shopping = '/shopping';
+  static const verify = '/verify';
 }

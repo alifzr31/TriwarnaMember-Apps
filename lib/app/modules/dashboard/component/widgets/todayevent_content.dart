@@ -1,5 +1,6 @@
 import 'package:card_swiper/card_swiper.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:member_apps/app/animation/fadeanimation.dart';
 import 'package:member_apps/app/component/swiper_box.dart';
@@ -29,8 +30,6 @@ class _TodayEventContentState extends State<TodayEventContent> {
     'Lorem Ipsum dolor sit amet lorem ipsum dolor sit amet',
     'Lorem Ipsum dolor sit amet lorem ipsum dolor sit amet',
   ];
-
-  int _currentPage = 0;
 
   @override
   Widget build(BuildContext context) {
@@ -84,11 +83,6 @@ class _TodayEventContentState extends State<TodayEventContent> {
                     desc: desc[index],
                   ),
                 );
-              },
-              onIndexChanged: (value) {
-                setState(() {
-                  _currentPage = value;
-                });
               },
             ),
           ),

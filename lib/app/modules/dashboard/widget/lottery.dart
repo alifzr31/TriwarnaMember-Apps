@@ -190,7 +190,7 @@ class HeaderLottery extends StatelessWidget {
                               FadeAnimation(
                                 delay: 1,
                                 child: GreyText(
-                                    text: controller.user.value!.idNumber!),
+                                    text: controller.user.value!.idNumber ?? '-'),
                               ),
                               const SizedBox(height: 10),
                               Row(

@@ -63,6 +63,7 @@ dependencies:
   loading_animation_widget: ^1.2.0+4
 
   liquid_pull_to_refresh: ^3.0.1
+  open_mail_app: ^0.4.5
 
   # NOT/NOT YET USE LIBRARY
   # http: ^0.13.6

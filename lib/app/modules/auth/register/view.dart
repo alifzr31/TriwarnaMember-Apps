@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:member_apps/app/component/base_button.dart';
-import 'package:member_apps/app/component/base_dropdown.dart';
 import 'package:member_apps/app/component/base_text_input.dart';
 import 'package:member_apps/app/core/value.dart';
 import 'package:member_apps/app/modules/auth/controller.dart';
@@ -35,20 +34,16 @@ class RegisterPage extends StatelessWidget {
               padding: const EdgeInsets.all(10),
               child: Column(
                 children: [
-                  Row(
-                    children: [
-                      Image.asset('assets/images/splash.png', width: 50),
-                      const SizedBox(width: 10),
-                      const Text(
-                        'Form Registration',
-                        style: TextStyle(fontSize: 22, color: baseColor),
-                      ),
-                    ],
+                  Padding(
+                    padding: EdgeInsets.symmetric(
+                        vertical: Get.width < 390
+                            ? Get.height * 0.08
+                            : Get.height * 0.1),
+                    child: Image.asset(
+                      'assets/images/login.png',
+                      height: 80,
+                    ),
                   ),
-                  const SizedBox(height: 10),
-                  const Text(
-                      'Please input your data for make member card and get all benefit for you.'),
-                  const SizedBox(height: 10),
                   const RegisterForm(),
                 ],
               ),
@@ -69,85 +64,118 @@ class RegisterForm extends StatefulWidget {
 
 class _RegisterFormState extends State<RegisterForm> {
   bool showPass = true;
+  bool showPassConfirm = true;
 
   final controller = Get.find<AuthController>();
-
-  final List<String> _idType = [
-    'KTP',
-    'SIM',
-  ];
 
   @override
   Widget build(BuildContext context) {
     return Expanded(
+      child: Get.width < 390 ? smallPhone() : normalPhone(),
+    );
+  }
+
+  Widget smallPhone() {
+    return SingleChildScrollView(
       child: Column(
         children: [
-          Expanded(
-            child: SingleChildScrollView(
-              child: Form(
-                key: controller.formKeyRegister,
-                child: Column(
-                  children: [
-                    BaseTextInput(
-                      label: 'Full Name',
-                      controller: controller.fullNameController,
-                    ),
-                    const SizedBox(height: 20),
-                    BaseTextInput(
-                      label: 'Email',
-                      controller: controller.emailRegisController,
-                      keyboardType: TextInputType.emailAddress,
-                    ),
-                    const SizedBox(height: 20),
-                    BaseTextInput(
-                      label: 'Username',
-                      controller: controller.usernameController,
-                    ),
-                    const SizedBox(height: 20),
-                    BaseTextInput(
-                      label: 'Password',
-                      controller: controller.passwordRegisController,
-                      obscureText: showPass,
-                      keyboardType: TextInputType.visiblePassword,
-                      icon: IconButton(
-                        onPressed: () {
-                          setState(() {
-                            showPass = !showPass;
-                          });
-                        },
-                        icon: Icon(
-                            showPass ? Icons.visibility : Icons.visibility_off),
-                      ),
-                    ),
-                    const SizedBox(height: 20),
-                    BaseDropdown(
-                      items: _idType
-                          .map((e) => DropdownMenuItem<String>(
-                                value: e,
-                                child: Text(e),
-                              ))
-                          .toList(),
-                      onChanged: (value) {
-                        controller.idTypeController.text = value as String;
-                      },
-                      hint: 'ID Type',
-                    ),
-                    const SizedBox(height: 20),
-                    BaseTextInput(
-                      label: 'ID Number',
-                      controller: controller.idNumberController,
-                      keyboardType: TextInputType.number,
-                    ),
-                    const SizedBox(height: 20),
-                    BaseTextInput(
-                      label: 'Contact',
-                      controller: controller.contactController,
-                      keyboardType: TextInputType.phone,
-                    ),
-                    const SizedBox(height: 10),
-                  ],
+          Form(
+            key: controller.formKeyRegister,
+            child: Column(
+              children: [
+                BaseTextInput(
+                  label: 'Nama Lengkap',
+                  controller: controller.fullNameController,
+                  validator: (value) {
+                    if (value!.isEmpty) {
+                      return 'Silahkan isi nama lengkap anda';
+                    }
+
+                    return null;
+                  },
                 ),
-              ),
+                const SizedBox(height: 20),
+                BaseTextInput(
+                  label: 'Email',
+                  controller: controller.emailRegisController,
+                  keyboardType: TextInputType.emailAddress,
+                  validator: (value) {
+                    if (value!.isEmpty) {
+                      return 'Silahkan isi email anda';
+                    } else {
+                      if (!value.isEmail) {
+                        return 'Masukkan email dengan benar';
+                      }
+                    }
+
+                    return null;
+                  },
+                ),
+                const SizedBox(height: 20),
+                BaseTextInput(
+                  label: 'No. Telepon',
+                  controller: controller.contactController,
+                  keyboardType: TextInputType.phone,
+                  validator: (value) {
+                    if (value!.isEmpty) {
+                      return 'Silahkan isi no. telepon anda';
+                    }
+
+                    return null;
+                  },
+                ),
+                const SizedBox(height: 20),
+                BaseTextInput(
+                  label: 'Password',
+                  controller: controller.passwordRegisController,
+                  obscureText: showPass,
+                  keyboardType: TextInputType.visiblePassword,
+                  icon: IconButton(
+                    onPressed: () {
+                      setState(() {
+                        showPass = !showPass;
+                      });
+                    },
+                    icon: Icon(
+                        showPass ? Icons.visibility : Icons.visibility_off),
+                  ),
+                  validator: (value) {
+                    if (value!.isEmpty) {
+                      return 'Silahkan isi password anda';
+                    }
+
+                    return null;
+                  },
+                ),
+                const SizedBox(height: 20),
+                BaseTextInput(
+                  label: 'Konfirmasi Password',
+                  controller: controller.passwordConfirmController,
+                  obscureText: showPassConfirm,
+                  keyboardType: TextInputType.visiblePassword,
+                  icon: IconButton(
+                    onPressed: () {
+                      setState(() {
+                        showPassConfirm = !showPassConfirm;
+                      });
+                    },
+                    icon: Icon(showPassConfirm
+                        ? Icons.visibility
+                        : Icons.visibility_off),
+                  ),
+                  validator: (value) {
+                    if (value!.isEmpty) {
+                      return 'Silahkan isi konfirmasi password';
+                    } else if (value !=
+                        controller.passwordRegisController.text) {
+                      return 'Konfirmasi password tidak sesuai';
+                    } else {
+                      return null;
+                    }
+                  },
+                ),
+                const SizedBox(height: 10),
+              ],
             ),
           ),
           SizedBox(
@@ -156,7 +184,9 @@ class _RegisterFormState extends State<RegisterForm> {
             child: BaseButton(
               text: 'Register',
               onPressed: () {
-                controller.register(context);
+                if (controller.formKeyRegister.currentState!.validate()) {
+                  controller.register(context);
+                }
               },
             ),
           ),
@@ -165,13 +195,13 @@ class _RegisterFormState extends State<RegisterForm> {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Text('Already have an account? '),
+                Text('Sudah mempunyai akun? '),
                 GestureDetector(
                   onTap: () {
                     Get.offAndToNamed('/login');
                   },
                   child: const Text(
-                    'Log In here',
+                    'Log In disini',
                     style: TextStyle(color: baseColor),
                   ),
                 ),
@@ -180,6 +210,146 @@ class _RegisterFormState extends State<RegisterForm> {
           )
         ],
       ),
+    );
+  }
+
+  Widget normalPhone() {
+    return Column(
+      children: [
+        Expanded(
+          child: SingleChildScrollView(
+            child: Form(
+              key: controller.formKeyRegister,
+              child: Column(
+                children: [
+                  BaseTextInput(
+                    label: 'Nama Lengkap',
+                    controller: controller.fullNameController,
+                    validator: (value) {
+                      if (value!.isEmpty) {
+                        return 'Silahkan isi nama lengkap anda';
+                      }
+
+                      return null;
+                    },
+                  ),
+                  const SizedBox(height: 20),
+                  BaseTextInput(
+                    label: 'Email',
+                    controller: controller.emailRegisController,
+                    keyboardType: TextInputType.emailAddress,
+                    validator: (value) {
+                      if (value!.isEmpty) {
+                        return 'Silahkan isi email anda';
+                      } else {
+                        if (!value.isEmail) {
+                          return 'Masukkan email dengan benar';
+                        }
+                      }
+
+                      return null;
+                    },
+                  ),
+                  const SizedBox(height: 20),
+                  BaseTextInput(
+                    label: 'No. Telepon',
+                    controller: controller.contactController,
+                    keyboardType: TextInputType.phone,
+                    validator: (value) {
+                      if (value!.isEmpty) {
+                        return 'Silahkan isi no. telepon anda';
+                      }
+
+                      return null;
+                    },
+                  ),
+                  const SizedBox(height: 20),
+                  BaseTextInput(
+                    label: 'Password',
+                    controller: controller.passwordRegisController,
+                    obscureText: showPass,
+                    keyboardType: TextInputType.visiblePassword,
+                    icon: IconButton(
+                      onPressed: () {
+                        setState(() {
+                          showPass = !showPass;
+                        });
+                      },
+                      icon: Icon(
+                          showPass ? Icons.visibility : Icons.visibility_off),
+                    ),
+                    validator: (value) {
+                      if (value!.isEmpty) {
+                        return 'Silahkan isi password anda';
+                      }
+
+                      return null;
+                    },
+                  ),
+                  const SizedBox(height: 20),
+                  BaseTextInput(
+                    label: 'Konfirmasi Password',
+                    controller: controller.passwordConfirmController,
+                    obscureText: showPassConfirm,
+                    keyboardType: TextInputType.visiblePassword,
+                    icon: IconButton(
+                      onPressed: () {
+                        setState(() {
+                          showPassConfirm = !showPassConfirm;
+                        });
+                      },
+                      icon: Icon(showPassConfirm
+                          ? Icons.visibility
+                          : Icons.visibility_off),
+                    ),
+                    validator: (value) {
+                      if (value!.isEmpty) {
+                        return 'Silahkan isi konfirmasi password';
+                      } else if (value !=
+                          controller.passwordRegisController.text) {
+                        return 'Konfirmasi password tidak sesuai';
+                      } else {
+                        return null;
+                      }
+                    },
+                  ),
+                  const SizedBox(height: 10),
+                ],
+              ),
+            ),
+          ),
+        ),
+        SizedBox(
+          height: 40,
+          width: Get.width,
+          child: BaseButton(
+            text: 'Register',
+            onPressed: () {
+              if (controller.formKeyRegister.currentState!.validate()) {
+                controller.register(context);
+              }
+            },
+          ),
+        ),
+        Padding(
+          padding: const EdgeInsets.only(top: 8, bottom: 2),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Text('Sudah mempunyai akun? '),
+              GestureDetector(
+                onTap: () {
+                  Get.offAndToNamed('/login');
+                },
+                child: const Text(
+                  'Log In disini',
+                  style: TextStyle(color: baseColor),
+                ),
+              ),
+            ],
+          ),
+        )
+      ],
     );
   }
 }

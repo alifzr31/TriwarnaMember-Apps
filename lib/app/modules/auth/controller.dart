@@ -5,6 +5,7 @@ import 'package:image_picker/image_picker.dart';
 import 'package:member_apps/app/core/utils/loading_function.dart';
 import 'package:member_apps/app/core/utils/snackbar.dart';
 import 'package:member_apps/app/data/providers/auth_provider.dart';
+import 'package:member_apps/app/modules/auth/verify/view.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class AuthController extends GetxController {
@@ -22,11 +23,14 @@ class AuthController extends GetxController {
   // REGISTER
   final fullNameController = TextEditingController();
   final emailRegisController = TextEditingController();
-  final usernameController = TextEditingController();
   final passwordRegisController = TextEditingController();
-  final idTypeController = TextEditingController();
-  final idNumberController = TextEditingController();
+  final passwordConfirmController = TextEditingController();
   final contactController = TextEditingController();
+
+  // VERIFY
+  final email = ''.obs;
+  var isLoading = false.obs;
+  var hasSent = false.obs;
 
   // @override
   // void onClose() {
@@ -47,7 +51,11 @@ class AuthController extends GetxController {
     try {
       final response = await authProvider.login(formData);
 
-      if (response.statusCode == 200) {
+      if (response.data['verify'] == '0') {
+        Get.back();
+        infoSnackbar('Akun Belum Aktif', response.data['message']);
+        Get.offAndToNamed('/verify', arguments: response.data['email']);
+      } else {
         SharedPreferences _prefs = await SharedPreferences.getInstance();
         _prefs.setString('token', response.data['token']);
 
@@ -63,25 +71,60 @@ class AuthController extends GetxController {
 
   void register(BuildContext context) async {
     final formData = _dio.FormData.fromMap({
-      "full_name": fullNameController.text,
+      "name": fullNameController.text,
       "email": emailRegisController.text,
-      "username": usernameController.text,
       "password": passwordRegisController.text,
-      "id_type": idTypeController.text,
-      "id_number": idNumberController.text,
-      "contact": contactController.text,
+      "password_confirmation": passwordConfirmController.text,
+      "phone_number": contactController.text,
     });
 
     loading(context);
 
     try {
-      print(formData.fields);
-    } on _dio.DioError catch (e) {
-      print(e);
-    } finally {
-      await Future.delayed(const Duration(milliseconds: 1000), () {
+      final response = await authProvider.register(formData);
+
+      if (response.data['verify'] == 0) {
         Get.back();
-      });
+      successSnackbar('Registrasi Berhasil',
+          'Registrasi sudah berhasil, Silahkan verifikasi akun anda');
+        Get.offAndToNamed('/verify', arguments: emailRegisController.text);
+      }
+    } on _dio.DioError catch (e) {
+      Get.back();
+
+      if (e.response!.statusCode == 422) {
+        if (e.response?.data['email'] != null &&
+            e.response?.data['phone_number'] != null) {
+          infoSnackbar(
+              'Ubah Inputan Anda', 'Email dan No. Telepon sudah digunakan');
+        } else if (e.response?.data['email'] != null &&
+            e.response?.data['phone_number'] == null) {
+          infoSnackbar('Ubah Inputan Anda', 'Email sudah digunakan');
+        } else if (e.response?.data['email'] == null &&
+            e.response?.data['phone_number'] != null) {
+          infoSnackbar('Ubah Inputan Anda', 'No. Telepon sudah digunakan');
+        }
+      } else {
+        failedSnackbar('Failed', e.response.toString());
+      }
+    }
+  }
+
+  void verifyEmail() async {
+    final formData = _dio.FormData.fromMap({
+      "email": email.value,
+    });
+
+    isLoading.value = true;
+
+    try {
+      final response = await authProvider.verifyEmail(formData);
+      print(response);
+    } on _dio.DioError catch (e) {
+      failedSnackbar('Failed', e.response.toString());
+    } finally {
+      isLoading.value = false;
+      hasSent.value = true;
     }
   }
 

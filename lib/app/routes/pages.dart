@@ -1,9 +1,10 @@
 import 'package:get/get.dart';
 import 'package:member_apps/app/modules/auth/binding.dart';
+import 'package:member_apps/app/modules/auth/verify/view.dart';
 import 'package:member_apps/app/modules/change_pass/binding.dart';
 import 'package:member_apps/app/modules/change_pass/view.dart';
-import 'package:member_apps/app/modules/change_pin/binding.dart';
-import 'package:member_apps/app/modules/change_pin/view.dart';
+import 'package:member_apps/app/modules/pin/change_pin/binding.dart';
+import 'package:member_apps/app/modules/pin/change_pin/view.dart';
 import 'package:member_apps/app/modules/dashboard/binding.dart';
 import 'package:member_apps/app/modules/dashboard/menu_page/member_menu.dart';
 import 'package:member_apps/app/modules/dashboard/view.dart';
@@ -14,6 +15,8 @@ import 'package:member_apps/app/modules/event/view.dart';
 import 'package:member_apps/app/modules/input_pin/binding.dart';
 import 'package:member_apps/app/modules/input_pin/view.dart';
 import 'package:member_apps/app/modules/onboard/view.dart';
+import 'package:member_apps/app/modules/pin/create_pin/binding.dart';
+import 'package:member_apps/app/modules/pin/create_pin/view.dart';
 import 'package:member_apps/app/modules/point/binding.dart';
 import 'package:member_apps/app/modules/point/tarik_point/binding.dart';
 import 'package:member_apps/app/modules/point/tarik_point/view.dart';
@@ -104,6 +107,12 @@ abstract class AppPages {
       transition: Transition.rightToLeftWithFade,
     ),
     GetPage(
+      name: Routes.createpin,
+      page: () => const CreatePinPage(),
+      binding: CreatePinBinding(),
+      transition: Transition.rightToLeft,
+    ),
+    GetPage(
       name: Routes.changepin,
       page: () => const ChangePinPage(),
       binding: ChangePinBinding(),
@@ -138,6 +147,12 @@ abstract class AppPages {
       page: () => const ShoppingPage(),
       binding: ShoppingBinding(),
       transition: Transition.rightToLeft,
+    ),
+    GetPage(
+      name: Routes.verify,
+      page: () => const VerifyPage(),
+      binding: AuthBinding(),
+      transition: Transition.fadeIn,
     ),
   ];
 }

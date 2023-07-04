@@ -5,7 +5,6 @@ import 'package:member_apps/app/component/base_text_input.dart';
 import 'package:member_apps/app/component/yellow_button.dart';
 import 'package:member_apps/app/core/value.dart';
 import 'package:member_apps/app/modules/auth/controller.dart';
-import 'package:member_apps/app/modules/webview/view.dart';
 
 class LoginPage extends StatelessWidget {
   const LoginPage({super.key});
@@ -20,7 +19,11 @@ class LoginPage extends StatelessWidget {
             children: [
               Positioned(
                 right: -300,
-                bottom: Get.width < 390 ? -100 : -30,
+                bottom: Get.height < 811
+                    ? Get.width < 390
+                        ? -150
+                        : -30
+                    : 0,
                 child: Image.asset('assets/images/wave.png', fit: BoxFit.cover),
               ),
               SingleChildScrollView(
@@ -65,12 +68,26 @@ class _LoginFormState extends State<LoginForm> {
             controller: controller.emailController,
             label: 'Username or Email Address',
             icon: const Icon(HeroIcons.user),
+            validator: (value) {
+              if (value!.isEmpty) {
+                return 'Masukkan username atau email anda';
+              }
+
+              return null;
+            },
           ),
           const SizedBox(height: 20),
           BaseTextInput(
             controller: controller.passwordController,
             label: 'Password',
             obscureText: showPass,
+            validator: (value) {
+              if (value!.isEmpty) {
+                return 'Masukkan password anda';
+              }
+
+              return null;
+            },
             icon: IconButton(
               onPressed: () {
                 setState(() {
@@ -87,7 +104,12 @@ class _LoginFormState extends State<LoginForm> {
             alignment: Alignment.centerRight,
             child: Text('Forgot Password?'),
           ),
-          SizedBox(height: Get.height * 0.14),
+          SizedBox(
+              height: Get.height < 811
+                  ? Get.width < 390
+                      ? Get.height * 0.08
+                      : Get.height * 0.14
+                  : Get.height * 0.16),
           SizedBox(
             width: Get.width,
             height: 40,
@@ -96,8 +118,6 @@ class _LoginFormState extends State<LoginForm> {
               onPressed: () async {
                 if (controller.formKeyLogin.currentState!.validate()) {
                   controller.login(context);
-                  print(controller.emailController.text);
-                  print(controller.passwordController.text);
                 }
               },
             ),

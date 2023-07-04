@@ -4,7 +4,7 @@ import 'package:member_apps/app/animation/fadeanimation.dart';
 import 'package:member_apps/app/component/base_button.dart';
 import 'package:member_apps/app/component/base_pin_input.dart';
 import 'package:member_apps/app/core/value.dart';
-import 'package:member_apps/app/modules/change_pin/controller.dart';
+import 'package:member_apps/app/modules/pin/change_pin/controller.dart';
 import 'package:member_apps/app/modules/dashboard/controller.dart';
 
 class ChangePinPage extends StatelessWidget {
