@@ -156,20 +156,38 @@ class HeaderHome extends StatelessWidget {
                         onTap: () {
                           Get.dialog(
                             BaseAlert(
-                              title: 'My QR Code',
-                              height: 220,
+                              height: 250,
+                              gradient: controller.user.value?.loyalty
+                                          .toString()
+                                          .capitalize ==
+                                      'Silver'
+                                  ? GradientColor.silver
+                                  : controller.user.value?.loyalty
+                                              .toString()
+                                              .capitalize ==
+                                          'Gold'
+                                      ? GradientColor.gold
+                                      : GradientColor.platinum,
                               content: Center(
                                 child: Column(
                                   crossAxisAlignment: CrossAxisAlignment.center,
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   children: [
-                                    Expanded(
+                                    const Text(
+                                      'My QR Code',
+                                      style: TextStyle(
+                                        fontSize: 18,
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                    ),
+                                    Flexible(
                                       child: Image.network(
                                         ApiUrl.qrStorage +
                                             '/${controller.user.value!.noMember}.png',
                                         errorBuilder:
                                             (context, error, stackTrace) {
-                                          return const Text('Load image failed');
+                                          return const Text(
+                                              'Load image failed');
                                         },
                                       ),
                                     ),
