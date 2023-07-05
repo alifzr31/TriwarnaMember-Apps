@@ -260,7 +260,7 @@ class HeaderPoint extends StatelessWidget {
                                 width: spend * (Get.width / 100000000),
                                 decoration: BoxDecoration(
                                   gradient: GradientColor.platinum,
-                                  borderRadius: BorderRadius.all(
+                                  borderRadius: const BorderRadius.all(
                                     Radius.circular(20),
                                   ),
                                 ),
