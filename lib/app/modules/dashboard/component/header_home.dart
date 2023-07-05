@@ -68,8 +68,9 @@ class HeaderHome extends StatelessWidget {
   }
 
   Widget hasLoginHeader(BuildContext context) {
-    return Padding(
+    return Container(
       padding: const EdgeInsets.all(10),
+      margin: const EdgeInsets.only(top: 10),
       child: FadeAnimation(
         delay: 1,
         child: Container(
@@ -156,20 +157,21 @@ class HeaderHome extends StatelessWidget {
                           Get.dialog(
                             BaseAlert(
                               title: 'My QR Code',
-                              height: 200,
+                              height: 220,
                               content: Center(
                                 child: Column(
                                   crossAxisAlignment: CrossAxisAlignment.center,
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   children: [
-                                    Image.network(
-                                      ApiUrl.qrStorage +
-                                          '/${controller.user.value!.noMember}.png',
-                                      colorBlendMode: BlendMode.difference,
-                                      errorBuilder:
-                                          (context, error, stackTrace) {
-                                        return const Text('Load image failed');
-                                      },
+                                    Expanded(
+                                      child: Image.network(
+                                        ApiUrl.qrStorage +
+                                            '/${controller.user.value!.noMember}.png',
+                                        errorBuilder:
+                                            (context, error, stackTrace) {
+                                          return const Text('Load image failed');
+                                        },
+                                      ),
                                     ),
                                     Text(controller.user.value!.noMember
                                         .toString()),
