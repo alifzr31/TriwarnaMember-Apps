@@ -14,6 +14,7 @@ import 'package:member_apps/app/component/base_textarea.dart';
 import 'package:member_apps/app/component/transparent_appbar.dart';
 import 'package:member_apps/app/component/white_text.dart';
 import 'package:member_apps/app/core/utils/api_url.dart';
+import 'package:member_apps/app/core/utils/gradient_color.dart';
 import 'package:member_apps/app/modules/dashboard/controller.dart';
 import 'package:member_apps/app/modules/profile/controller.dart';
 
@@ -139,7 +140,7 @@ class _HeaderProfileState extends State<HeaderProfile> {
                                     height: 23,
                                     width: 80,
                                     decoration: BoxDecoration(
-                                      color: Colors.grey.shade100,
+                                      gradient: GradientColor.silver,
                                       borderRadius: BorderRadius.circular(30),
                                     ),
                                     child: const Center(child: Text('Silver')),
@@ -152,7 +153,7 @@ class _HeaderProfileState extends State<HeaderProfile> {
                                         height: 23,
                                         width: 80,
                                         decoration: BoxDecoration(
-                                          color: Colors.grey.shade300,
+                                          gradient: GradientColor.platinum,
                                           borderRadius:
                                               BorderRadius.circular(30),
                                         ),
@@ -163,7 +164,7 @@ class _HeaderProfileState extends State<HeaderProfile> {
                                         height: 23,
                                         width: 80,
                                         decoration: BoxDecoration(
-                                          color: Colors.amber.shade400,
+                                          gradient: GradientColor.gold,
                                           borderRadius:
                                               BorderRadius.circular(30),
                                         ),
