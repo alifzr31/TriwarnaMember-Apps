@@ -137,7 +137,8 @@ class HeaderAccount extends StatelessWidget {
                                                   height: 23,
                                                   width: 80,
                                                   decoration: BoxDecoration(
-                                                    gradient: GradientColor.silver,
+                                                    gradient:
+                                                        GradientColor.silver,
                                                     borderRadius:
                                                         BorderRadius.circular(
                                                             30),
@@ -153,7 +154,8 @@ class HeaderAccount extends StatelessWidget {
                                                       height: 23,
                                                       width: 80,
                                                       decoration: BoxDecoration(
-                                                        gradient: GradientColor.platinum,
+                                                        gradient: GradientColor
+                                                            .platinum,
                                                         borderRadius:
                                                             BorderRadius
                                                                 .circular(30),
@@ -166,7 +168,8 @@ class HeaderAccount extends StatelessWidget {
                                                       height: 23,
                                                       width: 80,
                                                       decoration: BoxDecoration(
-                                                        gradient: GradientColor.gold,
+                                                        gradient:
+                                                            GradientColor.gold,
                                                         borderRadius:
                                                             BorderRadius
                                                                 .circular(30),
@@ -203,8 +206,13 @@ class HeaderAccount extends StatelessWidget {
                                           FadeAnimation(
                                             delay: 1.2,
                                             child: WhiteText(
-                                                text: controller.user.value!
-                                                    .fullAddress!.capitalize!),
+                                              text: controller.user.value!
+                                                          .address ==
+                                                      null
+                                                  ? '-'
+                                                  : controller.user.value!
+                                                      .fullAddress!.capitalize!,
+                                            ),
                                           ),
                                         ],
                                       ),

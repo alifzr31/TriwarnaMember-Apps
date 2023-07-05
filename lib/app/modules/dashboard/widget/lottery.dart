@@ -127,8 +127,10 @@ class HeaderLottery extends StatelessWidget {
                                 FadeAnimation(
                                   delay: 1,
                                   child: GreyText(
-                                    text: controller
-                                        .user.value!.fullAddress!.capitalize!,
+                                    text: controller.user.value!.address == null
+                                        ? '-'
+                                        : controller.user.value!.fullAddress!
+                                            .capitalize!,
                                     // textAlign: TextAlign.justify,
                                   ),
                                 ),
@@ -190,7 +192,8 @@ class HeaderLottery extends StatelessWidget {
                               FadeAnimation(
                                 delay: 1,
                                 child: GreyText(
-                                    text: controller.user.value!.idNumber ?? '-'),
+                                    text:
+                                        controller.user.value!.idNumber ?? '-'),
                               ),
                               const SizedBox(height: 10),
                               Row(
