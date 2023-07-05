@@ -176,7 +176,7 @@ class HeaderHome extends StatelessWidget {
                                     const Text(
                                       'My QR Code',
                                       style: TextStyle(
-                                        fontSize: 18,
+                                        fontSize: 22,
                                         fontWeight: FontWeight.bold,
                                       ),
                                     ),
