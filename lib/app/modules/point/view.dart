@@ -9,6 +9,7 @@ import 'package:member_apps/app/component/base_refresh.dart';
 import 'package:member_apps/app/component/point_text..dart';
 import 'package:member_apps/app/component/transparent_appbar.dart';
 import 'package:member_apps/app/component/white_text.dart';
+import 'package:member_apps/app/core/utils/gradient_color.dart';
 import 'package:member_apps/app/core/value.dart';
 import 'package:member_apps/app/modules/dashboard/controller.dart';
 import 'package:member_apps/app/modules/point/controller.dart';
@@ -206,7 +207,7 @@ class HeaderPoint extends StatelessWidget {
                             height: 8,
                             width: spend * (Get.width / 100000000),
                             decoration: BoxDecoration(
-                              color: yellow,
+                              gradient: GradientColor.silver,
                               borderRadius: BorderRadius.all(
                                 Radius.circular(20),
                               ),
@@ -234,7 +235,7 @@ class HeaderPoint extends StatelessWidget {
                                 height: 8,
                                 width: spend * (Get.width / 100000000),
                                 decoration: BoxDecoration(
-                                  color: yellow,
+                                  gradient: GradientColor.gold,
                                   borderRadius: BorderRadius.all(
                                     Radius.circular(20),
                                   ),
@@ -258,7 +259,7 @@ class HeaderPoint extends StatelessWidget {
                                 height: 8,
                                 width: spend * (Get.width / 100000000),
                                 decoration: BoxDecoration(
-                                  color: yellow,
+                                  gradient: GradientColor.platinum,
                                   borderRadius: BorderRadius.all(
                                     Radius.circular(20),
                                   ),
