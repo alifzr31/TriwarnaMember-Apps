@@ -24,7 +24,9 @@ class BaseDatePicker extends StatelessWidget {
     return DateTimePicker(
       initialValue: initialValue,
       controller: controller,
-      fieldHintText: hint,
+      decoration: InputDecoration(
+        hintText: hint,
+      ),
       type: DateTimePickerType.date,
       firstDate: DateTime(1800),
       lastDate: DateTime.now(),
