@@ -9,11 +9,9 @@ import 'package:member_apps/app/animation/fadeanimation.dart';
 import 'package:member_apps/app/component/white_text.dart';
 import 'package:member_apps/app/core/utils/api_url.dart';
 import 'package:member_apps/app/core/utils/gradient_color.dart';
-import 'package:member_apps/app/core/utils/loading_function.dart';
 import 'package:member_apps/app/core/value.dart';
 import 'package:member_apps/app/modules/auth/controller.dart';
 import 'package:member_apps/app/modules/dashboard/controller.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 class AccountPage extends StatelessWidget {
   const AccountPage({super.key});
@@ -98,23 +96,20 @@ class HeaderAccount extends StatelessWidget {
                                                 '/${controller.user.value!.image}'),
                                           ),
                                     SizedBox(width: Get.width * 0.04),
-                                    controller.user.value!.loyalty
-                                                .toString()
-                                                .capitalize ==
-                                            'Silver'
-                                        ? Image.asset(
-                                            'assets/images/silver.png',
-                                            height: 50)
-                                        : controller.user.value!.loyalty
-                                                    .toString()
-                                                    .capitalize ==
-                                                'Platinum'
-                                            ? Image.asset(
-                                                'assets/images/platinum.png',
-                                                height: 50)
-                                            : Image.asset(
-                                                'assets/images/gold.png',
-                                                height: 50),
+                                    SvgPicture.asset(
+                                      controller.user.value!.loyalty
+                                                  .toString()
+                                                  .capitalize ==
+                                              'Silver'
+                                          ? 'assets/images/silver.svg'
+                                          : controller.user.value!.loyalty
+                                                      .toString()
+                                                      .capitalize ==
+                                                  'Gold'
+                                              ? 'assets/images/gold.svg'
+                                              : 'assets/images/platinum.svg',
+                                      height: 50,
+                                    ),
                                     const SizedBox(width: 15),
                                     Expanded(
                                       child: Column(

@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:member_apps/app/component/transparent_appbar.dart';
@@ -116,19 +117,20 @@ class _HeaderProfileState extends State<HeaderProfile> {
                         ),
                       ),
                       SizedBox(width: Get.width * 0.04),
-                      userController.user.value!.loyalty
-                                  .toString()
-                                  .capitalize ==
-                              'Silver'
-                          ? Image.asset('assets/images/silver.png', height: 50)
-                          : userController.user.value!.loyalty
-                                      .toString()
-                                      .capitalize ==
-                                  'Platinum'
-                              ? Image.asset('assets/images/platinum.png',
-                                  height: 50)
-                              : Image.asset('assets/images/gold.png',
-                                  height: 50),
+                      SvgPicture.asset(
+                        userController.user.value!.loyalty
+                                    .toString()
+                                    .capitalize ==
+                                'Silver'
+                            ? 'assets/images/silver.svg'
+                            : userController.user.value!.loyalty
+                                        .toString()
+                                        .capitalize ==
+                                    'Gold'
+                                ? 'assets/images/gold.svg'
+                                : 'assets/images/platinum.svg',
+                        height: 50,
+                      ),
                       const SizedBox(width: 15),
                       Expanded(
                         child: Column(
