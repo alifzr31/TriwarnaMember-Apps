@@ -60,8 +60,8 @@ class _HeaderProfileState extends State<HeaderProfile> {
                           picked = await picker.pickImage(
                               source: ImageSource.gallery, imageQuality: 80);
 
-                          if (picked!.path != null || picked!.path.isNotEmpty) {
-                            print(picked!.path);
+                          if (picked?.path != null) {
+                            print(picked?.path);
 
                             setState(() {
                               visible.value = true;
