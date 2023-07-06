@@ -21,6 +21,7 @@ class User {
   String? group;
   String? pin;
   String? gender;
+  String? birthPlace;
   DateTime? birthDate;
   String? image;
   String? contact;
@@ -29,6 +30,7 @@ class User {
   String? job;
   String? address;
   String? village;
+  String? villageId;
   String? district;
   String? city;
   String? province;
@@ -55,6 +57,7 @@ class User {
     this.group,
     this.pin,
     this.gender,
+    this.birthPlace,
     required this.birthDate,
     this.image,
     this.contact,
@@ -63,6 +66,7 @@ class User {
     this.job,
     this.address,
     this.village,
+    this.villageId,
     this.district,
     this.city,
     this.province,
@@ -90,6 +94,7 @@ class User {
         group: json["group"],
         pin: json["pin"],
         gender: json["gender"],
+        birthPlace: json["birth_place"],
         birthDate: json["birth_date"] == null ? null : DateTime.parse(json["birth_date"]),
         image: json["image"],
         contact: json["contact"],
@@ -98,6 +103,7 @@ class User {
         job: json["job"],
         address: json["address"],
         village: json["village"],
+        villageId: json["village_id"],
         district: json["district"],
         city: json["city"],
         province: json["province"],
@@ -129,6 +135,7 @@ class User {
         "group": group,
         "pin": pin,
         "gender": gender,
+        "birth_place": birthPlace,
         "birth_date": birthDate?.toIso8601String(),
         "image": image,
         "contact": contact,
@@ -137,6 +144,7 @@ class User {
         "job": job,
         "address": address,
         "village": village,
+        "village_id": villageId,
         "district": district,
         "city": city,
         "province": province,
