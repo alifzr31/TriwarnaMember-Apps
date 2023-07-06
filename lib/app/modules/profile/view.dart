@@ -19,7 +19,7 @@ class ProfilePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: TransparentAppbar(
-        title: 'PROFILE',
+        title: 'Profile',
         preferredSize: Size.fromHeight(kToolbarHeight),
       ),
       body: Padding(
