@@ -15,6 +15,7 @@ import 'package:member_apps/app/component/transparent_appbar.dart';
 import 'package:member_apps/app/component/white_text.dart';
 import 'package:member_apps/app/core/utils/api_url.dart';
 import 'package:member_apps/app/core/utils/gradient_color.dart';
+import 'package:member_apps/app/core/value.dart';
 import 'package:member_apps/app/modules/dashboard/controller.dart';
 import 'package:member_apps/app/modules/profile/controller.dart';
 
@@ -81,13 +82,23 @@ class _HeaderProfileState extends State<HeaderProfile> {
                         },
                         child: Stack(
                           children: [
-                            CircleAvatar(
-                              radius: 50,
-                              backgroundColor: Colors.transparent,
-                              backgroundImage: NetworkImage(
-                                  ApiUrl.profileStorage +
-                                      '/${userController.user.value!.image}'),
-                            ),
+                            userController.user.value!.image == null
+                                ? const CircleAvatar(
+                                    radius: 50,
+                                    backgroundColor: yellow,
+                                    child: Icon(
+                                      Icons.person,
+                                      size: 60,
+                                      color: baseColor,
+                                    ),
+                                  )
+                                : CircleAvatar(
+                                    radius: 50,
+                                    backgroundColor: Colors.transparent,
+                                    backgroundImage: NetworkImage(
+                                        ApiUrl.profileStorage +
+                                            '/${userController.user.value!.image}'),
+                                  ),
                             if (picked != null)
                               Visibility(
                                 visible: visible.value,
