@@ -97,7 +97,7 @@ class FormUpdateProfle extends StatelessWidget {
         controller.jobController.text = '2';
       } else if (userController.user.value!.job == 'Tukang') {
         controller.jobController.text = '3';
-      } else {
+      } else if (userController.user.value!.job == 'Mandor') {
         controller.jobController.text = '4';
       }
 
