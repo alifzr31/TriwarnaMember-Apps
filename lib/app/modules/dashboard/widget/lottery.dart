@@ -109,7 +109,7 @@ class HeaderLottery extends StatelessWidget {
                                 FadeAnimation(
                                   delay: 1,
                                   child: GreyText(
-                                      text: controller.user.value!.job!),
+                                      text: controller.user.value!.job ?? '-'),
                                 ),
                                 const SizedBox(height: 10),
                                 Row(
