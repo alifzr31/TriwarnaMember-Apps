@@ -20,11 +20,19 @@ class ProfileController extends GetxController {
 
   final formKey = GlobalKey<FormState>();
   final emailController = TextEditingController();
+  final usernameController = TextEditingController();
   final nameController = TextEditingController();
   final genderController = TextEditingController();
   final birthController = TextEditingController();
   final addressController = TextEditingController();
   final villageController = TextEditingController();
+  final idTypeController = TextEditingController();
+  final idNumberController = TextEditingController();
+  final educationController = TextEditingController();
+  final jobController = TextEditingController();
+  final birthPlaceController = TextEditingController();
+  final religionController = TextEditingController();
+  final maritalController = TextEditingController();
   final selectedVillage = ''.obs;
 
   final userControl = Get.find<DashboardController>();
@@ -52,6 +60,13 @@ class ProfileController extends GetxController {
     birthController.dispose();
     addressController.dispose();
     villageController.dispose();
+    idTypeController.dispose();
+    idNumberController.dispose();
+    educationController.dispose();
+    jobController.dispose();
+    birthPlaceController.dispose();
+    religionController.dispose();
+    maritalController.dispose();
     super.onClose();
   }
 
@@ -80,12 +95,18 @@ class ProfileController extends GetxController {
       'gender': genderController.text,
       'birth_date': birthController.text,
       'address': addressController.text,
-      'village': selectedVillage.value
+      'village': selectedVillage.value,
+      'id_type': idTypeController.text,
+      'id_number': idNumberController.text,
+      'education': educationController.text,
+      'job_code': jobController.text,
+      'birth_place': birthPlaceController.text,
+      'religion': religionController.text,
+      'marital_status': maritalController.text,
     });
+    print(formData.fields);
 
     loading(context);
-
-    print(formData.fields[1]);
 
     try {
       final response = await profileProvider.updateProfile(formData);
@@ -93,7 +114,7 @@ class ProfileController extends GetxController {
       successSnackbar(
           'Update Profile Success', response.data['success'].toString());
 
-      Get.offAndToNamed('/dashboard');
+      Get.offAllNamed('/dashboard');
       userControl.fetchProfile();
     } on _dio.DioError catch (e) {
       Get.back();
