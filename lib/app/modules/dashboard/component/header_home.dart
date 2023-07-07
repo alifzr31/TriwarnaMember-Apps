@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:member_apps/app/animation/fadeanimation.dart';
 import 'package:member_apps/app/component/base_alert.dart';
@@ -129,10 +130,7 @@ class HeaderHome extends StatelessWidget {
                                 ),
                                 Row(
                                   children: [
-                                    Image.asset(
-                                      'assets/images/point_icon_large.png',
-                                      height: 18,
-                                    ),
+                                    SvgPicture.asset('assets/images/point_icon.svg', width: 18),
                                     controller.user.value == null
                                         ? CupertinoActivityIndicator()
                                         : Text(

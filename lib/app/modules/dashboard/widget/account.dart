@@ -291,7 +291,7 @@ class BodyAccount extends StatelessWidget {
                       delay: 1,
                       child: ListTile(
                         leading:
-                            Image.asset('assets/images/point_icon_small.png'),
+                            SvgPicture.asset('assets/images/point_icon.svg', width: 25),
                         title: const Text('Point'),
                         trailing: const Icon(Icons.keyboard_arrow_right),
                         onTap: () {

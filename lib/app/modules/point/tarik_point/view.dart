@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:member_apps/app/animation/fadeanimation.dart';
@@ -120,10 +121,7 @@ class PointView extends StatelessWidget {
         delay: 1,
         child: Row(
           children: [
-            Image.asset(
-              'assets/images/point_icon_large.png',
-              width: 40,
-            ),
+            SvgPicture.asset('assets/images/point_icon.svg', width: 40),
             FadeAnimation(
               delay: 1.3,
               child: PointText(
@@ -325,10 +323,7 @@ class RedeemPrize extends StatelessWidget {
                                                       ),
                                             Row(
                                               children: [
-                                                Image.asset(
-                                                  'assets/images/point_icon_large.png',
-                                                  width: 25,
-                                                ),
+                                                SvgPicture.asset('assets/images/point_icon.svg', width: 25),
                                                 userPoint < point
                                                     ? FadeAnimation(
                                                         delay: 1.3,

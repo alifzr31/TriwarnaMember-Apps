@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:member_apps/app/animation/fadeanimation.dart';
 import 'package:member_apps/app/core/value.dart';
 
@@ -71,10 +72,7 @@ class MemberMenuBody extends StatelessWidget {
               delay: 1,
               child: Row(
                 children: [
-                  Image.asset(
-                    'assets/images/silver.png',
-                    width: 50,
-                  ),
+                  SvgPicture.asset('assets/images/silver.svg', width: 50),
                   const SizedBox(width: 10),
                   const Expanded(
                     child: Text(
@@ -179,10 +177,7 @@ class MemberMenuBody extends StatelessWidget {
               delay: 1,
               child: Row(
                 children: [
-                  Image.asset(
-                    'assets/images/gold.png',
-                    width: 50,
-                  ),
+                  SvgPicture.asset('assets/images/gold.svg', width: 50),
                   const SizedBox(width: 10),
                   const Expanded(
                     child: Text(
@@ -304,10 +299,7 @@ class MemberMenuBody extends StatelessWidget {
               delay: 1,
               child: Row(
                 children: [
-                  Image.asset(
-                    'assets/images/platinum.png',
-                    width: 50,
-                  ),
+                  SvgPicture.asset('assets/images/platinum.svg', width: 50),
                   const SizedBox(width: 10),
                   const Expanded(
                     child: Text(

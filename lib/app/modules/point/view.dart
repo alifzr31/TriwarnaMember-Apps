@@ -132,7 +132,7 @@ class HeaderPoint extends StatelessWidget {
     return Obx(
       () => Column(
         children: [
-          Image.asset('assets/images/point_icon_large.png'),
+          SvgPicture.asset('assets/images/point_icon.svg'),
           FadeAnimation(
             delay: 1,
             child: PointText(text: controller.jumlah.value, size: 34),
