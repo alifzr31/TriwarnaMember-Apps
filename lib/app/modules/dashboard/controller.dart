@@ -92,7 +92,7 @@ class DashboardController extends GetxController {
         update();
       } else {
         failedSnackbar(
-            'Failed',
+            'Failed Profile',
             response.statusCode.toString() +
                 ' ' +
                 response.statusMessage.toString());
@@ -116,7 +116,7 @@ class DashboardController extends GetxController {
         failedSnackbar('Failed Fetching Store', response.statusCode.toString());
       }
     } on DioError catch (e) {
-      failedSnackbar('Failed', e.response.toString());
+      failedSnackbar('Failed Fetching Store', e.response.toString());
     }
 
     isLoading.value = false;

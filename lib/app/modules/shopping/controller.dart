@@ -55,7 +55,7 @@ class ShoppingController extends GetxController {
       shopping.value = body;
       update();
     } on DioError catch (e) {
-      failedSnackbar('Failed', e.response.toString());
+      failedSnackbar('Failed Fetching Shopping', e.response.toString());
     }
 
     isLoading.value = false;
