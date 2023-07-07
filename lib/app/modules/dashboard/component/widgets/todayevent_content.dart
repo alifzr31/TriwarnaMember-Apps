@@ -1,9 +1,9 @@
 import 'package:card_swiper/card_swiper.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:member_apps/app/animation/fadeanimation.dart';
 import 'package:member_apps/app/component/swiper_box.dart';
+import 'package:member_apps/app/core/utils/snackbar.dart';
 import 'package:member_apps/app/modules/dashboard/controller.dart';
 
 class TodayEventContent extends StatefulWidget {
@@ -34,7 +34,7 @@ class _TodayEventContentState extends State<TodayEventContent> {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: 230,
+      height: 250,
       child: Column(
         children: [
           FadeAnimation(
@@ -76,7 +76,17 @@ class _TodayEventContentState extends State<TodayEventContent> {
               itemCount: today.length,
               itemBuilder: (context, index) {
                 return GestureDetector(
-                  onTap: () {},
+                  onTap: () {
+                    if (controller.token.value == 'null') {
+                      infoSnackbar(
+                        "You're not logged in",
+                        'You must log in first to access this feature',
+                      );
+                      Get.toNamed('/login');
+                    } else {
+                      print('object');
+                    }
+                  },
                   child: BoxColumnContent(
                     image: 'assets/images/' + today[index],
                     title: title[index],
@@ -86,6 +96,59 @@ class _TodayEventContentState extends State<TodayEventContent> {
               },
             ),
           ),
+          // Expanded(
+          //   child: ListView.builder(
+          //     itemCount: title.length,
+          //     itemBuilder: (context, index) {
+          //       return Card(
+          //         shape: RoundedRectangleBorder(
+          //           borderRadius: BorderRadius.circular(10),
+          //         ),
+          //         elevation: 5,
+          //         margin: const EdgeInsets.only(bottom: 10),
+          //         child: Row(
+          //           crossAxisAlignment: CrossAxisAlignment.start,
+          //           children: [
+          //             Container(
+          //               width: 100,
+          //               height: 100,
+          //               decoration: BoxDecoration(
+          //                 borderRadius: const BorderRadius.only(
+          //                   topLeft: Radius.circular(10),
+          //                   bottomLeft: Radius.circular(10),
+          //                 ),
+          //                 image: DecorationImage(
+          //                   image: Image.asset('assets/images/${today[index]}')
+          //                       .image,
+          //                   fit: BoxFit.cover,
+          //                 ),
+          //               ),
+          //             ),
+          //             Expanded(
+          //               child: Padding(
+          //                 padding: const EdgeInsets.all(5),
+          //                 child: Column(
+          //                   crossAxisAlignment: CrossAxisAlignment.start,
+          //                   children: [
+          //                     Text(
+          //                       '${title[index]}',
+          //                       style: const TextStyle(
+          //                         fontSize: 16,
+          //                         fontWeight: FontWeight.bold,
+          //                       ),
+          //                     ),
+          //                     const SizedBox(height: 10),
+          //                     Text('${desc[index]}', textAlign: TextAlign.justify,),
+          //                   ],
+          //                 ),
+          //               ),
+          //             )
+          //           ],
+          //         ),
+          //       );
+          //     },
+          //   ),
+          // ),
         ],
       ),
     );

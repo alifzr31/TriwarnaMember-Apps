@@ -1,6 +1,7 @@
 import 'package:card_swiper/card_swiper.dart';
 import 'package:flutter/material.dart';
 import 'package:member_apps/app/animation/fadeanimation.dart';
+import 'package:member_apps/app/component/point_text..dart';
 import 'package:member_apps/app/core/value.dart';
 
 class SwiperBox extends StatelessWidget {
@@ -80,8 +81,9 @@ class BoxColumnContent extends StatelessWidget {
             child: Container(
               decoration: BoxDecoration(
                 image: DecorationImage(
-                    image: AssetImage(image),
-                    fit: BoxFit.fill),
+                  image: AssetImage(image),
+                  fit: BoxFit.cover,
+                ),
                 borderRadius: BorderRadius.only(
                   topLeft: Radius.circular(20),
                   topRight: Radius.circular(20),
@@ -91,7 +93,7 @@ class BoxColumnContent extends StatelessWidget {
           ),
           Container(
             decoration: BoxDecoration(
-              color: yellow,
+              color: baseColor,
               borderRadius: const BorderRadius.only(
                 bottomLeft: Radius.circular(20),
                 bottomRight: Radius.circular(20),
@@ -103,16 +105,18 @@ class BoxColumnContent extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(
-                    title,
-                    style: const TextStyle(
-                      fontSize: 16,
-                      fontWeight: FontWeight.bold,
-                    ),
+                  PointText(
+                    text: title,
+                    size: 16,
+                    bold: FontWeight.bold,
+                    // style: const TextStyle(
+                    //   fontSize: 16,
+                    //   fontWeight: FontWeight.bold,
+                    // ),
                   ),
                   const SizedBox(height: 5),
-                  Text(
-                    desc,
+                  PointText(
+                    text: desc,
                     textAlign: TextAlign.justify,
                   ),
                 ],
