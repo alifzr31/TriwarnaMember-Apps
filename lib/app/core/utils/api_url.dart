@@ -1,11 +1,11 @@
 class ApiUrl {
-  static final String baseUrl = 'http://10.1.1.152/api';
-  static final String profileStorage = 'http://10.1.1.152/storage/profile';
-  static final String qrStorage = 'http://10.1.1.152/storage/qr/members';
-  static final String prizeStorage = 'http://10.1.1.152/storage/prizes/';
-  static final String voucherStorage = 'http://10.1.1.152/storage/qr/points/';
-  static final String receiptImage = 'http://10.1.1.152/storage/attachments/';
-  static final String receiptSignature = 'http://10.1.1.152/storage/signatures/';
+  static final String baseUrl = 'https://member.triwarna.co.id/api';
+  static final String profileStorage = 'https://member.triwarna.co.id/storage/profile';
+  static final String qrStorage = 'https://member.triwarna.co.id/storage/qr/members';
+  static final String prizeStorage = 'https://member.triwarna.co.id/storage/prizes/';
+  static final String voucherStorage = 'https://member.triwarna.co.id/storage/qr/points/';
+  static final String receiptImage = 'https://member.triwarna.co.id/storage/attachments/';
+  static final String receiptSignature = 'https://member.triwarna.co.id/storage/signatures/';
   static final EndPoint endPoint = EndPoint();
 }
 
