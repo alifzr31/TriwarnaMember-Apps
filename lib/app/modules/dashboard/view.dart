@@ -29,42 +29,37 @@ class _DashboardPageState extends State<DashboardPage> {
           AccountPage(),
         ],
       ),
-      bottomNavigationBar: Padding(
-        padding: const EdgeInsets.all(15),
-        child: CustomNavigationBar(
-          currentIndex: _page,
-          elevation: 30,
-          scaleCurve: Curves.bounceIn,
-          borderRadius: const Radius.circular(20),
-          unSelectedColor: Colors.grey,
-          strokeColor: Colors.grey,
-          backgroundColor: Colors.white,
-          selectedColor: baseColor,
-          onTap: (index) {
-            setState(() {
-              _page = index;
-            });
-          },
-          items: [
-            CustomNavigationBarItem(
-              icon: const Icon(HeroIcons.home),
-              title: const Text('Home'),
-            ),
-            CustomNavigationBarItem(
-              icon: const Icon(HeroIcons.gift),
-              title: const Text('Lottery'),
-            ),
-            CustomNavigationBarItem(
-              icon: const Icon(HeroIcons.map_pin),
-              title: const Text('Store'),
-            ),
-            CustomNavigationBarItem(
-              icon: const Icon(HeroIcons.user),
-              title: const Text('Account'),
-            ),
-          ],
-          bubbleCurve: Curves.bounceInOut,
-        ),
+      bottomNavigationBar: CustomNavigationBar(
+        currentIndex: _page,
+        scaleCurve: Curves.bounceIn,
+        unSelectedColor: Colors.grey,
+        strokeColor: Colors.grey,
+        backgroundColor: Colors.white,
+        selectedColor: baseColor,
+        onTap: (index) {
+          setState(() {
+            _page = index;
+          });
+        },
+        items: [
+          CustomNavigationBarItem(
+            icon: const Icon(HeroIcons.home),
+            title: const Text('Home'),
+          ),
+          CustomNavigationBarItem(
+            icon: const Icon(HeroIcons.gift),
+            title: const Text('Lottery'),
+          ),
+          CustomNavigationBarItem(
+            icon: const Icon(HeroIcons.map_pin),
+            title: const Text('Store'),
+          ),
+          CustomNavigationBarItem(
+            icon: const Icon(HeroIcons.user),
+            title: const Text('Account'),
+          ),
+        ],
+        bubbleCurve: Curves.bounceInOut,
       ),
     );
   }

@@ -25,34 +25,29 @@ class _DashboardPage0State extends State<DashboardPage0> {
           StorePage(),
         ],
       ),
-      bottomNavigationBar: Padding(
-        padding: const EdgeInsets.all(15),
-        child: CustomNavigationBar(
-          currentIndex: _page,
-          elevation: 30,
-          scaleCurve: Curves.bounceIn,
-          borderRadius: const Radius.circular(20),
-          unSelectedColor: Colors.grey,
-          strokeColor: Colors.grey,
-          backgroundColor: Colors.white,
-          selectedColor: baseColor,
-          onTap: (index) {
-            setState(() {
-              _page = index;
-            });
-          },
-          items: [
-            CustomNavigationBarItem(
-              icon: const Icon(HeroIcons.home),
-              title: const Text('Home'),
-            ),
-            CustomNavigationBarItem(
-              icon: const Icon(HeroIcons.map_pin),
-              title: const Text('Store'),
-            ),
-          ],
-          bubbleCurve: Curves.bounceInOut,
-        ),
+      bottomNavigationBar: CustomNavigationBar(
+        currentIndex: _page,
+        scaleCurve: Curves.bounceIn,
+        unSelectedColor: Colors.grey,
+        strokeColor: Colors.grey,
+        backgroundColor: Colors.white,
+        selectedColor: baseColor,
+        onTap: (index) {
+          setState(() {
+            _page = index;
+          });
+        },
+        items: [
+          CustomNavigationBarItem(
+            icon: const Icon(HeroIcons.home),
+            title: const Text('Home'),
+          ),
+          CustomNavigationBarItem(
+            icon: const Icon(HeroIcons.map_pin),
+            title: const Text('Store'),
+          ),
+        ],
+        bubbleCurve: Curves.bounceInOut,
       ),
     );
   }
