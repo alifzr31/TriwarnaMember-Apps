@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:member_apps/app/modules/dashboard/component/carousel.dart';
 import 'package:member_apps/app/modules/dashboard/component/widgets/shopping_content.dart';
 import 'package:member_apps/app/modules/dashboard/component/widgets/todayevent_content.dart';
 import 'package:member_apps/app/modules/dashboard/controller.dart';
@@ -10,18 +11,25 @@ class ContentHome extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.only(left: 10, right: 10, top: 10),
-      child: Obx(
-        () => controller.token.value == 'null'
-            ? noLoginContent()
-            : hasLoginContent(),
-      ),
+    return Obx(
+      () => controller.token.value == 'null'
+          ? noLoginContent()
+          : hasLoginContent(),
     );
   }
 
   Widget noLoginContent() {
-    return const TodayEventContent();
+    return Column(
+      children: [
+        const TodayEventContent(),
+        const SizedBox(height: 10),
+        SizedBox(
+          height: 200,
+          width: Get.width,
+          child: const CarouselField(),
+        ),
+      ],
+    );
   }
 
   Widget hasLoginContent() {

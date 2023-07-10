@@ -13,7 +13,8 @@ class ShoppingContent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
+    return Container(
+      padding: const EdgeInsets.all(10),
       height: 230,
       child: Column(
         children: [

@@ -1,6 +1,7 @@
 import 'package:card_swiper/card_swiper.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:member_apps/app/animation/fadeanimation.dart';
 import 'package:member_apps/app/core/value.dart';
 
 class CarouselField extends StatefulWidget {
@@ -25,41 +26,39 @@ class _CarouselFieldState extends State<CarouselField> {
       children: [
         Positioned(
           bottom: Get.width < 390 ? -15 : 0,
-          // left: 0,
-          // right: 0,
-          child: Container(
-            width: Get.width,
-            height: 130,
-            decoration: BoxDecoration(
-              image: const DecorationImage(
-                image: AssetImage('assets/images/wave2.png'),
-                fit: BoxFit.cover,
+          child: FadeAnimation(
+            delay: 1,
+            child: Container(
+              width: Get.width,
+              height: 130,
+              decoration: BoxDecoration(
+                image: const DecorationImage(
+                  image: AssetImage('assets/images/wave2.png'),
+                  fit: BoxFit.cover,
+                ),
               ),
             ),
           ),
         ),
-        Column(
-          children: [
-            Expanded(
-              child: Swiper(
-                itemCount: images.length,
-                curve: Curves.bounceOut,
-                onIndexChanged: (value) {
-                  print(value);
-                  setState(() {
-                    currentPage = value;
-                  });
-                },
-                itemBuilder: (context, index) {
-                  return Card(
-                    elevation: 0,
-                    color: Colors.transparent,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(20.0),
-                    ),
-                    child: InkWell(
-                      onTap: () {},
-                      splashColor: Colors.black.withOpacity(0.3),
+        FadeAnimation(
+          delay: 1.3,
+          child: Column(
+            children: [
+              Expanded(
+                child: Swiper(
+                  itemCount: images.length,
+                  curve: Curves.bounceOut,
+                  onIndexChanged: (value) {
+                    print(value);
+                    setState(() {
+                      currentPage = value;
+                    });
+                  },
+                  itemBuilder: (context, index) {
+                    return GestureDetector(
+                      onTap: () {
+                        print(images[index]);
+                      },
                       child: Padding(
                         padding: const EdgeInsets.all(10),
                         child: Container(
@@ -72,30 +71,30 @@ class _CarouselFieldState extends State<CarouselField> {
                           ),
                         ),
                       ),
-                    ),
-                  );
-                },
+                    );
+                  },
+                ),
               ),
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: List.generate(
-                images.length,
-                (index) {
-                  print(index);
-                  return Container(
-                    margin: const EdgeInsets.only(right: 8, bottom: 8),
-                    height: 6,
-                    width: currentPage == index ? 18 : 6,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(10),
-                      color: currentPage == index ? yellow : Colors.grey,
-                    ),
-                  );
-                },
-              ),
-            )
-          ],
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: List.generate(
+                  images.length,
+                  (index) {
+                    print(index);
+                    return Container(
+                      margin: const EdgeInsets.only(right: 8, bottom: 8),
+                      height: 6,
+                      width: currentPage == index ? 18 : 6,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(10),
+                        color: currentPage == index ? yellow : Colors.grey,
+                      ),
+                    );
+                  },
+                ),
+              )
+            ],
+          ),
         ),
       ],
     );

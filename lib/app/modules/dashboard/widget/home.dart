@@ -29,12 +29,16 @@ class HomeBody extends StatelessWidget {
     await Future.delayed(
       const Duration(milliseconds: 2500),
       () async {
-        controller.fetchProfile();
-        shoppingController.fetchShopping();
-        controller.user.refresh();
-        shoppingController.shopping.refresh();
+        if (controller.token.value != 'null') {
+          controller.fetchProfile();
+          shoppingController.fetchShopping();
+          controller.user.refresh();
+          shoppingController.shopping.refresh();
+        } else {
+          print('Not logged in');
+        }
 
-        await Fluttertoast.showToast(
+        Fluttertoast.showToast(
           msg: 'Data Refreshed',
           toastLength: Toast.LENGTH_SHORT,
           gravity: ToastGravity.BOTTOM,
@@ -49,8 +53,15 @@ class HomeBody extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    if (controller.token.value == 'null') {
-      return SingleChildScrollView(
+    return LiquidPullToRefresh(
+      onRefresh: refreshHome,
+      color: baseColor,
+      showChildOpacityTransition: false,
+      backgroundColor: yellow,
+      springAnimationDurationInMilliseconds: 300,
+      height: 80,
+      child: SingleChildScrollView(
+        physics: const AlwaysScrollableScrollPhysics(),
         child: Column(
           children: [
             HeaderHome(),
@@ -58,25 +69,38 @@ class HomeBody extends StatelessWidget {
             ContentHome(),
           ],
         ),
-      );
-    } else {
-      return LiquidPullToRefresh(
-        onRefresh: refreshHome,
-        color: baseColor,
-        showChildOpacityTransition: false,
-        backgroundColor: yellow,
-        springAnimationDurationInMilliseconds: 300,
-        height: 80,
-        child: SingleChildScrollView(
-          child: Column(
-            children: [
-              HeaderHome(),
-              const MenuButton(),
-              ContentHome(),
-            ],
-          ),
-        ),
-      );
-    }
+      ),
+    );
+    // return LiquidPullToRefresh(
+    //   onRefresh: refreshHome,
+    //   color: baseColor,
+    //   showChildOpacityTransition: false,
+    //   backgroundColor: yellow,
+    //   springAnimationDurationInMilliseconds: 300,
+    //   height: 80,
+    //   child: SizedBox(
+    //     height: Get.height,
+    //     width: Get.width,
+    //     child: Column(
+    //       children: [
+    //         HeaderHome(),
+    //         const MenuButton(),
+    //         Expanded(child: ContentHome()),
+    //         // Expanded(
+    //         //   child: ListView.builder(
+    //         //     itemCount: 6,
+    //         //     itemBuilder: (context, index) {
+    //         //       return ListTile(
+    //         //         leading: Text('${index+1}'),
+    //         //         title: Text('TITLE'),
+    //         //         subtitle: Text('Subtitle'),
+    //         //       );
+    //         //     },
+    //         //   ),
+    //         // ),
+    //       ],
+    //     ),
+    //   ),
+    // );
   }
 }

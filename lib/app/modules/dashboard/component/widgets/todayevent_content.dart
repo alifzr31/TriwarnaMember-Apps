@@ -33,8 +33,9 @@ class _TodayEventContentState extends State<TodayEventContent> {
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      height: 250,
+    return Container(
+      height: 240,
+      padding: const EdgeInsets.symmetric(horizontal: 10),
       child: Column(
         children: [
           FadeAnimation(
