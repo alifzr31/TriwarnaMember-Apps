@@ -23,7 +23,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GetMaterialApp(
-      title: 'Member Apps',
+      title: 'Triwarna Member',
       theme: ThemeData(
         colorScheme: const ColorScheme.light(
           primary: baseColor,
