@@ -135,7 +135,7 @@ class HeaderPoint extends StatelessWidget {
           SvgPicture.asset('assets/images/point_icon.svg'),
           FadeAnimation(
             delay: 1,
-            child: PointText(text: controller.jumlah.value, size: 34),
+            child: PointText(text: userController.user.value?.loyaltyPoint ?? '', size: 34),
           ),
           ElevatedButton(
             onPressed: () {

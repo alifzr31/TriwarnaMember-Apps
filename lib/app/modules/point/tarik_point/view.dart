@@ -1,3 +1,4 @@
+import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -13,41 +14,7 @@ import 'package:member_apps/app/core/value.dart';
 import 'package:member_apps/app/modules/dashboard/controller.dart';
 import 'package:member_apps/app/modules/point/additional/prize_controller.dart';
 import 'package:member_apps/app/modules/point/controller.dart';
-
-// class TarikPointPage extends StatelessWidget {
-//   const TarikPointPage({super.key});
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return Scaffold(
-//       appBar: TransparentAppbar(
-//         title: 'REDEEM POINT',
-//         preferredSize: Size.fromHeight(kToolbarHeight),
-//       ),
-//       body: Padding(
-//         padding: const EdgeInsets.all(10),
-//         child: Column(
-//           crossAxisAlignment: CrossAxisAlignment.start,
-//           mainAxisAlignment: MainAxisAlignment.center,
-//           children: [
-//             FadeAnimation(
-//               delay: 1,
-//               child: const Align(
-//                 alignment: Alignment.topLeft,
-//                 child: Text(
-//                   '*The number of Coins cannot be less than 50',
-//                   style: TextStyle(color: Colors.red),
-//                 ),
-//               ),
-//             ),
-//             const SizedBox(height: 10),
-//             FormTarik(),
-//           ],
-//         ),
-//       ),
-//     );
-//   }
-// }
+import 'package:shared_preferences/shared_preferences.dart';
 
 class TarikPointPage extends StatelessWidget {
   const TarikPointPage({super.key});
@@ -55,10 +22,6 @@ class TarikPointPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // appBar: TransparentAppbar(
-      //   title: 'REDEEM POINT',
-      //   preferredSize: Size.fromHeight(kToolbarHeight),
-      // ),
       body: SafeArea(
         child: Padding(
           padding: const EdgeInsets.all(10),
@@ -113,6 +76,7 @@ class TarikPointPage extends StatelessWidget {
 class PointView extends StatelessWidget {
   PointView({super.key});
   final controller = Get.find<PointController>();
+  final userController = Get.find<DashboardController>();
 
   @override
   Widget build(BuildContext context) {
@@ -121,11 +85,11 @@ class PointView extends StatelessWidget {
         delay: 1,
         child: Row(
           children: [
-            SvgPicture.asset('assets/images/point_icon.svg', width: 40),
+            SvgPicture.asset('assets/images/point_icon.svg', width: 30),
             FadeAnimation(
               delay: 1.3,
               child: PointText(
-                text: controller.jumlah.value,
+                text: userController.user.value?.loyaltyPoint ?? '0',
                 size: 22,
               ),
             ),
@@ -311,19 +275,78 @@ class RedeemPrize extends StatelessWidget {
                                                         onCancelPressed: () {
                                                           Get.back();
                                                         },
-                                                        onSubmitPressed: () {
-                                                          Get.toNamed(
-                                                            '/inputpin',
-                                                            arguments: [
-                                                              prize.prizeCode,
-                                                              prize.prizeDesc,
-                                                            ],
-                                                          );
+                                                        onSubmitPressed:
+                                                            () async {
+                                                          SharedPreferences
+                                                              _prefs =
+                                                              await SharedPreferences
+                                                                  .getInstance();
+                                                          bool? complete =
+                                                              _prefs.getBool(
+                                                                  'complete');
+
+                                                          if (complete ==
+                                                              true) {
+                                                            Get.toNamed(
+                                                              '/inputpin',
+                                                              arguments: [
+                                                                prize.prizeCode,
+                                                                prize.prizeDesc,
+                                                              ],
+                                                            );
+                                                          } else {
+                                                            Get.back();
+                                                            AwesomeDialog(
+                                                              context: context,
+                                                              dialogType:
+                                                                  DialogType
+                                                                      .info,
+                                                              animType: AnimType
+                                                                  .topSlide,
+                                                              dismissOnTouchOutside:
+                                                                  true,
+                                                              dismissOnBackKeyPress:
+                                                                  false,
+                                                              headerAnimationLoop:
+                                                                  true,
+                                                              btnOkColor:
+                                                                  baseColor,
+                                                              btnOk:
+                                                                  ElevatedButton(
+                                                                style: ElevatedButton
+                                                                    .styleFrom(
+                                                                  shape:
+                                                                      const StadiumBorder(),
+                                                                  backgroundColor:
+                                                                      baseColor,
+                                                                  foregroundColor:
+                                                                      yellow,
+                                                                ),
+                                                                onPressed:
+                                                                    () {
+                                                                      Get.back();
+                                                                      Get.toNamed('/profile');
+                                                                    },
+                                                                child:
+                                                                    const Text(
+                                                                        'Lengkapi Sekarang'),
+                                                              ),
+                                                              padding:
+                                                                  const EdgeInsets
+                                                                      .all(10),
+                                                              title:
+                                                                  'Profil Belum Lengkap',
+                                                              desc:
+                                                                  'Silahkan lengkapi profil anda terlebih dahulu,\nagar bisa melakukan redeem point.\nTerima kasih!',
+                                                            ).show();
+                                                          }
                                                         },
                                                       ),
                                             Row(
                                               children: [
-                                                SvgPicture.asset('assets/images/point_icon.svg', width: 25),
+                                                SvgPicture.asset(
+                                                    'assets/images/point_icon.svg',
+                                                    width: 25),
                                                 userPoint < point
                                                     ? FadeAnimation(
                                                         delay: 1.3,
@@ -366,41 +389,3 @@ class RedeemPrize extends StatelessWidget {
     );
   }
 }
-
-// class FormTarik extends StatelessWidget {
-//   FormTarik({super.key});
-//   final formKey = GlobalKey<FormState>();
-
-//   final List<String> _items = [
-//     'Option 1',
-//     'Option 2',
-//     'Option 3',
-//   ];
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return Column(
-      // mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      // children: [
-        // FadeAnimation(
-        //   delay: 1.5,
-        //   child: BaseDropdown(
-        //     hint: 'Nominal Point',
-        //     items: _items.map((e) {
-        //       return DropdownMenuItem(value: e, child: Text(e));
-        //     }).toList(),
-        //     onChanged: (val) {},
-        //   ),
-        // ),
-        // SizedBox(
-        //   height: 40,
-        //   width: Get.width,
-        //   child: BaseButton(
-        //     text: 'Pull Point',
-        //     onPressed: () {},
-        //   ),
-        // ),
-//       ],
-//     );
-//   }
-// }

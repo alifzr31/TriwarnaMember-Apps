@@ -28,74 +28,79 @@ class _SplasScreenState extends State<SplasScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Stack(
-      children: [
-        Container(
-          decoration: const BoxDecoration(
-            image: const DecorationImage(
-              image: AssetImage('assets/images/back-splash.png'),
-              fit: BoxFit.fill,
+    return WillPopScope(
+      onWillPop: () async {
+        return false;
+      },
+      child: Stack(
+        children: [
+          Container(
+            decoration: const BoxDecoration(
+              image: const DecorationImage(
+                image: AssetImage('assets/images/back-splash.png'),
+                fit: BoxFit.fill,
+              ),
             ),
           ),
-        ),
-        Scaffold(
-          backgroundColor: Colors.transparent,
-          body: Center(
-            child: Stack(
-              children: [
-                Center(child: Image.asset('assets/images/splash.png')),
-                Positioned(
-                  bottom: 150,
-                  left: 30,
-                  right: 30,
-                  child: Padding(
-                    padding: const EdgeInsets.only(bottom: 10),
+          Scaffold(
+            backgroundColor: Colors.transparent,
+            body: Center(
+              child: Stack(
+                children: [
+                  Center(child: Image.asset('assets/images/splash.png')),
+                  Positioned(
+                    bottom: 150,
+                    left: 30,
+                    right: 30,
+                    child: Padding(
+                      padding: const EdgeInsets.only(bottom: 10),
+                      child: Column(
+                        children: [
+                          SpinKitWave(
+                            size: 25,
+                            itemBuilder: (BuildContext context, int index) {
+                              return const DecoratedBox(
+                                decoration: BoxDecoration(
+                                  color: yellow,
+                                ),
+                              );
+                            },
+                          ),
+                          // const Text(
+                          //   'Powered By',
+                          //   style: TextStyle(fontSize: 16, color: yellow),
+                          // ),
+                          // const Text(
+                          //   'DEV-IT AnyarGroup | 2023',
+                          //   style: TextStyle(fontSize: 16, color: yellow),
+                          // ),
+                        ],
+                      ),
+                    ),
+                  ),
+                  Positioned(
+                    bottom: 35,
+                    left: 30,
+                    right: 30,
                     child: Column(
                       children: [
-                        SpinKitWave(
-                          size: 25,
-                          itemBuilder: (BuildContext context, int index) {
-                            return const DecoratedBox(
-                              decoration: BoxDecoration(
-                                color: yellow,
-                              ),
-                            );
-                          },
+                        const Text(
+                          'Powered By',
+                          style: TextStyle(fontSize: 16, color: yellow),
                         ),
-                        // const Text(
-                        //   'Powered By',
-                        //   style: TextStyle(fontSize: 16, color: yellow),
-                        // ),
-                        // const Text(
-                        //   'DEV-IT AnyarGroup | 2023',
-                        //   style: TextStyle(fontSize: 16, color: yellow),
-                        // ),
+                        const Text(
+                          'DEV-IT AnyarGroup | 2023',
+                          style: TextStyle(fontSize: 16, color: yellow),
+                        ),
                       ],
                     ),
                   ),
-                ),
-                Positioned(
-                  bottom: 35,
-                  left: 30,
-                  right: 30,
-                  child: Column(
-                    children: [
-                      const Text(
-                        'Powered By',
-                        style: TextStyle(fontSize: 16, color: yellow),
-                      ),
-                      const Text(
-                        'DEV-IT AnyarGroup | 2023',
-                        style: TextStyle(fontSize: 16, color: yellow),
-                      ),
-                    ],
-                  ),
-                ),
-              ],
+                ],
+              ),
             ),
           ),
-        ),
-      ],
+        ],
+      ),
     );
   }
 }

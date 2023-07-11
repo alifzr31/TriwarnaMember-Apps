@@ -43,6 +43,7 @@ class User {
   String? statusActive;
   String? verifyStatus;
   DateTime? lastActivity;
+  bool? complete;
 
   User({
     this.success,
@@ -79,6 +80,7 @@ class User {
     this.statusActive,
     this.verifyStatus,
     this.lastActivity,
+    this.complete,
   });
 
   factory User.fromJson(Map<String, dynamic> json) => User(
@@ -95,7 +97,9 @@ class User {
         pin: json["pin"],
         gender: json["gender"],
         birthPlace: json["birth_place"],
-        birthDate: json["birth_date"] == null ? null : DateTime.parse(json["birth_date"]),
+        birthDate: json["birth_date"] == null
+            ? null
+            : DateTime.parse(json["birth_date"]),
         image: json["image"],
         contact: json["contact"],
         religion: json["religion"],
@@ -120,6 +124,7 @@ class User {
         lastActivity: json["last_activity"] == null
             ? null
             : DateTime.parse(json["last_activity"]),
+        complete: json["complete"],
       );
 
   Map<String, dynamic> toJson() => {
@@ -157,5 +162,6 @@ class User {
         "status_active": statusActive,
         "verify_status": verifyStatus,
         "last_activity": lastActivity?.toIso8601String(),
+        "complete": complete,
       };
 }
