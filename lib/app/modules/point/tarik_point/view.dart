@@ -285,16 +285,11 @@ class RedeemPrize extends StatelessWidget {
                                                               _prefs.getBool(
                                                                   'complete');
 
-                                                          if (complete ==
-                                                              true) {
-                                                            Get.toNamed(
-                                                              '/inputpin',
-                                                              arguments: [
-                                                                prize.prizeCode,
-                                                                prize.prizeDesc,
-                                                              ],
-                                                            );
-                                                          } else {
+                                                          if (userController
+                                                                  .user
+                                                                  .value
+                                                                  ?.pin ==
+                                                              null) {
                                                             Get.back();
                                                             AwesomeDialog(
                                                               context: context,
@@ -322,23 +317,81 @@ class RedeemPrize extends StatelessWidget {
                                                                   foregroundColor:
                                                                       yellow,
                                                                 ),
-                                                                onPressed:
-                                                                    () {
-                                                                      Get.back();
-                                                                      Get.toNamed('/profile');
-                                                                    },
-                                                                child:
-                                                                    const Text(
-                                                                        'Lengkapi Sekarang'),
+                                                                onPressed: () {
+                                                                  Get.back();
+                                                                  Get.toNamed(
+                                                                      '/createpin');
+                                                                },
+                                                                child: const Text(
+                                                                    'Buat PIN Sekarang'),
                                                               ),
                                                               padding:
                                                                   const EdgeInsets
                                                                       .all(10),
                                                               title:
-                                                                  'Profil Belum Lengkap',
+                                                                  'Anda Belum Membuat PIN',
                                                               desc:
-                                                                  'Silahkan lengkapi profil anda terlebih dahulu,\nagar bisa melakukan redeem point.\nTerima kasih!',
+                                                                  'Silahkan buat PIN terlebih dahulu untuk bisa melakukan penukaran hadiah. Terima kasih!',
                                                             ).show();
+                                                          } else {
+                                                            if (complete ==
+                                                                true) {
+                                                              Get.toNamed(
+                                                                '/inputpin',
+                                                                arguments: [
+                                                                  prize
+                                                                      .prizeCode,
+                                                                  prize
+                                                                      .prizeDesc,
+                                                                ],
+                                                              );
+                                                            } else {
+                                                              Get.back();
+                                                              AwesomeDialog(
+                                                                context:
+                                                                    context,
+                                                                dialogType:
+                                                                    DialogType
+                                                                        .info,
+                                                                animType: AnimType
+                                                                    .topSlide,
+                                                                dismissOnTouchOutside:
+                                                                    true,
+                                                                dismissOnBackKeyPress:
+                                                                    false,
+                                                                headerAnimationLoop:
+                                                                    true,
+                                                                btnOkColor:
+                                                                    baseColor,
+                                                                btnOk:
+                                                                    ElevatedButton(
+                                                                  style: ElevatedButton
+                                                                      .styleFrom(
+                                                                    shape:
+                                                                        const StadiumBorder(),
+                                                                    backgroundColor:
+                                                                        baseColor,
+                                                                    foregroundColor:
+                                                                        yellow,
+                                                                  ),
+                                                                  onPressed:
+                                                                      () {
+                                                                    Get.back();
+                                                                    Get.toNamed(
+                                                                        '/profile');
+                                                                  },
+                                                                  child: const Text(
+                                                                      'Lengkapi Sekarang'),
+                                                                ),
+                                                                padding:
+                                                                    const EdgeInsets
+                                                                        .all(10),
+                                                                title:
+                                                                    'Profil Belum Lengkap',
+                                                                desc:
+                                                                    'Silahkan lengkapi profil anda terlebih dahulu,\nagar bisa melakukan redeem point.\nTerima kasih!',
+                                                              ).show();
+                                                            }
                                                           }
                                                         },
                                                       ),
