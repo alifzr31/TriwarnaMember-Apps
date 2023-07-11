@@ -36,7 +36,7 @@ class MenuButton extends StatelessWidget {
                 svgIcon: 'member_circle.svg',
                 sizeIcon: 35,
                 label: 'Member',
-                onTap: () async {
+                onTap: () {
                   Get.toNamed('/membermenu');
                 },
               ),
