@@ -67,7 +67,7 @@ class HeaderHome extends StatelessWidget {
                     itemBuilder: (context, index) {
                       return Container(
                         padding: const EdgeInsets.symmetric(
-                            horizontal: 10, vertical: 20),
+                            horizontal: 15, vertical: 20),
                         margin: const EdgeInsets.symmetric(horizontal: 10),
                         decoration: BoxDecoration(
                           gradient: gradient[index],

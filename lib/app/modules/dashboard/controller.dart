@@ -88,6 +88,8 @@ class DashboardController extends GetxController {
 
       if (response.statusCode == 200) {
         user.value = userFromJson(jsonEncode(response.data));
+        SharedPreferences _prefs = await SharedPreferences.getInstance();
+        _prefs.setBool('complete', user.value!.complete!);
 
         update();
       } else {
