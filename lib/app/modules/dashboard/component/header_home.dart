@@ -14,6 +14,7 @@ import 'package:member_apps/app/core/utils/gradient_color.dart';
 import 'package:member_apps/app/core/value.dart';
 import 'package:member_apps/app/modules/dashboard/component/carousel.dart';
 import 'package:member_apps/app/modules/dashboard/controller.dart';
+import 'package:shimmer/shimmer.dart';
 
 class HeaderHome extends StatelessWidget {
   HeaderHome({super.key});
@@ -171,37 +172,41 @@ class HeaderHome extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.all(10),
       margin: const EdgeInsets.only(top: 10),
-      child: FadeAnimation(
-        delay: 1,
-        child: Container(
-          width: Get.width,
-          height: 180,
-          decoration: BoxDecoration(
-            gradient: controller.user.value?.loyalty.toString().capitalize ==
-                    'Silver'
-                ? GradientColor.silver
-                : controller.user.value?.loyalty.toString().capitalize == 'Gold'
-                    ? GradientColor.gold
-                    : GradientColor.platinum,
-            borderRadius: BorderRadius.circular(20),
-          ),
-          padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 20),
-          child: FadeAnimation(
-            delay: 1.3,
-            child: controller.user.value == null
-                ? Center(
-                    child: SpinKitWave(
-                      size: 20,
-                      itemBuilder: (BuildContext context, int index) {
-                        return const DecoratedBox(
-                          decoration: BoxDecoration(
-                            color: baseColor,
-                          ),
-                        );
-                      },
-                    ),
-                  )
-                : Row(
+      child: controller.user.value == null
+          ? Shimmer.fromColors(
+              baseColor: Colors.grey.shade300,
+              highlightColor: Colors.grey.shade100,
+              child: Container(
+                height: 180,
+                width: Get.width,
+                decoration: BoxDecoration(
+                  color: Colors.grey.shade300,
+                  borderRadius: BorderRadius.circular(20),
+                ),
+              ),
+            )
+          : FadeAnimation(
+              delay: 1,
+              child: Container(
+                width: Get.width,
+                height: 180,
+                decoration: BoxDecoration(
+                  gradient: controller.user.value?.loyalty
+                              .toString()
+                              .capitalize ==
+                          'Silver'
+                      ? GradientColor.silver
+                      : controller.user.value?.loyalty.toString().capitalize ==
+                              'Gold'
+                          ? GradientColor.gold
+                          : GradientColor.platinum,
+                  borderRadius: BorderRadius.circular(20),
+                ),
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 10, vertical: 20),
+                child: FadeAnimation(
+                  delay: 1.3,
+                  child: Row(
                     children: [
                       Expanded(
                         child: Column(
@@ -232,6 +237,7 @@ class HeaderHome extends StatelessWidget {
                                     SvgPicture.asset(
                                         'assets/images/point_icon.svg',
                                         width: 18),
+                                        const SizedBox(width: 5),
                                     controller.user.value == null
                                         ? const CupertinoActivityIndicator()
                                         : Text(
@@ -311,9 +317,9 @@ class HeaderHome extends StatelessWidget {
                       ),
                     ],
                   ),
-          ),
-        ),
-      ),
+                ),
+              ),
+            ),
     );
   }
 }
