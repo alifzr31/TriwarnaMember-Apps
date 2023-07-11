@@ -22,7 +22,7 @@ class ContentHome extends StatelessWidget {
     return Column(
       children: [
         const TodayEventContent(),
-        const SizedBox(height: 10),
+        const SizedBox(height: 20),
         SizedBox(
           height: 200,
           width: Get.width,
